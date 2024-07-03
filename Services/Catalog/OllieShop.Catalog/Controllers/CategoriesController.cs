@@ -1,10 +1,11 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OllieShop.Catalog.Dtos.CategoryDtos;
 using OllieShop.Catalog.Services.CategoryServices;
 
 namespace OllieShop.Catalog.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class CategoriesController : ControllerBase

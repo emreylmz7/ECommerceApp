@@ -7,9 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Features\CQRS\Commands\AddressCommands\" />
-    <Folder Include="Features\CQRS\Handlers\AddressHandlers\" />
-    <Folder Include="Features\Mediator\" />
+    <PackageReference Include="MediatR" Version="12.2.0" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.1.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="6.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Services\Order\Core\OllieShop.Order.Domain\OllieShop.Order.Domain.csproj" />
   </ItemGroup>
 
 </Project>
