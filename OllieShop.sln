@@ -58,7 +58,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OllieShop.Basket", "Service
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Frontend", "Frontend", "{26F84BD7-AEFE-48AD-AD3D-68BCF0064614}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OllieShop.WebUI", "Frontend\OllieShop.WebUI\OllieShop.WebUI.csproj", "{DFB44CC1-5521-40C1-94F2-B99993317906}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OllieShop.WebUI", "Frontend\OllieShop.WebUI\OllieShop.WebUI.csproj", "{DFB44CC1-5521-40C1-94F2-B99993317906}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

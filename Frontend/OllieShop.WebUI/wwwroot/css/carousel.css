@@ -1,0 +1,29 @@
+﻿/* Carousel container styling */
+.vendor-carousel {
+    background-color: #fff;
+    padding: 15px 0;
+}
+
+    /* Item container styling */
+    .vendor-carousel .p-4 {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: transform 0.3s, box-shadow 0.3s;
+        height: 120px; /* Yükseklik sabitlendi */
+    }
+
+        /* Hover effect for items */
+        .vendor-carousel .p-4:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+    /* Image styling */
+    .vendor-carousel img {
+        max-width: 100px; /* Maksimum genişlik ayarlandı */
+        max-height: 80px; /* Maksimum yükseklik ayarlandı */
+        width: auto; /* Oranlarını koruyarak genişlik */
+        height: auto; /* Oranlarını koruyarak yükseklik */
+        object-fit: contain; /* Resimleri çerçeveye sığdır */
+    }

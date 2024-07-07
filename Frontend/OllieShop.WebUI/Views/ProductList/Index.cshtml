@@ -1,0 +1,37 @@
+﻿@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/UILayout/_UILayout.cshtml";
+}
+
+
+<div class="container mt-4 ">
+    <div class="row px-xl-5 ">
+        <div class="col-12">
+            <nav class="breadcrumb bg-light mb-30 rounded">
+                <a class="breadcrumb-item text-dark" href="#">Home</a>
+                <a class="breadcrumb-item text-dark" href="#">Shop</a>
+                <span class="breadcrumb-item active">Product List</span>
+            </nav>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row px-xl-5">
+        <div class="col-lg-3 col-md-4">
+            @await Component.InvokeAsync("_PriceFilterComponentPartial")
+            @await Component.InvokeAsync("_ColorFilterComponentPartial")
+            @await Component.InvokeAsync("_SizeFilterComponentPartial")
+        </div>
+
+        <div class="col-lg-9 col-md-8">
+            <div class="row pb-3">
+
+                @await Component.InvokeAsync("_SortingProductsComponentPartial")
+                @await Component.InvokeAsync("_ProductListComponentPartial")
+                @await Component.InvokeAsync("_PaginationProductsComponentPartial")
+
+            </div>
+        </div>
+    </div>
+</div>
