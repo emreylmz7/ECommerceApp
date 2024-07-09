@@ -1,0 +1,74 @@
+﻿@model UpdateProductDto
+
+@{
+    ViewData["Title"] = "UpdateProduct";
+    Layout = "~/Areas/Admin/Views/AdminLayout/Index.cshtml";
+}
+
+<div class="container-xxl flex-grow-1 container-p-y">
+    <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Update /</span> Update Product</h4>
+
+    <div class="row">
+        <div class="col-xl">
+            <div class="card mb-4">
+                <h5 class="card-header">Update Product</h5>
+                <div class="card-body">
+                    <form method="post" enctype="multipart/form-data">
+                        <input type="hidden" asp-for="ProductId"/>
+                        <div class="mb-3">
+                            <label for="productName" class="form-label">Product Name</label>
+                            <input type="text"
+                                   class="form-control"
+                                   asp-for="Name"
+                                   placeholder="Enter product name"
+                                   required />
+                        </div>
+                        <div class="mb-3">
+                            <label for="productDescription" class="form-label">Description</label>
+                            <textarea class="form-control"
+                                      asp-for="Description"
+                                      rows="3"
+                                      placeholder="Enter product description"
+                                      required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="productPrice" class="form-label">Price</label>
+                            <input type="number"
+                                   class="form-control"
+                                   asp-for="Price"
+                                   placeholder="Enter product price"
+                                   step="0.01"
+                                   min="0"
+                                   required />
+                        </div>
+                        <div class="mb-3">
+                            <label for="productCategory" class="form-label">Category</label>
+                            <select class="form-select" id="productCategory" name="CategoryId" required>
+                                @foreach (var category in ViewBag.Categories)
+                                {
+                                    if (@Model.CategoryId == category.Value)
+                                    {
+                                        <option value="@category.Value" selected>@category.Text</option>
+                                    }
+                                    <option value="@category.Value">@category.Text</option>
+
+                                }
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="productImage" class="form-label">Product Image</label>
+                            <input type="text"
+                                   class="form-control"
+                                   asp-for="ImageUrl"
+                                   accept="image/*"
+                                   required />
+                        </div>
+                        <button type="submit" class="btn btn-primary">Update Product</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

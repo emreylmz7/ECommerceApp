@@ -1,62 +1,33 @@
-﻿
+﻿@model List<ResultCarouselDto>
+
+@{
+    int modelCount = Model.Count();
+    int count = 0;
+}
+
 <div class="mb-3">
     <div id="header-carousel" class="carousel slide carousel-fade mb-lg-0" data-ride="carousel">
         <ol class="carousel-indicators">
-            <li data-target="#header-carousel" data-slide-to="0" class="active rounded-pill"></li>
-            <li data-target="#header-carousel" data-slide-to="1" class="rounded-pill"></li>
-            <li data-target="#header-carousel" data-slide-to="2" class="rounded-pill"></li>
+            @for (int i = 0; i < modelCount; i++)
+            {
+                <li data-target="#header-carousel" data-slide-to="@i" class="@(i == 0 ? "active":"") rounded-pill"></li>
+            } 
         </ol>
         <div class="carousel-inner">
-            <div class="carousel-item position-relative active" style="height: 480px;">
-                <img class="position-absolute w-100 h-100" src="~/online-shop-website-template/img/man_fashion3.jpg" style="object-fit: cover;">
-                <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
-                    <div class="p-3" style="max-width: 700px;">
-                        <h1 class="display-4 text-white mb-3 animate__animated animate__fadeInDown">Men's Collection</h1>
-                        <p class="mx-md-5 px-5 animate__animated animate__bounceIn">Discover our men's fashion collection where style meets comfort.</p>
-                        <a class="btn btn-outline-light py-2 px-4 mt-3 animate__animated animate__fadeInUp rounded" href="#">Shop Now</a>
+            @foreach(var item in Model)
+            {
+                count++;
+                <div class="carousel-item position-relative @(count == 1 ? "active":"")" style="height: 480px;">
+                    <img class="position-absolute w-100 h-100" src="~/online-shop-website-template/img/@item.ImageUrl" style="object-fit: cover;">
+                    <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
+                        <div class="p-3" style="max-width: 700px;">
+                            <h1 class="display-4 text-white mb-3 animate__animated animate__fadeInDown">@item.Title</h1>
+                            <p class="mx-md-5 px-5 animate__animated animate__bounceIn">@item.Description</p>
+                            <a class="btn btn-outline-light py-2 px-4 mt-3 animate__animated animate__fadeInUp rounded" href="/ProductList/Index">Shop Now</a>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="carousel-item position-relative" style="height: 480px;">
-                <img class="position-absolute w-100 h-100" src="~/online-shop-website-template/img/woman_fashion1.jpg" style="object-fit: cover;">
-                <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
-                    <div class="p-3" style="max-width: 700px;">
-                        <h1 class="display-4 text-white mb-3 animate__animated animate__fadeInDown">Women's Collection</h1>
-                        <p class="mx-md-5 px-5 animate__animated animate__bounceIn">Explore our women's fashion options that combine elegance and style.</p>
-                        <a class="btn btn-outline-light py-2 px-4 mt-3 animate__animated animate__fadeInUp rounded" href="#">Shop Now</a>
-                    </div>
-                </div>
-            </div>
-            <div class="carousel-item position-relative" style="height: 480px;">
-                <img class="position-absolute w-100 h-100" src="~/online-shop-website-template/img/kido_fashion.jpg" style="object-fit: cover;">
-                <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
-                    <div class="p-3" style="max-width: 700px;">
-                        <h1 class="display-4 text-white mb-3 animate__animated animate__fadeInDown">Kids' Collection</h1>
-                        <p class="mx-md-5 px-5 animate__animated animate__bounceIn">Check out the fun and comfortable fashion trends for kids.</p>
-                        <a class="btn btn-outline-light py-2 px-4 mt-3 animate__animated animate__fadeInUp rounded" href="#">Shop Now</a>
-                    </div>
-                </div>
-            </div>
+            }
         </div>
     </div>
-    
-    @* <div class="col-lg-4">
-        <div class="product-offer mb-30" style="height: 200px;">
-            <img class="img-fluid" src="~/online-shop-website-template/img/offer-1.jpg" alt="">
-            <div class="offer-text">
-                <h6 class="text-white text-uppercase">Save 20%</h6>
-                <h3 class="text-white mb-3">Special Offer</h3>
-                <a href="" class="btn btn-primary">Shop Now</a>
-            </div>
-        </div>
-        <div class="product-offer mb-30" style="height: 200px;">
-            <img class="img-fluid" src="~/online-shop-website-template/img/offer-2.jpg" alt="">
-            <div class="offer-text">
-                <h6 class="text-white text-uppercase">Save 20%</h6>
-                <h3 class="text-white mb-3">Special Offer</h3>
-                <a href="" class="btn btn-primary">Shop Now</a>
-            </div>
-        </div>
-    </div> *@
-
 </div>

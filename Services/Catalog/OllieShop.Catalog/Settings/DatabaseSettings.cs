@@ -8,5 +8,7 @@
         public string ProductDetailCollectionName { get; set; } = null!;
         public string ConnectionString { get; set; } = null!;
         public string DatabaseName { get; set; } = null!;
+        public string CarouselCollectionName { get ; set ; } = null!;
+        public string OfferCollectionName { get ; set ; } = null!;
     }
 }

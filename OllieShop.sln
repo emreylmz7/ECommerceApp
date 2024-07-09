@@ -60,6 +60,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Frontend", "Frontend", "{26
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OllieShop.WebUI", "Frontend\OllieShop.WebUI\OllieShop.WebUI.csproj", "{DFB44CC1-5521-40C1-94F2-B99993317906}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OllieShop.DtoLayer", "Frontend\OllieShop.DtoLayer\OllieShop.DtoLayer.csproj", "{58454FE7-3A23-4068-A49B-DD7826676AD5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -122,6 +124,10 @@ Global
 		{DFB44CC1-5521-40C1-94F2-B99993317906}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DFB44CC1-5521-40C1-94F2-B99993317906}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DFB44CC1-5521-40C1-94F2-B99993317906}.Release|Any CPU.Build.0 = Release|Any CPU
+		{58454FE7-3A23-4068-A49B-DD7826676AD5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{58454FE7-3A23-4068-A49B-DD7826676AD5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{58454FE7-3A23-4068-A49B-DD7826676AD5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{58454FE7-3A23-4068-A49B-DD7826676AD5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -149,6 +155,7 @@ Global
 		{6C810E5A-B948-44E4-8792-E102163A2887} = {111D90EF-E7AF-42E3-985F-B7E1193552B3}
 		{E8293165-E8FD-464F-A03A-69E22563DEC3} = {6C810E5A-B948-44E4-8792-E102163A2887}
 		{DFB44CC1-5521-40C1-94F2-B99993317906} = {26F84BD7-AEFE-48AD-AD3D-68BCF0064614}
+		{58454FE7-3A23-4068-A49B-DD7826676AD5} = {26F84BD7-AEFE-48AD-AD3D-68BCF0064614}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1DFDD18C-2BB1-4D55-8239-FFF80F0D1873}

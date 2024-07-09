@@ -1,0 +1,63 @@
+﻿@model List<ResultOfferDto>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/AdminLayout/Index.cshtml";
+    int count = 0;
+}
+
+<div class="container-xxl flex-grow-1 container-p-y">
+    <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Dashboard /</span> Offers</h4>
+
+    <!-- Basic Bootstrap Table -->
+    <div class="card">
+        <h5 class="card-header">Offer Operations</h5>
+        <div class="table-responsive text-nowrap">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Title</th>
+                        <th>SubTitle</th>
+                        <th>Image URL</th>
+                        <th>Discount Percentage</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="table-border-bottom-0">
+                    @foreach (var item in Model)
+                    {
+                        count++;
+                        <tr>
+                            <td>@count</td>
+                            <td>@item.Title</td>
+                            <td>@item.SubTitle</td>
+                            <td>@item.ImageUrl</td>
+                            <td>@item.DiscountPercentage%</td>
+                            <td>@item.StartDate.ToString("yyyy-MM-dd")</td>
+                            <td>@item.EndDate.ToString("yyyy-MM-dd")</td>
+                            <td>
+                                <div class="dropdown">
+                                    <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                                        <i class="bx bx-dots-vertical-rounded"></i>
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item" href="/Admin/Offer/UpdateOffer/@item.OfferId"><i class="bx bx-edit-alt me-1"></i> Edit</a>
+                                        <a class="dropdown-item" href="/Admin/Offer/DeleteOffer/@item.OfferId"><i class="bx bx-trash me-1"></i> Delete</a>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <button type="button" class="btn btn-primary m-4" onclick="window.location.href='/Admin/Offer/CreateOffer/'">
+                <span class="tf-icons bx bx-plus-medical"></span>&nbsp; Add Offer
+            </button>
+        </div>
+    </div>
+</div>
+
+

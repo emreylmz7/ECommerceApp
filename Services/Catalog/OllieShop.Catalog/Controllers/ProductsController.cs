@@ -5,7 +5,6 @@ using OllieShop.Catalog.Services.ProductServices;
 
 namespace OllieShop.Catalog.Controllers
 {
-    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class ProductsController : ControllerBase
@@ -50,6 +49,13 @@ namespace OllieShop.Catalog.Controllers
         {
             await _productService.UpdateProductAsync(updateProductDto);
             return Ok("Product Updated Successfully.");
+        }
+
+        [HttpGet("ProductListWithCategory")]
+        public async Task<IActionResult> ProductListWithCategory()
+        {
+            var value = await _productService.GetProductsWithCategoryAsync();
+            return Ok(value);
         }
     }
 }

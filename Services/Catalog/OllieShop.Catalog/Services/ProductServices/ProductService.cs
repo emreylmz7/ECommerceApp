@@ -7,9 +7,10 @@ using OllieShop.Catalog.Settings;
 
 namespace OllieShop.Catalog.Services.ProductService
 {
-    public class ProductService : IProductService 
+    public class ProductService : IProductService
     {
         private readonly IMongoCollection<Product> _productCollection;
+        private readonly IMongoCollection<Category> _categoryCollection;
         private readonly IMapper _mapper;
 
         public ProductService(IMapper mapper, IDatabaseSettings databaseSettings)
@@ -17,6 +18,7 @@ namespace OllieShop.Catalog.Services.ProductService
             var client = new MongoClient(databaseSettings.ConnectionString);
             var database = client.GetDatabase(databaseSettings.DatabaseName);
             _productCollection = database.GetCollection<Product>(databaseSettings.ProductCollectionName); 
+            _categoryCollection = database.GetCollection<Category>(databaseSettings.CategoryCollectionName); 
             _mapper = mapper;
         }
 
@@ -42,6 +44,25 @@ namespace OllieShop.Catalog.Services.ProductService
             var values = await _productCollection.Find<Product>(x => x.ProductId == id).FirstOrDefaultAsync(); 
             return _mapper.Map<GetByIdProductDto>(values);
         }
+
+        public async Task<List<ResultProductsWithCategoryDto>> GetProductsWithCategoryAsync()
+        {
+            var products = await _productCollection.Find<Product>(x => true).ToListAsync();
+
+            var categoryIds = products.Select(p => p.CategoryId).Distinct();
+            var categories = await _categoryCollection.Find<Category>(c => categoryIds.Contains(c.CategoryId)).ToListAsync();
+            var categoryDict = categories.ToDictionary(c => c.CategoryId, c => c.Name);
+
+            var mappedProducts = products.Select(item =>
+            {
+                var mappedItem = _mapper.Map<ResultProductsWithCategoryDto>(item);
+                mappedItem.CategoryName = categoryDict[item.CategoryId];
+                return mappedItem;
+            }).ToList();
+
+            return mappedProducts;
+        }
+
 
         public async Task UpdateProductAsync(UpdateProductDto updateProductDto) 
         {

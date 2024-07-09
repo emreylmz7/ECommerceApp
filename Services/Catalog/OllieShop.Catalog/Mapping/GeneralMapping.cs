@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
+using OllieShop.Catalog.Dtos.CarouselDtos;
 using OllieShop.Catalog.Dtos.CategoryDtos;
+using OllieShop.Catalog.Dtos.OfferDtos;
 using OllieShop.Catalog.Dtos.ProductDetailDtos;
 using OllieShop.Catalog.Dtos.ProductDtos;
 using OllieShop.Catalog.Dtos.ProductImageDtos;
@@ -20,6 +22,7 @@ namespace OllieShop.Catalog.Mapping
             CreateMap<Product, CreateProductDto>().ReverseMap();
             CreateMap<Product, UpdateProductDto>().ReverseMap();
             CreateMap<Product, GetByIdProductDto>().ReverseMap();
+            CreateMap<Product, ResultProductsWithCategoryDto>().ReverseMap();
 
             CreateMap<ProductDetail, ResultProductDetailDto>().ReverseMap();
             CreateMap<ProductDetail, CreateProductDetailDto>().ReverseMap();
@@ -30,6 +33,18 @@ namespace OllieShop.Catalog.Mapping
             CreateMap<ProductImage, CreateProductImageDto>().ReverseMap();
             CreateMap<ProductImage, UpdateProductImageDto>().ReverseMap();
             CreateMap<ProductImage, GetByIdProductImageDto>().ReverseMap();
+
+            CreateMap<Carousel, ResultCarouselDto>().ReverseMap();
+            CreateMap<Carousel, CreateCarouselDto>().ReverseMap();
+            CreateMap<Carousel, UpdateCarouselDto>().ReverseMap();
+            CreateMap<Carousel, GetCarouselByIdDto>().ReverseMap();
+
+            CreateMap<Offer, ResultOfferDto>().ReverseMap();
+            CreateMap<Offer, CreateOfferDto>().ReverseMap();
+            CreateMap<Offer, UpdateOfferDto>().ReverseMap();
+            CreateMap<Offer, GetOfferByIdDto>().ReverseMap();
+
+
         }
     }
 }
