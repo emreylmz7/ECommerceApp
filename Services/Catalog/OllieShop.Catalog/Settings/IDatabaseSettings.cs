@@ -7,7 +7,10 @@
         public string ProductImageCollectionName { get; set; }
         public string ProductDetailCollectionName { get; set; }
         public string CarouselCollectionName { get; set; }
+        public string FeatureCollectionName { get; set; }
         public string OfferCollectionName { get; set; }
+        public string VendorCollectionName { get; set; }
+        public string AboutCollectionName { get; set; }
         public string ConnectionString { get; set; }
         public string DatabaseName { get; set; }
     }

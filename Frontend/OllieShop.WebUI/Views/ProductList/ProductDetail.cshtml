@@ -5,25 +5,25 @@
 }
 
 <div class="container">
-    <div class="row px-xl-5">
+    <div class="row">
         <div class="col-12">
-            <nav class="breadcrumb bg-light mb-30 mt-4 rounded">
-                <a class="breadcrumb-item text-dark" href="#">Home</a>
-                <a class="breadcrumb-item text-dark" href="#">Shop</a>
-                <span class="breadcrumb-item active">Shop Detail</span>
+            <nav class="breadcrumb bg-dark mb-30 mt-4 rounded">
+                <a class="breadcrumb-item text-light" href="#">Home</a>
+                <a class="breadcrumb-item text-light" href="#">Shop</a>
+                <span class="breadcrumb-item text-light active ">Shop Detail</span>
             </nav>
         </div>
     </div>
 </div>
 
 <div class="container pb-5">
-    <div class="row px-xl-5">
+    <div class="row">
                                   
-        @await Component.InvokeAsync("_ProductDetailImageSliderComponentPartial")
-        @await Component.InvokeAsync("_ProductPreviewComponentPartial")
+        @await Component.InvokeAsync("_ProductDetailImageSliderComponentPartial", new { id = ViewBag.ProductId })
+        @await Component.InvokeAsync("_ProductPreviewComponentPartial", new {id = ViewBag.ProductId})
 
     </div>
-    <div class="row px-xl-5">
+    <div class="row">
         <div class="col">
             <div class="bg-light p-30 rounded">
                 <div class="nav nav-tabs mb-4">
@@ -32,8 +32,8 @@
                     <a class="nav-item nav-link text-dark" data-toggle="tab" href="#tab-pane-3">Reviews (0)</a>
                 </div>
                 <div class="tab-content">
-                    @await Component.InvokeAsync("_ProductDescriptionComponentPartial")
-                    @await Component.InvokeAsync("_ProductInformationComponentPartial")
+                    @await Component.InvokeAsync("_ProductDescriptionComponentPartial", new { id = ViewBag.ProductId })
+                    @await Component.InvokeAsync("_ProductInformationComponentPartial", new { id = ViewBag.ProductId })
                     @await Component.InvokeAsync("_ProductReviewsComponentPartial")
                 </div>
             </div>

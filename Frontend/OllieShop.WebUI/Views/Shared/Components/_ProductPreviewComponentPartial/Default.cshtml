@@ -1,7 +1,8 @@
-﻿
+﻿@model ResultProductDto
+
 <div class="col-lg-7 h-auto mb-30 ">
     <div class="h-100 bg-light p-30 rounded">
-        <h3>Navy Blue Polo T-Shirt</h3>
+        <h3>@Model.Name</h3>
         <div class="d-flex mb-3">
             <div class="text-primary mr-2">
                 <small class="fas fa-star"></small>
@@ -10,11 +11,11 @@
                 <small class="fas fa-star-half-alt"></small>
                 <small class="far fa-star"></small>
             </div>
-            <small class="pt-1">(42 Reviews)</small>
+            <small class="pt-1">(14 Reviews)</small>
         </div>
-        <h3 class="font-weight-semi-bold mb-4">$599.00</h3>
+        <h3 class="font-weight-semi-bold mb-4">$@Model.Price</h3>
         <p class="mb-4">
-            Experience ultimate comfort and timeless style with our Navy Blue Polo T-Shirt. Perfect for any occasion, this classic piece is a must-have for your wardrobe.
+            @Model.Description
         </p>
         <div class="d-flex mb-3">
             <strong class="text-dark mr-3">Sizes:</strong>

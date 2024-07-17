@@ -1,7 +1,9 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Options;
+using OllieShop.Catalog.Services.AboutServices;
 using OllieShop.Catalog.Services.CarouselServices;
 using OllieShop.Catalog.Services.CategoryServices;
+using OllieShop.Catalog.Services.FeatureServices;
 using OllieShop.Catalog.Services.OfferServices;
 using OllieShop.Catalog.Services.ProductDetailService;
 using OllieShop.Catalog.Services.ProductDetailServices;
@@ -9,6 +11,7 @@ using OllieShop.Catalog.Services.ProductImageService;
 using OllieShop.Catalog.Services.ProductImageServices;
 using OllieShop.Catalog.Services.ProductService;
 using OllieShop.Catalog.Services.ProductServices;
+using OllieShop.Catalog.Services.VendorServices;
 using OllieShop.Catalog.Settings;
 using System.Reflection;
 
@@ -27,6 +30,9 @@ builder.Services.AddScoped<IProductDetailService, ProductDetailService>();
 builder.Services.AddScoped<IProductImageService, ProductImageService>();
 builder.Services.AddScoped<ICarouselService, CarouselService>();
 builder.Services.AddScoped<IOfferService, OfferService>();
+builder.Services.AddScoped<IFeatureService, FeatureService>();
+builder.Services.AddScoped<IVendorService, VendorService>();
+builder.Services.AddScoped<IAboutService, AboutService>();
 
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 

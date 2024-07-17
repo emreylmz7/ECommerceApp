@@ -1,0 +1,39 @@
+﻿@model UpdateProductDetailDto
+
+@{
+    ViewData["Title"] = "Update Product Detail";
+    Layout = "~/Areas/Admin/Views/AdminLayout/Index.cshtml";
+}
+
+<div class="container-xxl flex-grow-1 container-p-y">
+    <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Products /</span> Update Product Detail</h4>
+
+    <div class="row">
+        <div class="col-xl">
+            <div class="card mb-4">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">Products</h5>
+                    <small class="text-muted float-end">Update Product Detail</small>
+                </div>
+                <div class="card-body">
+                    <form method="post" id="updateDetailForm">
+                        <input type="hidden" asp-for="ProductDetailId" value="@Model.ProductDetailId" />
+                        <input type="hidden" asp-for="ProductId" value="@ViewBag.ProductId" />
+
+                        <div class="mb-3">
+                            <label class="form-label" for="Description">Description</label>
+                            <textarea asp-for="Description" class="form-control" id="Description" rows="3">@Model.Description</textarea>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label" for="Information">Information</label>
+                            <textarea asp-for="Information" class="form-control" id="Information" rows="3">@Model.Information</textarea>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Update</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

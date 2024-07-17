@@ -29,6 +29,13 @@ namespace OllieShop.Catalog.Controllers
             return Ok(value);
         }
 
+        [HttpGet("GetProductDetailsByProductId")]
+        public async Task<IActionResult> GetProductDetailsByProductId(string id)
+        {
+            var value = await _productDetailService.GetProductDetailByProductIdAsync(id);
+            return Ok(value);
+        }
+
         [HttpPost]
         public async Task<IActionResult> CreateProductDetail(CreateProductDetailDto createProductDetailDto)
         {

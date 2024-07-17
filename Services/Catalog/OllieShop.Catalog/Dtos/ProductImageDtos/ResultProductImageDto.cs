@@ -1,11 +1,14 @@
-﻿namespace OllieShop.Catalog.Dtos.ProductImageDtos
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace OllieShop.Catalog.Dtos.ProductImageDtos
 {
     public class ResultProductImageDto
     {
         public string ProductImagesId { get; set; } = null!;
-        public string? Image1 { get; set; }
-        public string? Image2 { get; set; }
-        public string? Image3 { get; set; }
+        [Required]
+        [MinLength(4, ErrorMessage = "You must provide at least 4 images.")]
+        [MaxLength(10, ErrorMessage = "You can provide a maximum of 10 images.")]
+        public List<string> Images { get; set; } = new List<string>();
         public string? ProductId { get; set; }
     }
 }

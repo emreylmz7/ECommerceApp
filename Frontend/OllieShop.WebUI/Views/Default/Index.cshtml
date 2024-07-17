@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "Index";
     Layout = "~/Views/UILayout/_UILayout.cshtml";
 }
@@ -9,21 +8,14 @@
 </div>
 
 <div class="container">
-    @await Component.InvokeAsync("_FeaturedDefaultComponentPartial")
-    @await Component.InvokeAsync("_CategoriesDefaultComponentPartial")
     @await Component.InvokeAsync("_FeaturedProductsDefaultComponentPartial")
-    @await Component.InvokeAsync("_OfferDefaultComponentPartial")
-    @await Component.InvokeAsync("_RecentProductsDefaultComponentPartial")
 </div>
 
 @await Component.InvokeAsync("_VendorDefaultComponentPartial")
 
-
-    
-
-
-
-
-
-
-
+<div class="container">
+    @await Component.InvokeAsync("_CategoriesDefaultComponentPartial")
+    @await Component.InvokeAsync("_OfferDefaultComponentPartial")
+    @await Component.InvokeAsync("_FeaturedDefaultComponentPartial")
+    @await Component.InvokeAsync("_RecentProductsDefaultComponentPartial")
+</div>

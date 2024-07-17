@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using OllieShop.DtoLayer.CatalogDtos.Category;
 using OllieShop.DtoLayer.CatalogDtos.Product;
+using OllieShop.DtoLayer.CatalogDtos.ProductDetail;
+using OllieShop.DtoLayer.CatalogDtos.ProductImage;
 using OllieShop.WebUI.Services.ApiServices;
 
 namespace OllieShop.WebUI.Areas.Admin.Controllers
@@ -95,6 +97,61 @@ namespace OllieShop.WebUI.Areas.Admin.Controllers
             return View();
         }
 
+        [Route("UpdateProductImage/{id}")]
+        [HttpGet]
+        public async Task<IActionResult> UpdateProductImage(string id)
+        {
+            ViewBag.ProductId = id;
+            var productImages = await _apiService.GetAsync<UpdateProductImageDto>($"https://localhost:7220/api/ProductImages/GetImagesByProductId?id={id}");
+            if(productImages == null)
+            {
+                return Redirect($"/Admin/Product/AddProductImage/{id}");
+            }
+            return View(productImages);
+        }
 
+        [HttpPost]
+        [Route("UpdateProductImage/{id}")]
+        public async Task<IActionResult> UpdateProductImage(UpdateProductImageDto updateProductImageDto)
+        {
+            var responseMessage = await _apiService.PutAsync("https://localhost:7220/api/ProductImages", updateProductImageDto);
+            if (responseMessage.IsSuccessStatusCode)
+            {
+                return RedirectToAction("Index", "Product", new { area = "Admin" });
+            }
+            return View();
+        }
+
+
+
+
+
+
+
+
+        [Route("UpdateProductDetail/{id}")]
+        [HttpGet]
+        public async Task<IActionResult> UpdateProductDetail(string id)
+        {
+            ViewBag.ProductId = id;
+            var productDetails = await _apiService.GetAsync<UpdateProductDetailDto>($"https://localhost:7220/api/ProductDetails/GetProductDetailsByProductId?id={id}");
+            if (productDetails == null)
+            {
+                return Redirect($"/Admin/Product/Index");
+            }
+            return View(productDetails);
+        }
+
+        [HttpPost]
+        [Route("UpdateProductDetail/{id}")]
+        public async Task<IActionResult> UpdateProductDetail(UpdateProductDetailDto updateProductDetailDto)
+        {
+            var responseMessage = await _apiService.PutAsync("https://localhost:7220/api/ProductDetails", updateProductDetailDto);
+            if (responseMessage.IsSuccessStatusCode)
+            {
+                return RedirectToAction("Index", "Product", new { area = "Admin" });
+            }
+            return View();
+        }
     }
 }

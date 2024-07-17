@@ -1,4 +1,6 @@
-﻿@{
+﻿@model List<ResultCategoryDto>
+
+@{
     <link rel="stylesheet" href="~/css/navbar.css" />
 }
 
@@ -12,17 +14,18 @@
                 </a>
                 <nav class="collapse position-absolute navbar navbar-vertical navbar-light align-items-start p-0 bg-light" id="navbar-vertical" style="width: calc(100% - 30px); z-index: 999;">
                     <div class="navbar-nav w-100">
-                        <div class="nav-item dropdown dropright">
+                        @* <div class="nav-item dropdown dropright">
                             <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Jewelry <i class="fa fa-angle-right float-right mt-1"></i></a>
                             <div class="dropdown-menu position-absolute rounded border-0 m-0">
                                 <a href="" class="dropdown-item">Neckalce</a>
                                 <a href="" class="dropdown-item">Chains</a>
                                 <a href="" class="dropdown-item">Bracelet</a>
                             </div>
-                        </div>
-                        <a href="" class="nav-item nav-link">T-Shirt</a>
-                        <a href="" class="nav-item nav-link">Hoodie</a>
-                        <a href="" class="nav-item nav-link">Jackets</a>
+                        </div> *@
+                        @foreach(var item in Model)
+                        {
+                            <a href="/ProductList/Index/@item.CategoryId" class="nav-item nav-link">@item.Name</a>
+                        }
                     </div>
                 </nav>
             </div>

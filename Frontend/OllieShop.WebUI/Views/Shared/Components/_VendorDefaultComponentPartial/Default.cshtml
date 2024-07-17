@@ -1,32 +1,25 @@
-﻿@{
+﻿@model List<ResultVendorDto>
+
+@{
     <link rel="stylesheet" href="~/css/carousel.css" />
 }
+
+<div class="">
+    <div class="container">
+        <h2 class="section-title position-relative mb-4"><span class="bg-secondary pr-3">Partners</span></h2>
+    </div>
+</div>
 
 <div class="container-fluid bg-light">
     <div class="row">
         <div class="col">
             <div class="owl-carousel vendor-carousel container">
-                <div class="p-4">
-                    <img src="~/img/brands/adidas.png" alt="Adidas">
-                </div>
-                <div class="p-4">
-                    <img src="~/img/brands/puma.png" alt="Puma">
-                </div>
-                <div class="p-4">
-                    <img src="~/img/brands/nike.png" alt="Nike">
-                </div>
-                <div class="p-4">
-                    <img src="~/img/brands/hummel.png" alt="Hummel">
-                </div>
-                <div class="p-4">
-                    <img src="~/img/brands/columbia.png" alt="Columbia">
-                </div>
-                <div class="p-4">
-                    <img src="~/img/brands/jackjones.png" alt="Jack & Jones">
-                </div>
-                <div class="p-4">
-                    <img src="~/img/brands/mavi.png" alt="Mavi">
-                </div>
+                @foreach(var item in Model)
+                {
+                    <div class="p-4">
+                        <img src="~/img/brands/@item.ImageUrl" alt="@item.Name">
+                    </div>
+                }
             </div>
         </div>
     </div>

@@ -29,6 +29,13 @@ namespace OllieShop.Catalog.Controllers
             return Ok(value);
         }
 
+        [HttpGet("GetImagesByProductId")]
+        public async Task<IActionResult> GetImagesByProductId(string id)
+        {
+            var value = await _productImageService.GetImagesByProductIdAsync(id);
+            return Ok(value);
+        }
+
         [HttpPost]
         public async Task<IActionResult> CreateProductImage(CreateProductImageDto createProductImageDto)
         {

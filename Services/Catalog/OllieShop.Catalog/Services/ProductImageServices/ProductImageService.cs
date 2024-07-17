@@ -7,7 +7,7 @@ using OllieShop.Catalog.Settings;
 
 namespace OllieShop.Catalog.Services.ProductImageService 
 {
-    public class ProductImageService : IProductImageService 
+    public class ProductImageService : IProductImageService
     {
         private readonly IMongoCollection<ProductImage> _productImageCollection;
         private readonly IMapper _mapper;
@@ -41,6 +41,12 @@ namespace OllieShop.Catalog.Services.ProductImageService
         {
             var values = await _productImageCollection.Find<ProductImage>(x => x.ProductImagesId == id).FirstOrDefaultAsync(); 
             return _mapper.Map<GetByIdProductImageDto>(values);
+        }
+
+        public async Task<GetByIdProductImageDto> GetImagesByProductIdAsync(string productId)
+        {
+            var value = await _productImageCollection.Find<ProductImage>(x => x.ProductId == productId).FirstOrDefaultAsync();
+            return _mapper.Map<GetByIdProductImageDto>(value);
         }
 
         public async Task UpdateProductImageAsync(UpdateProductImageDto updateProductImageDto) 

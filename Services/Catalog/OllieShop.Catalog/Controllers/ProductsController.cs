@@ -57,5 +57,12 @@ namespace OllieShop.Catalog.Controllers
             var value = await _productService.GetProductsWithCategoryAsync();
             return Ok(value);
         }
+
+        [HttpGet("ProductListByCategory")]
+        public async Task<IActionResult> ProductListByCategory(string id)
+        {
+            var value = await _productService.GetProductsByCategoryIdAsync(id);
+            return Ok(value);
+        }
     }
 }

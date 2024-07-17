@@ -7,7 +7,7 @@ using OllieShop.Catalog.Settings;
 
 namespace OllieShop.Catalog.Services.ProductDetailService
 {
-    public class ProductDetailService : IProductDetailService 
+    public class ProductDetailService : IProductDetailService
     {
         private readonly IMongoCollection<ProductDetail> _productDetailCollection;
         private readonly IMapper _mapper;
@@ -40,6 +40,12 @@ namespace OllieShop.Catalog.Services.ProductDetailService
         public async Task<GetByIdProductDetailDto> GetByIdProductDetailAsync(string id) 
         {
             var values = await _productDetailCollection.Find<ProductDetail>(x => x.ProductDetailId == id).FirstOrDefaultAsync(); 
+            return _mapper.Map<GetByIdProductDetailDto>(values);
+        }
+
+        public async Task<GetByIdProductDetailDto> GetProductDetailByProductIdAsync(string id)
+        {
+            var values = await _productDetailCollection.Find<ProductDetail>(x => x.ProductId == id).FirstOrDefaultAsync();
             return _mapper.Map<GetByIdProductDetailDto>(values);
         }
 

@@ -5,7 +5,7 @@
 
 
 <div class="container mt-4 ">
-    <div class="row px-xl-5 ">
+    <div class="row">
         <div class="col-12">
             <nav class="breadcrumb bg-light mb-30 rounded">
                 <a class="breadcrumb-item text-dark" href="#">Home</a>
@@ -17,7 +17,7 @@
 </div>
 
 <div class="container">
-    <div class="row px-xl-5">
+    <div class="row">
         <div class="col-lg-3 col-md-4">
             @await Component.InvokeAsync("_PriceFilterComponentPartial")
             @await Component.InvokeAsync("_ColorFilterComponentPartial")
@@ -28,7 +28,7 @@
             <div class="row pb-3">
 
                 @await Component.InvokeAsync("_SortingProductsComponentPartial")
-                @await Component.InvokeAsync("_ProductListComponentPartial")
+                @await Component.InvokeAsync("_ProductListComponentPartial", new { id = ViewBag.CategoryId })
                 @await Component.InvokeAsync("_PaginationProductsComponentPartial")
 
             </div>
