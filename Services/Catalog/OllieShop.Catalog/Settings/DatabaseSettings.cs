@@ -13,5 +13,6 @@
         public string FeatureCollectionName { get; set ; } = null!;
         public string VendorCollectionName { get ; set ; } = null!;
         public string AboutCollectionName { get ; set ; } = null!;
+        public string ContactCollectionName { get ; set ; } = null!;
     }
 }

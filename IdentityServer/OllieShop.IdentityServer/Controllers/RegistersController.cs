@@ -8,7 +8,7 @@ using static IdentityServer4.IdentityServerConstants;
 
 namespace OllieShop.IdentityServer.Controllers
 {
-    [Authorize(LocalApi.PolicyName)]
+    [AllowAnonymous]
     [Route("api/[controller]")]
     [ApiController]
     public class RegistersController : ControllerBase

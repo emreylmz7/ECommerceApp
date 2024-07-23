@@ -1,11 +1,42 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using OllieShop.WebUI.Services.ApiServices;
+using OllieShop.WebUI.Services.IdentityServices;
+using OllieShop.WebUI.Services.LoginServices;
+using OllieShop.WebUI.Services.TokenServices;
+using OllieShop.WebUI.Settings;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddCookie(JwtBearerDefaults.AuthenticationScheme, opt =>
+{
+    opt.LoginPath = "/Login/Index";
+    opt.LogoutPath = "/Default/Index";
+    opt.AccessDeniedPath = "/Pages/AccessDenied/";
+    opt.Cookie.HttpOnly = true;
+    opt.Cookie.SameSite = SameSiteMode.Strict;
+    opt.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest;
+    opt.Cookie.Name ="OllieShopJwt";
+});
+
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(CookieAuthenticationDefaults.AuthenticationScheme,opt =>
+{
+    opt.LoginPath = "/Login/Index";
+    opt.ExpireTimeSpan = TimeSpan.FromDays(5);
+    opt.Cookie.Name = "OllieShopCookie";
+    opt.SlidingExpiration = true;
+});
+
+builder.Services.AddHttpContextAccessor();
 builder.Services.AddHttpClient();
 builder.Services.AddControllersWithViews();
+
+builder.Services.Configure<ClientSettings>(builder.Configuration.GetSection("ClientSettings"));
+
 builder.Services.AddScoped<IApiService, ApiService>();
+builder.Services.AddScoped<ILoginService, LoginService>();
+builder.Services.AddScoped<IIdentityService, IdentityService>();
+builder.Services.AddScoped<ITokenService, TokenService>();
 
 var app = builder.Build();
 
@@ -21,6 +52,8 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 

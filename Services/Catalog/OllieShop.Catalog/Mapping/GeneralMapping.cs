@@ -2,6 +2,7 @@
 using OllieShop.Catalog.Dtos.AboutDtos;
 using OllieShop.Catalog.Dtos.CarouselDtos;
 using OllieShop.Catalog.Dtos.CategoryDtos;
+using OllieShop.Catalog.Dtos.ContactDtos;
 using OllieShop.Catalog.Dtos.FeatureDtos;
 using OllieShop.Catalog.Dtos.OfferDtos;
 using OllieShop.Catalog.Dtos.ProductDetailDtos;
@@ -61,6 +62,11 @@ namespace OllieShop.Catalog.Mapping
             CreateMap<About, CreateAboutDto>().ReverseMap();
             CreateMap<About, UpdateAboutDto>().ReverseMap();
             CreateMap<About, GetAboutByIdDto>().ReverseMap();
+
+            CreateMap<Contact, ResultContactDto>().ReverseMap();
+            CreateMap<Contact, CreateContactDto>().ReverseMap();
+            CreateMap<Contact, UpdateContactDto>().ReverseMap();
+            CreateMap<Contact, GetContactByIdDto>().ReverseMap();
         }
     }
 }

@@ -37,6 +37,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Requirements", "Requirement
 	ProjectSection(SolutionItems) = preProject
 		IdentityServerVersionErrorSolution.txt = IdentityServerVersionErrorSolution.txt
 		PortainerCMD.txt = PortainerCMD.txt
+		OcelotCodeExample.txt = OcelotCodeExample.txt
 		PortNumbers.txt = PortNumbers.txt
 	EndProjectSection
 EndProject
@@ -60,7 +61,23 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Frontend", "Frontend", "{26
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OllieShop.WebUI", "Frontend\OllieShop.WebUI\OllieShop.WebUI.csproj", "{DFB44CC1-5521-40C1-94F2-B99993317906}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OllieShop.DtoLayer", "Frontend\OllieShop.DtoLayer\OllieShop.DtoLayer.csproj", "{58454FE7-3A23-4068-A49B-DD7826676AD5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OllieShop.DtoLayer", "Frontend\OllieShop.DtoLayer\OllieShop.DtoLayer.csproj", "{58454FE7-3A23-4068-A49B-DD7826676AD5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Comment", "Comment", "{2464B36B-4E26-48C8-B017-5E418C8D217F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OllieShop.Comment", "Services\Comment\OllieShop.Comment\OllieShop.Comment.csproj", "{F83877BD-282C-4785-8A3B-D36D138B9228}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ApiGateway", "ApiGateway", "{C8917F48-55B4-4259-963D-FF026247F65D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OllieShop.OcelotGateway", "ApiGateway\OllieShop.OcelotGateway\OllieShop.OcelotGateway.csproj", "{6469DEB1-34CE-404A-B656-8B80DAE3DECD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Payment", "Payment", "{2BB0C633-05EB-485D-AB75-74D609C7E8B5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OllieShop.Payment", "Services\Payment\OllieShop.Payment\OllieShop.Payment.csproj", "{398BD2A4-0190-44F8-A16F-C3B4D1B18DD5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Images", "Images", "{B8444272-850E-4812-8C5D-62042246656E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OlliShop.Images", "Services\Images\OlliShop.Images\OlliShop.Images.csproj", "{F70B83C7-4252-4C82-A989-CA80A4AF7BEA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -128,6 +145,22 @@ Global
 		{58454FE7-3A23-4068-A49B-DD7826676AD5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{58454FE7-3A23-4068-A49B-DD7826676AD5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{58454FE7-3A23-4068-A49B-DD7826676AD5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F83877BD-282C-4785-8A3B-D36D138B9228}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F83877BD-282C-4785-8A3B-D36D138B9228}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F83877BD-282C-4785-8A3B-D36D138B9228}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F83877BD-282C-4785-8A3B-D36D138B9228}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6469DEB1-34CE-404A-B656-8B80DAE3DECD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6469DEB1-34CE-404A-B656-8B80DAE3DECD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6469DEB1-34CE-404A-B656-8B80DAE3DECD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6469DEB1-34CE-404A-B656-8B80DAE3DECD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{398BD2A4-0190-44F8-A16F-C3B4D1B18DD5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{398BD2A4-0190-44F8-A16F-C3B4D1B18DD5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{398BD2A4-0190-44F8-A16F-C3B4D1B18DD5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{398BD2A4-0190-44F8-A16F-C3B4D1B18DD5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F70B83C7-4252-4C82-A989-CA80A4AF7BEA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F70B83C7-4252-4C82-A989-CA80A4AF7BEA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F70B83C7-4252-4C82-A989-CA80A4AF7BEA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F70B83C7-4252-4C82-A989-CA80A4AF7BEA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -156,6 +189,13 @@ Global
 		{E8293165-E8FD-464F-A03A-69E22563DEC3} = {6C810E5A-B948-44E4-8792-E102163A2887}
 		{DFB44CC1-5521-40C1-94F2-B99993317906} = {26F84BD7-AEFE-48AD-AD3D-68BCF0064614}
 		{58454FE7-3A23-4068-A49B-DD7826676AD5} = {26F84BD7-AEFE-48AD-AD3D-68BCF0064614}
+		{2464B36B-4E26-48C8-B017-5E418C8D217F} = {111D90EF-E7AF-42E3-985F-B7E1193552B3}
+		{F83877BD-282C-4785-8A3B-D36D138B9228} = {2464B36B-4E26-48C8-B017-5E418C8D217F}
+		{6469DEB1-34CE-404A-B656-8B80DAE3DECD} = {C8917F48-55B4-4259-963D-FF026247F65D}
+		{2BB0C633-05EB-485D-AB75-74D609C7E8B5} = {111D90EF-E7AF-42E3-985F-B7E1193552B3}
+		{398BD2A4-0190-44F8-A16F-C3B4D1B18DD5} = {2BB0C633-05EB-485D-AB75-74D609C7E8B5}
+		{B8444272-850E-4812-8C5D-62042246656E} = {111D90EF-E7AF-42E3-985F-B7E1193552B3}
+		{F70B83C7-4252-4C82-A989-CA80A4AF7BEA} = {B8444272-850E-4812-8C5D-62042246656E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1DFDD18C-2BB1-4D55-8239-FFF80F0D1873}

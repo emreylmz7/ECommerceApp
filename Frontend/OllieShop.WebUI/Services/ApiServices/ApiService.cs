@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System.Net.Http.Headers;
 using System.Text;
 
 namespace OllieShop.WebUI.Services.ApiServices
@@ -40,6 +41,18 @@ namespace OllieShop.WebUI.Services.ApiServices
         public async Task<HttpResponseMessage> DeleteAsync(string url)
         {
             return await _client.DeleteAsync(url);
+        }
+
+        public async Task<T> GetWithTokenAsync<T>(string url, string token)
+        {
+            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer",token);
+            var responseMessage = await _client.GetAsync(url);
+            if (responseMessage.IsSuccessStatusCode)
+            {
+                var jsonData = await responseMessage.Content.ReadAsStringAsync();
+                return JsonConvert.DeserializeObject<T>(jsonData)!;
+            }
+            return default(T)!;
         }
     }
 }

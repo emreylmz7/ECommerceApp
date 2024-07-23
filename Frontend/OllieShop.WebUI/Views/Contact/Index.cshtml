@@ -22,34 +22,38 @@
         <div class="col-lg-7 mb-5 ">
             <div class="contact-form bg-light p-30 rounded">
                 <div id="success"></div>
-                <form name="sentMessage" id="contactForm" novalidate="novalidate">
+
+                <form method="post" asp-controller="Contact" asp-action="Index" >
+
                     <div class="control-group">
-                        <input type="text" class="form-control rounded" id="name" placeholder="Your Name"
+                        <input type="text" class="form-control rounded" id="FullName" name="FullName" placeholder="Your Name"
                                required="required" data-validation-required-message="Please enter your name" />
                         <p class="help-block text-danger"></p>
                     </div>
+
                     <div class="control-group">
-                        <input type="email" class="form-control rounded" id="email" placeholder="Your Email"
+                        <input type="email" class="form-control rounded" id="Email" name="Email" placeholder="Your Email"
                                required="required" data-validation-required-message="Please enter your email" />
                         <p class="help-block text-danger"></p>
                     </div>
+
                     <div class="control-group">
-                        <input type="text" class="form-control rounded" id="subject" placeholder="Subject"
+                        <input type="text" class="form-control rounded" id="Subject" name="Subject" placeholder="Subject"
                                required="required" data-validation-required-message="Please enter a subject" />
                         <p class="help-block text-danger"></p>
                     </div>
+
                     <div class="control-group">
-                        <textarea class="form-control rounded" rows="8" id="message" placeholder="Message"
+                        <textarea class="form-control rounded" rows="8" id="Message" name="Message" placeholder="Message"
                                   required="required"
                                   data-validation-required-message="Please enter your message"></textarea>
                         <p class="help-block text-danger"></p>
                     </div>
+
                     <div>
-                        <button class="btn btn-outline-dark rounded btn-block btn-sm my-2" type="submit" id="sendMessageButton">
+                        <button class="btn btn-outline-dark rounded btn-block btn-sm my-2" type="submit">
                             Send
                         </button>
-                        @* <a class="btn btn-outline-dark rounded btn-block btn-sm my-2" href="#">Apply</a> *@
-
                     </div>
                 </form>
             </div>

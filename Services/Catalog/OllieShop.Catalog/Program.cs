@@ -3,6 +3,7 @@ using Microsoft.Extensions.Options;
 using OllieShop.Catalog.Services.AboutServices;
 using OllieShop.Catalog.Services.CarouselServices;
 using OllieShop.Catalog.Services.CategoryServices;
+using OllieShop.Catalog.Services.ContactServices;
 using OllieShop.Catalog.Services.FeatureServices;
 using OllieShop.Catalog.Services.OfferServices;
 using OllieShop.Catalog.Services.ProductDetailService;
@@ -33,6 +34,7 @@ builder.Services.AddScoped<IOfferService, OfferService>();
 builder.Services.AddScoped<IFeatureService, FeatureService>();
 builder.Services.AddScoped<IVendorService, VendorService>();
 builder.Services.AddScoped<IAboutService, AboutService>();
+builder.Services.AddScoped<IContactService, ContactService>();
 
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 

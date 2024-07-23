@@ -5,6 +5,7 @@ using OllieShop.Catalog.Services.CategoryServices;
 
 namespace OllieShop.Catalog.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class CategoriesController : ControllerBase

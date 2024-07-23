@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using OllieShop.Catalog.Dtos.CarouselDtos;
 using OllieShop.Catalog.Services.CarouselServices;
 
 namespace OllieShop.Catalog.Controllers
 {
+    [AllowAnonymous]
     [Route("api/[controller]")]
     [ApiController]
     public class CarouselsController : ControllerBase

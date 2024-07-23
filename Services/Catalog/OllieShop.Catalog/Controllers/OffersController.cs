@@ -1,9 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using OllieShop.Catalog.Dtos.OfferDtos;
 using OllieShop.Catalog.Services.OfferServices;
 
 namespace OllieShop.Catalog.Controllers
 {
+    [AllowAnonymous]
+
     [Route("api/[controller]")]
     [ApiController]
     public class OffersController : ControllerBase

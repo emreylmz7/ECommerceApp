@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using OllieShop.Catalog.Dtos.VendorDtos;
 using OllieShop.Catalog.Services.VendorServices;
 
 namespace OllieShop.Catalog.Controllers
 {
+    [AllowAnonymous]
     [Route("api/[controller]")]
     [ApiController]
     public class VendorsController : ControllerBase

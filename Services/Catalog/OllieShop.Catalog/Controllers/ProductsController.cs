@@ -5,6 +5,8 @@ using OllieShop.Catalog.Services.ProductServices;
 
 namespace OllieShop.Catalog.Controllers
 {
+    [AllowAnonymous]
+
     [Route("api/[controller]")]
     [ApiController]
     public class ProductsController : ControllerBase

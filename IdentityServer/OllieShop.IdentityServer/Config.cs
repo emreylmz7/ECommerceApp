@@ -16,6 +16,10 @@ namespace OllieShop.IdentityServer
             new ApiResource("ResourceOrder") { Scopes = { "OrderFullPermission", "OrderReadPermission" } },
             new ApiResource("ResourceCargo") { Scopes = { "CargoFullPermission", "CargoReadPermission" } },
             new ApiResource("ResourceBasket") { Scopes = { "BasketFullPermission", "BasketReadPermission" } },
+            new ApiResource("ResourceComment") { Scopes = { "CommentFullPermission", "CommentReadPermission" } },
+            new ApiResource("ResourcePayment") { Scopes = { "PaymentFullPermission", "PaymentReadPermission" } },
+            new ApiResource("ResourceImages") { Scopes = { "ImagesFullPermission", "ImagesReadPermission" } },
+            new ApiResource("ResourceOcelot") { Scopes = { "OcelotFullPermission" } },
             new ApiResource(IdentityServerConstants.LocalApi.ScopeName)
         };
 
@@ -38,44 +42,79 @@ namespace OllieShop.IdentityServer
             new ApiScope("CargoReadPermission", "Reading authority for cargo operations"),
             new ApiScope("BasketFullPermission", "Full authority for basket operations"),
             new ApiScope("BasketReadPermission", "Reading authority for basket operations"),
+            new ApiScope("CommentFullPermission", "Full authority for comment operations"),
+            new ApiScope("CommentReadPermission", "Reading authority for comment operations"),
+            new ApiScope("PaymentFullPermission", "Full authority for payment operations"),
+            new ApiScope("PaymentReadPermission", "Reading authority for payment operations"),
+            new ApiScope("ImagesFullPermission", "Full authority for images operations"),
+            new ApiScope("ImagesReadPermission", "Reading authority for images operations"),
+            new ApiScope("OcelotFullPermission", "Full authority for Ocelot operations"),
             new ApiScope(IdentityServerConstants.LocalApi.ScopeName)
         };
 
         public static IEnumerable<Client> Clients => new Client[]
         {
-            //Visitor
+            // Visitor
             new Client
             {
-                ClientId="OllieShopId",
+                ClientId="OllieShopVisitorId",
                 ClientName="Ollie Shop Visitor User",
                 AllowedGrantTypes=GrantTypes.ClientCredentials,
                 ClientSecrets={new Secret("ollieshopsecret".Sha256())},
-                AllowedScopes={ "DiscountFullPermission" }
+                AllowedScopes={
+                    "CatalogReadPermission",
+                    "DiscountReadPermission",
+                    "OrderReadPermission",
+                    "CargoReadPermission",
+                    "BasketReadPermission",
+                    "CommentReadPermission",
+                    "PaymentReadPermission",
+                    "ImagesReadPermission",
+                    IdentityServerConstants.StandardScopes.OpenId,
+                    IdentityServerConstants.StandardScopes.Profile
+                }
             },
 
-            //Manager
+            // Manager
             new Client
             {
                 ClientId="OllieShopManagerId",
                 ClientName="Ollie Shop Manager User",
                 AllowedGrantTypes=GrantTypes.ResourceOwnerPassword,
                 ClientSecrets={new Secret("ollieshopsecret".Sha256())},
-                AllowedScopes={ "CatalogFullPermission", "CatalogReadPermission" }
+                AllowedScopes={
+                    "CatalogFullPermission",
+                    "DiscountFullPermission",
+                    "OrderReadPermission",
+                    "CargoReadPermission",
+                    "BasketReadPermission",
+                    "CommentReadPermission",
+                    "PaymentReadPermission",
+                    "ImagesReadPermission",
+                    "OcelotFullPermission",
+                    IdentityServerConstants.StandardScopes.Email,
+                    IdentityServerConstants.StandardScopes.OpenId,
+                    IdentityServerConstants.StandardScopes.Profile
+                }
             },
 
-            //Admin
+            // Admin
             new Client
             {
                 ClientId="OllieShopAdminId",
                 ClientName="Ollie Shop Admin User",
                 AllowedGrantTypes=GrantTypes.ResourceOwnerPassword,
                 ClientSecrets={new Secret("ollieshopsecret".Sha256())},
-                AllowedScopes={ 
+                AllowedScopes={
                     "CatalogFullPermission",
                     "DiscountFullPermission",
                     "OrderFullPermission",
                     "CargoFullPermission",
                     "BasketFullPermission",
+                    "CommentFullPermission",
+                    "PaymentFullPermission",
+                    "ImagesFullPermission",
+                    "OcelotFullPermission",
                     IdentityServerConstants.LocalApi.ScopeName,
                     IdentityServerConstants.StandardScopes.Email,
                     IdentityServerConstants.StandardScopes.OpenId,
@@ -84,5 +123,6 @@ namespace OllieShop.IdentityServer
                 AccessTokenLifetime=300
             }
         };
+
     }
 }

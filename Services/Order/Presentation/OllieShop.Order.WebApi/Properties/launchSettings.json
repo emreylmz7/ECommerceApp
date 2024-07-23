@@ -12,9 +12,9 @@
     "OllieShop.Order.WebApi": {
       "commandName": "Project",
       "dotnetRunMessages": true,
-      "launchBrowser": true,
+      "launchBrowser": false,
       "launchUrl": "swagger",
-      "applicationUrl": "https://localhost:7222",
+      "applicationUrl": "http://localhost:7222",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
