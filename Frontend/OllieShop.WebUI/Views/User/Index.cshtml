@@ -1,0 +1,58 @@
+﻿@model UserDetailViewModel
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>User Details</title>
+    <style>
+        table {
+            width: 50%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            font-size: 18px;
+            text-align: left;
+        }
+        th, td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h2>User Details</h2>
+    <table>
+        <tr>
+            <th>Property</th>
+            <th>Value</th>
+        </tr>
+        <tr>
+            <td>Id</td>
+            <td>@Model.Id</td>
+        </tr>
+        <tr>
+            <td>Username</td>
+            <td>@Model.Username</td>
+        </tr>
+        <tr>
+            <td>Email</td>
+            <td>@Model.Email</td>
+        </tr>
+        <tr>
+            <td>Name</td>
+            <td>@Model.Name</td>
+        </tr>
+        <tr>
+            <td>Surname</td>
+            <td>@Model.Surname</td>
+        </tr>
+    </table>
+</body>
+</html>

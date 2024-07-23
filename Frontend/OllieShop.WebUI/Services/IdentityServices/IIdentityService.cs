@@ -6,5 +6,6 @@ namespace OllieShop.WebUI.Services.IdentityServices
     public interface IIdentityService
     {
         Task<bool> SignIn(LoginDto loginDto);
+        Task<bool> GetRefreshToken();
     }
 }

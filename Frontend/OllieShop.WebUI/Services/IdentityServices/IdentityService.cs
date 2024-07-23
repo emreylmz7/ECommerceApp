@@ -14,19 +14,72 @@ namespace OllieShop.WebUI.Services.IdentityServices
         private readonly HttpClient _httpClient;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly ClientSettings _clientSettings;
+        private readonly ServiceApiSettings _serviceApiSettings;
 
-        public IdentityService(IHttpContextAccessor httpContextAccessor, IOptions<ClientSettings> clientSettings, HttpClient httpClient)
+        public IdentityService(IHttpContextAccessor httpContextAccessor, IOptions<ClientSettings> clientSettings, HttpClient httpClient, IOptions<ServiceApiSettings> serviceApiSettings)
         {
             _httpContextAccessor = httpContextAccessor;
             _clientSettings = clientSettings.Value;
             _httpClient = httpClient;
+            _serviceApiSettings = serviceApiSettings.Value;
+        }
+
+        public async Task<bool> GetRefreshToken()
+        {
+            var discoveryEndPoint = await _httpClient.GetDiscoveryDocumentAsync(new DiscoveryDocumentRequest
+            {
+                Address = _serviceApiSettings.IdentityServerUrl,
+                Policy = new DiscoveryPolicy
+                {
+                    RequireHttps = false,
+                }
+            });
+
+            var refreshToken = await _httpContextAccessor.HttpContext.GetTokenAsync(OpenIdConnectParameterNames.RefreshToken);
+
+            RefreshTokenRequest refreshTokenRequest = new() 
+            {
+                ClientId = _clientSettings.OllieShopAdminClient.ClientId,
+                ClientSecret = _clientSettings.OllieShopAdminClient.ClientSecret,
+                RefreshToken = refreshToken,
+                Address = discoveryEndPoint.TokenEndpoint
+            };
+
+            var token = await _httpClient.RequestRefreshTokenAsync(refreshTokenRequest);
+
+            var authenticationToken = new List<AuthenticationToken>()
+            {
+                new AuthenticationToken
+                {
+                    Name = OpenIdConnectParameterNames.AccessToken,
+                    Value = token.AccessToken
+                },
+                new AuthenticationToken
+                {
+                    Name = OpenIdConnectParameterNames.RefreshToken,
+                    Value = token.RefreshToken,
+                },
+                new AuthenticationToken
+                {
+                    Name = OpenIdConnectParameterNames.ExpiresIn,
+                    Value = DateTime.Now.AddSeconds(token.ExpiresIn).ToString(),
+                },
+            };
+
+            var result = await _httpContextAccessor.HttpContext.AuthenticateAsync();
+            var properties = result.Properties;
+            properties.StoreTokens(authenticationToken);
+
+            await _httpContextAccessor.HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,result.Principal,properties);
+
+            return true;
         }
 
         public async Task<bool> SignIn(LoginDto loginDto)
         {
             var discoveryEndPoint = await _httpClient.GetDiscoveryDocumentAsync(new DiscoveryDocumentRequest
             {
-                Address = "http://localhost:5001",
+                Address = _serviceApiSettings.IdentityServerUrl,
                 Policy = new DiscoveryPolicy
                 {
                     RequireHttps = false,
@@ -35,8 +88,8 @@ namespace OllieShop.WebUI.Services.IdentityServices
 
             var passwordTokenRequest = new PasswordTokenRequest
             {
-                ClientId = _clientSettings.OllieShopVisitorClient.ClientId,
-                ClientSecret = _clientSettings.OllieShopVisitorClient.ClientSecret,
+                ClientId = _clientSettings.OllieShopAdminClient.ClientId,
+                ClientSecret = _clientSettings.OllieShopAdminClient.ClientSecret,
                 UserName = loginDto.Username,
                 Password = loginDto.Password,
                 Address = discoveryEndPoint.TokenEndpoint

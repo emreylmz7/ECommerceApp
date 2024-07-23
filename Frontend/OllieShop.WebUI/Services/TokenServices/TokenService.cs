@@ -15,7 +15,7 @@ namespace OllieShop.WebUI.Services.TokenServices
                     Method = HttpMethod.Post,
                     Content = new FormUrlEncodedContent(new Dictionary<string, string>
                 {
-                    {"client_id","OllieShopVisitorId" },
+                    {"client_id","OllieShopAdminId" },
                     {"client_secret","ollieshopsecret" },
                     {"grant_type","client_credentials" }
                 })

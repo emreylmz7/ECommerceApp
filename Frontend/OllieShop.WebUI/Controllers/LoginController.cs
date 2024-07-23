@@ -33,48 +33,18 @@ namespace OllieShop.WebUI.Controllers
         [HttpPost]
         public async Task<IActionResult> Index(LoginDto loginDto)
         {
-            var responseMessage = await _apiService.PostAsync("http://localhost:5001/api/Login", loginDto);
-            if (responseMessage.IsSuccessStatusCode)
-            {
-                var jsonData = await responseMessage.Content.ReadAsStringAsync();
-                var tokenModel = JsonSerializer.Deserialize<JwtResponseModel>(jsonData, new JsonSerializerOptions
-                {
-                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-                });
-
-                if (tokenModel != null)
-                {
-                    JwtSecurityTokenHandler handler = new JwtSecurityTokenHandler();
-                    var token = handler.ReadJwtToken(tokenModel.Token);
-                    var claims = token.Claims.ToList();
-
-                    if (tokenModel.Token != null)
-                    {
-                        claims.Add(new Claim("OllieShopToken",tokenModel.Token));
-                        var claimIdentity = new ClaimsIdentity(claims, JwtBearerDefaults.AuthenticationScheme);
-                        var authProps = new AuthenticationProperties
-                        {
-                            ExpiresUtc = tokenModel.ExpireDate,
-                            IsPersistent = true
-                        };
-                        await HttpContext.SignInAsync(JwtBearerDefaults.AuthenticationScheme, new ClaimsPrincipal(claimIdentity),authProps);
-                        var userId = _loginService.GetUserId;
-
-                        return RedirectToAction("Index", "Default");
-                    }
-                }
-            }
             return View();
         }
 
         [HttpGet]
         public async Task<IActionResult> SignIn(LoginDto loginDto)
         {
+            
             loginDto.Username = "emreylmz";
             loginDto.Password = "123456aA*";
             await _identityService.SignIn(loginDto);
           
-            return RedirectToAction("Index","Default");
+            return RedirectToAction("Index","User");
         }
     }
 }

@@ -36,8 +36,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Requirements", "Requirements", "{1069A14D-44A9-4FDE-BF35-01AF618A0144}"
 	ProjectSection(SolutionItems) = preProject
 		IdentityServerVersionErrorSolution.txt = IdentityServerVersionErrorSolution.txt
-		PortainerCMD.txt = PortainerCMD.txt
+		LoginIndex.txt = LoginIndex.txt
 		OcelotCodeExample.txt = OcelotCodeExample.txt
+		PortainerCMD.txt = PortainerCMD.txt
 		PortNumbers.txt = PortNumbers.txt
 	EndProjectSection
 EndProject
@@ -73,11 +74,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OllieShop.OcelotGateway", "
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Payment", "Payment", "{2BB0C633-05EB-485D-AB75-74D609C7E8B5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OllieShop.Payment", "Services\Payment\OllieShop.Payment\OllieShop.Payment.csproj", "{398BD2A4-0190-44F8-A16F-C3B4D1B18DD5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OllieShop.Payment", "Services\Payment\OllieShop.Payment\OllieShop.Payment.csproj", "{398BD2A4-0190-44F8-A16F-C3B4D1B18DD5}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Images", "Images", "{B8444272-850E-4812-8C5D-62042246656E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OlliShop.Images", "Services\Images\OlliShop.Images\OlliShop.Images.csproj", "{F70B83C7-4252-4C82-A989-CA80A4AF7BEA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OlliShop.Images", "Services\Images\OlliShop.Images\OlliShop.Images.csproj", "{F70B83C7-4252-4C82-A989-CA80A4AF7BEA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
