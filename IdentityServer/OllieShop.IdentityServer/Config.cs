@@ -62,7 +62,7 @@ namespace OllieShop.IdentityServer
                 AllowedGrantTypes=GrantTypes.ClientCredentials,
                 ClientSecrets={new Secret("ollieshopsecret".Sha256())},
                 AllowedScopes={
-                    "CatalogReadPermission",
+                    "CatalogFullPermission",
                     "DiscountReadPermission",
                     "OrderReadPermission",
                     "CargoReadPermission",
@@ -70,6 +70,7 @@ namespace OllieShop.IdentityServer
                     "CommentReadPermission",
                     "PaymentReadPermission",
                     "ImagesReadPermission",
+                    "OcelotFullPermission",
                     IdentityServerConstants.StandardScopes.OpenId,
                     IdentityServerConstants.StandardScopes.Profile
                 }

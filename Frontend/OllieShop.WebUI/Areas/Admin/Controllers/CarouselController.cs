@@ -1,27 +1,25 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using OllieShop.DtoLayer.CatalogDtos.Carousel;
-using OllieShop.WebUI.Services.ApiServices;
+using OllieShop.WebUI.Services.CatalogServices.CarouselServices;
 
 namespace OllieShop.WebUI.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [AllowAnonymous]
     [Route("Admin/Carousel")]
     public class CarouselController : Controller
     {
-        private readonly IApiService _apiService;
+        private readonly ICarouselService _carouselService;
 
-        public CarouselController(IApiService apiService)
+        public CarouselController(ICarouselService carouselService)
         {
-            _apiService = apiService;
+            _carouselService = carouselService;
         }
 
-        [Route("Index")]    
+        [Route("Index")]
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var carousels = await _apiService.GetAsync<List<ResultCarouselDto>>("https://localhost:7220/api/Carousels");
+            var carousels = await _carouselService.GetAllCarouselAsync();
             return View(carousels);
         }
 
@@ -36,7 +34,7 @@ namespace OllieShop.WebUI.Areas.Admin.Controllers
         [Route("CreateCarousel")]
         public async Task<IActionResult> CreateCarousel(CreateCarouselDto createCarouselDto)
         {
-            var responseMessage = await _apiService.PostAsync("https://localhost:7220/api/Carousels", createCarouselDto);
+            var responseMessage = await _carouselService.CreateCarouselAsync(createCarouselDto);
             if (responseMessage.IsSuccessStatusCode)
             {
                 return RedirectToAction("Index", "Carousel", new { area = "Admin" });
@@ -48,7 +46,7 @@ namespace OllieShop.WebUI.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> DeleteCarousel(string id)
         {
-            var responseMessage = await _apiService.DeleteAsync($"https://localhost:7220/api/Carousels?id={id}");
+            var responseMessage = await _carouselService.DeleteCarouselAsync(id);
             if (responseMessage.IsSuccessStatusCode)
             {
                 return RedirectToAction("Index", "Carousel", new { area = "Admin" });
@@ -60,15 +58,23 @@ namespace OllieShop.WebUI.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> UpdateCarousel(string id)
         {
-            var carousel = await _apiService.GetAsync<UpdateCarouselDto>($"https://localhost:7220/api/Carousels/{id}");
-            return View(carousel);
+            var carousel = await _carouselService.GetByIdCarouselAsync(id);
+            var updateCarouselDto = new UpdateCarouselDto
+            {
+                CarouselId = carousel.CarouselId,
+                ImageUrl = carousel.ImageUrl,
+                Status = carousel.Status,
+                Title = carousel.Title,
+                Description = carousel.Description, 
+            };
+            return View(updateCarouselDto);
         }
 
         [HttpPost]
         [Route("UpdateCarousel/{id}")]
         public async Task<IActionResult> UpdateCarousel(UpdateCarouselDto updateCarouselDto)
         {
-            var responseMessage = await _apiService.PutAsync("https://localhost:7220/api/Carousels", updateCarouselDto);
+            var responseMessage = await _carouselService.UpdateCarouselAsync(updateCarouselDto);
             if (responseMessage.IsSuccessStatusCode)
             {
                 return RedirectToAction("Index", "Carousel", new { area = "Admin" });

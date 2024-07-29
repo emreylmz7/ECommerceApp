@@ -1,27 +1,25 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using OllieShop.DtoLayer.CatalogDtos.About;
-using OllieShop.WebUI.Services.ApiServices;
+using OllieShop.WebUI.Services.CatalogServices.AboutServices;
 
 namespace OllieShop.WebUI.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [AllowAnonymous]
     [Route("Admin/About")]
     public class AboutController : Controller
     {
-        private readonly IApiService _apiService;
+        private readonly IAboutService _aboutService;
 
-        public AboutController(IApiService apiService)
+        public AboutController(IAboutService aboutService)
         {
-            _apiService = apiService;
+            _aboutService = aboutService;
         }
 
         [Route("Index")]
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var abouts = await _apiService.GetAsync<List<ResultAboutDto>>("https://localhost:7220/api/Abouts");
+            var abouts = await _aboutService.GetAllAboutAsync();
             return View(abouts);
         }
 
@@ -36,7 +34,7 @@ namespace OllieShop.WebUI.Areas.Admin.Controllers
         [Route("CreateAbout")]
         public async Task<IActionResult> CreateAbout(CreateAboutDto createAboutDto)
         {
-            var responseMessage = await _apiService.PostAsync("https://localhost:7220/api/Abouts", createAboutDto);
+            var responseMessage = await _aboutService.CreateAboutAsync(createAboutDto);
             if (responseMessage.IsSuccessStatusCode)
             {
                 return RedirectToAction("Index", "About", new { area = "Admin" });
@@ -48,7 +46,7 @@ namespace OllieShop.WebUI.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> DeleteAbout(string id)
         {
-            var responseMessage = await _apiService.DeleteAsync($"https://localhost:7220/api/Abouts?id={id}");
+            var responseMessage = await _aboutService.DeleteAboutAsync(id);
             if (responseMessage.IsSuccessStatusCode)
             {
                 return RedirectToAction("Index", "About", new { area = "Admin" });
@@ -60,15 +58,24 @@ namespace OllieShop.WebUI.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> UpdateAbout(string id)
         {
-            var about = await _apiService.GetAsync<UpdateAboutDto>($"https://localhost:7220/api/Abouts/{id}");
-            return View(about);
+            var about = await _aboutService.GetByIdAboutAsync(id);
+            var about2 = new UpdateAboutDto
+            {
+                AboutId = about.AboutId,
+                Address = about.Address,
+                Description = about.Description,    
+                Email = about.Email,    
+                Phone = about.Phone,
+                Title = about.Title,
+            };
+            return View(about2);
         }
 
         [HttpPost]
         [Route("UpdateAbout/{id}")]
         public async Task<IActionResult> UpdateAbout(UpdateAboutDto updateAboutDto)
         {
-            var responseMessage = await _apiService.PutAsync("https://localhost:7220/api/Abouts", updateAboutDto);
+            var responseMessage = await _aboutService.UpdateAboutAsync(updateAboutDto);
             if (responseMessage.IsSuccessStatusCode)
             {
                 return RedirectToAction("Index", "About", new { area = "Admin" });

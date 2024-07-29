@@ -1,23 +1,19 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using OllieShop.DtoLayer.CatalogDtos.Category;
-using OllieShop.WebUI.Services.ApiServices;
-using OllieShop.WebUI.Services.TokenServices;
+using OllieShop.WebUI.Services.CatalogServices.CategoryServices;
 
 namespace OllieShop.WebUI.ViewComponents.DefaultViewComponents
 {
     public class _CategoriesDefaultComponentPartial:ViewComponent
     {
-        private readonly IApiService _apiService;
-        private readonly ITokenService _tokenService;
-        public _CategoriesDefaultComponentPartial(IApiService apiService,ITokenService tokenService)
+        private readonly ICategoryService _categoryService;
+        public _CategoriesDefaultComponentPartial(ICategoryService categoryService)
         {
-            _apiService = apiService;
-            _tokenService = tokenService;
+            _categoryService = categoryService;
         }
+
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            var token = await _tokenService.GetTokenAsync();
-            var categories = await _apiService.GetWithTokenAsync<List<ResultCategoryDto>>("https://localhost:7220/api/Categories", token);
+            var categories = await _categoryService.GetAllCategoryAsync();
             return View(categories);
         }
     }

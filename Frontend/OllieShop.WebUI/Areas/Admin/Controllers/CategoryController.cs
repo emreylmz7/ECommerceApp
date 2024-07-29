@@ -2,26 +2,26 @@
 using Microsoft.AspNetCore.Mvc;
 using OllieShop.DtoLayer.CatalogDtos.Category;
 using OllieShop.WebUI.Services.ApiServices;
+using OllieShop.WebUI.Services.CatalogServices.CategoryServices;
 
 namespace OllieShop.WebUI.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [AllowAnonymous]
     [Route("Admin/Category")]
     public class CategoryController : Controller
     {
-        private readonly IApiService _apiService;
+        private readonly ICategoryService _categoryService;
 
-        public CategoryController(IApiService apiService)
+        public CategoryController(ICategoryService categoryService)
         {
-            _apiService = apiService;
+            _categoryService = categoryService;
         }
 
         [Route("Index")]
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var categories = await _apiService.GetAsync<List<ResultCategoryDto>>("https://localhost:7220/api/Categories");
+            var categories = await _categoryService.GetAllCategoryAsync();
             return View(categories);
         }
 
@@ -36,7 +36,7 @@ namespace OllieShop.WebUI.Areas.Admin.Controllers
         [Route("CreateCategory")]
         public async Task<IActionResult> CreateCategory(CreateCategoryDto createCategoryDto)
         {
-            var responseMessage = await _apiService.PostAsync("https://localhost:7220/api/Categories", createCategoryDto);
+            var responseMessage = await _categoryService.CreateCategoryAsync(createCategoryDto);
             if (responseMessage.IsSuccessStatusCode)
             {
                 return RedirectToAction("Index", "Category", new { area = "Admin" });
@@ -48,7 +48,7 @@ namespace OllieShop.WebUI.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> DeleteCategory(string id)
         {
-            var responseMessage = await _apiService.DeleteAsync($"https://localhost:7220/api/Categories?id={id}");
+            var responseMessage = await _categoryService.DeleteCategoryAsync(id);
             if (responseMessage.IsSuccessStatusCode)
             {
                 return RedirectToAction("Index", "Category", new { area = "Admin" });
@@ -60,15 +60,21 @@ namespace OllieShop.WebUI.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> UpdateCategory(string id)
         {
-            var category = await _apiService.GetAsync<UpdateCategoryDto>($"https://localhost:7220/api/Categories/{id}");
-            return View(category);
+            var category = await _categoryService.GetByIdCategoryAsync(id);
+            var category2 = new UpdateCategoryDto
+            {
+                CategoryId = category.CategoryId,
+                ImageUrl = category.ImageUrl,
+                Name = category.Name,
+            };
+            return View(category2);
         }
 
         [HttpPost]
         [Route("UpdateCategory/{id}")]
         public async Task<IActionResult> UpdateCategory(UpdateCategoryDto updateCategoryDto)
         {
-            var responseMessage = await _apiService.PutAsync("https://localhost:7220/api/Categories", updateCategoryDto);
+            var responseMessage = await _categoryService.UpdateCategoryAsync(updateCategoryDto);
             if (responseMessage.IsSuccessStatusCode)
             {
                 return RedirectToAction("Index", "Category", new { area = "Admin" });

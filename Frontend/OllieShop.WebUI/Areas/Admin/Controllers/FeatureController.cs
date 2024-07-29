@@ -1,27 +1,25 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using OllieShop.DtoLayer.CatalogDtos.Feature;
-using OllieShop.WebUI.Services.ApiServices;
+using OllieShop.WebUI.Services.CatalogServices.FeatureServices;
 
 namespace OllieShop.WebUI.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [AllowAnonymous]
     [Route("Admin/Feature")]
     public class FeatureController : Controller
     {
-        private readonly IApiService _apiService;
+        private readonly IFeatureService _featureService;
 
-        public FeatureController(IApiService apiService)
+        public FeatureController(IFeatureService featureService)
         {
-            _apiService = apiService;
+            _featureService = featureService;
         }
 
         [Route("Index")]
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var features = await _apiService.GetAsync<List<ResultFeatureDto>>("https://localhost:7220/api/Features");
+            var features = await _featureService.GetAllFeatureAsync();
             return View(features);
         }
 
@@ -36,7 +34,7 @@ namespace OllieShop.WebUI.Areas.Admin.Controllers
         [Route("CreateFeature")]
         public async Task<IActionResult> CreateFeature(CreateFeatureDto createFeatureDto)
         {
-            var responseMessage = await _apiService.PostAsync("https://localhost:7220/api/Features", createFeatureDto);
+            var responseMessage = await _featureService.CreateFeatureAsync(createFeatureDto);
             if (responseMessage.IsSuccessStatusCode)
             {
                 return RedirectToAction("Index", "Feature", new { area = "Admin" });
@@ -48,7 +46,7 @@ namespace OllieShop.WebUI.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> DeleteFeature(string id)
         {
-            var responseMessage = await _apiService.DeleteAsync($"https://localhost:7220/api/Features?id={id}");
+            var responseMessage = await _featureService.DeleteFeatureAsync(id);
             if (responseMessage.IsSuccessStatusCode)
             {
                 return RedirectToAction("Index", "Feature", new { area = "Admin" });
@@ -60,15 +58,21 @@ namespace OllieShop.WebUI.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> UpdateFeature(string id)
         {
-            var feature = await _apiService.GetAsync<UpdateFeatureDto>($"https://localhost:7220/api/Features/{id}");
-            return View(feature);
+            var feature = await _featureService.GetByIdFeatureAsync(id);
+            var updateFeatureDto = new UpdateFeatureDto
+            {
+                FeatureId = feature.FeatureId,
+                Icon = feature.Icon,
+                Title = feature.Title,
+            };
+            return View(updateFeatureDto);
         }
 
         [HttpPost]
         [Route("UpdateFeature/{id}")]
         public async Task<IActionResult> UpdateFeature(UpdateFeatureDto updateFeatureDto)
         {
-            var responseMessage = await _apiService.PutAsync("https://localhost:7220/api/Features", updateFeatureDto);
+            var responseMessage = await _featureService.UpdateFeatureAsync(updateFeatureDto);
             if (responseMessage.IsSuccessStatusCode)
             {
                 return RedirectToAction("Index", "Feature", new { area = "Admin" });

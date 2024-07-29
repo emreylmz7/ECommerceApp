@@ -15,11 +15,9 @@ namespace OllieShop.WebUI.Controllers
     public class LoginController : Controller
     {
         private readonly IApiService _apiService;
-        private readonly ILoginService _loginService;
         private readonly IIdentityService _identityService; 
-        public LoginController(IApiService apiService, ILoginService loginService, IIdentityService identityService )
+        public LoginController(IApiService apiService, IIdentityService identityService )
         {
-            _loginService = loginService;
             _apiService = apiService;
             _identityService = identityService;
         }
@@ -33,18 +31,8 @@ namespace OllieShop.WebUI.Controllers
         [HttpPost]
         public async Task<IActionResult> Index(LoginDto loginDto)
         {
-            return View();
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> SignIn(LoginDto loginDto)
-        {
-            
-            loginDto.Username = "emreylmz";
-            loginDto.Password = "123456aA*";
             await _identityService.SignIn(loginDto);
-          
-            return RedirectToAction("Index","User");
+            return RedirectToAction("Index", "User");
         }
     }
 }

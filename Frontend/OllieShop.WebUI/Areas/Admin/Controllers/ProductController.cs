@@ -1,11 +1,13 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using OllieShop.DtoLayer.CatalogDtos.Category;
 using OllieShop.DtoLayer.CatalogDtos.Product;
 using OllieShop.DtoLayer.CatalogDtos.ProductDetail;
 using OllieShop.DtoLayer.CatalogDtos.ProductImage;
-using OllieShop.WebUI.Services.ApiServices;
+using OllieShop.WebUI.Services.CatalogServices.CategoryServices;
+using OllieShop.WebUI.Services.CatalogServices.ProductDetailServices;
+using OllieShop.WebUI.Services.CatalogServices.ProductImageServices;
+using OllieShop.WebUI.Services.CatalogServices.ProductServices;
 
 namespace OllieShop.WebUI.Areas.Admin.Controllers
 {
@@ -14,18 +16,24 @@ namespace OllieShop.WebUI.Areas.Admin.Controllers
     [Route("Admin/Product")]
     public class ProductController : Controller
     {
-        private readonly IApiService _apiService;
+        private readonly IProductService _productService;
+        private readonly IProductDetailService _productDetailService;
+        private readonly IProductImageService _productImageService;
+        private readonly ICategoryService _categoryService;
 
-        public ProductController(IApiService apiService)
+        public ProductController(IProductService productService, IProductDetailService productDetailService, IProductImageService productImageService, ICategoryService categoryService)
         {
-            _apiService = apiService;
+            _productService = productService;
+            _productDetailService = productDetailService;
+            _productImageService = productImageService;
+            _categoryService = categoryService;
         }
 
         [Route("Index")]
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var products = await _apiService.GetAsync<List<ResultProductsWithCategoryDto>>("https://localhost:7220/api/Products/ProductListWithCategory");
+            var products = await _productService.GetAllProductsWithCategoryAsync();
             return View(products);
         }
 
@@ -33,12 +41,12 @@ namespace OllieShop.WebUI.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> CreateProduct()
         {
-            var categories = await _apiService.GetAsync<List<ResultCategoryDto>>("https://localhost:7220/api/Categories");
+            var categories = await _categoryService.GetAllCategoryAsync();
             List<SelectListItem> categoryValues = (from category in categories
                                                    select new SelectListItem
                                                    {
-                                                       Text=category.Name,
-                                                       Value=category.CategoryId
+                                                       Text = category.Name,
+                                                       Value = category.CategoryId
                                                    }).ToList();
             ViewBag.Categories = categoryValues;
             return View();
@@ -48,7 +56,7 @@ namespace OllieShop.WebUI.Areas.Admin.Controllers
         [Route("CreateProduct")]
         public async Task<IActionResult> CreateProduct(CreateProductDto createProductDto)
         {
-            var responseMessage = await _apiService.PostAsync("https://localhost:7220/api/Products", createProductDto);
+            var responseMessage = await _productService.CreateProductAsync(createProductDto);
             if (responseMessage.IsSuccessStatusCode)
             {
                 return RedirectToAction("Index", "Product", new { area = "Admin" });
@@ -60,7 +68,7 @@ namespace OllieShop.WebUI.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> DeleteProduct(string id)
         {
-            var responseMessage = await _apiService.DeleteAsync($"https://localhost:7220/api/Products?id={id}");
+            var responseMessage = await _productService.DeleteProductAsync(id);
             if (responseMessage.IsSuccessStatusCode)
             {
                 return RedirectToAction("Index", "Product", new { area = "Admin" });
@@ -72,9 +80,18 @@ namespace OllieShop.WebUI.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> UpdateProduct(string id)
         {
-            var product = await _apiService.GetAsync<UpdateProductDto>($"https://localhost:7220/api/Products/{id}");
+            var product = await _productService.GetByIdProductAsync(id);
+            var product2 = new UpdateProductDto
+            {
+                CategoryId = product.CategoryId,
+                Description = product.Description,
+                ImageUrl = product.ImageUrl,
+                Name = product.Name,
+                Price = product.Price,
+                ProductId = product.ProductId,
+            };
 
-            var categories = await _apiService.GetAsync<List<ResultCategoryDto>>("https://localhost:7220/api/Categories");
+            var categories = await _categoryService.GetAllCategoryAsync();
             List<SelectListItem> categoryValues = (from category in categories
                                                    select new SelectListItem
                                                    {
@@ -82,14 +99,14 @@ namespace OllieShop.WebUI.Areas.Admin.Controllers
                                                        Value = category.CategoryId
                                                    }).ToList();
             ViewBag.Categories = categoryValues;
-            return View(product);
+            return View(product2);
         }
 
         [HttpPost]
         [Route("UpdateProduct/{id}")]
         public async Task<IActionResult> UpdateProduct(UpdateProductDto updateProductDto)
         {
-            var responseMessage = await _apiService.PutAsync("https://localhost:7220/api/Products", updateProductDto);
+            var responseMessage = await _productService.UpdateProductAsync(updateProductDto);
             if (responseMessage.IsSuccessStatusCode)
             {
                 return RedirectToAction("Index", "Product", new { area = "Admin" });
@@ -102,8 +119,8 @@ namespace OllieShop.WebUI.Areas.Admin.Controllers
         public async Task<IActionResult> UpdateProductImage(string id)
         {
             ViewBag.ProductId = id;
-            var productImages = await _apiService.GetAsync<UpdateProductImageDto>($"https://localhost:7220/api/ProductImages/GetImagesByProductId?id={id}");
-            if(productImages == null)
+            var productImages = await _productImageService.GetProductImagesByProductId(id);
+            if (productImages == null)
             {
                 return Redirect($"/Admin/Product/AddProductImage/{id}");
             }
@@ -114,7 +131,8 @@ namespace OllieShop.WebUI.Areas.Admin.Controllers
         [Route("UpdateProductImage/{id}")]
         public async Task<IActionResult> UpdateProductImage(UpdateProductImageDto updateProductImageDto)
         {
-            var responseMessage = await _apiService.PutAsync("https://localhost:7220/api/ProductImages", updateProductImageDto);
+            //var responseMessage = await _apiService.PutAsync("https://localhost:7220/api/ProductImages", updateProductImageDto);
+            var responseMessage = await _productImageService.UpdateProductImageAsync(updateProductImageDto);
             if (responseMessage.IsSuccessStatusCode)
             {
                 return RedirectToAction("Index", "Product", new { area = "Admin" });
@@ -122,19 +140,12 @@ namespace OllieShop.WebUI.Areas.Admin.Controllers
             return View();
         }
 
-
-
-
-
-
-
-
         [Route("UpdateProductDetail/{id}")]
         [HttpGet]
         public async Task<IActionResult> UpdateProductDetail(string id)
         {
             ViewBag.ProductId = id;
-            var productDetails = await _apiService.GetAsync<UpdateProductDetailDto>($"https://localhost:7220/api/ProductDetails/GetProductDetailsByProductId?id={id}");
+            var productDetails = await _productDetailService.GetProductDetailsByProductId(id);
             if (productDetails == null)
             {
                 return Redirect($"/Admin/Product/Index");
@@ -146,7 +157,7 @@ namespace OllieShop.WebUI.Areas.Admin.Controllers
         [Route("UpdateProductDetail/{id}")]
         public async Task<IActionResult> UpdateProductDetail(UpdateProductDetailDto updateProductDetailDto)
         {
-            var responseMessage = await _apiService.PutAsync("https://localhost:7220/api/ProductDetails", updateProductDetailDto);
+            var responseMessage = await _productDetailService.UpdateProductDetailAsync(updateProductDetailDto);
             if (responseMessage.IsSuccessStatusCode)
             {
                 return RedirectToAction("Index", "Product", new { area = "Admin" });
