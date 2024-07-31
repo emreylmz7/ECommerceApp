@@ -1,53 +1,98 @@
-﻿
+﻿@model List<ResultCommentDto>
+
+@{
+    var isLoggedIn = ViewData["IsLoggedIn"] as bool? ?? false;
+    var userInfo = ViewData["UserInfo"] as UserDetailViewModel;
+}
+
+
 <div class="tab-pane fade" id="tab-pane-3">
     <div class="row">
-        <div class="col-md-6">
-            <h4 class="mb-4">1 review for "Product Name"</h4>
-            <div class="media mb-4">
-                <img src="img/user.jpg" alt="Image" class="img-fluid mr-3 mt-1" style="width: 45px;">
-                <div class="media-body">
-                    <h6>John Doe<small> - <i>01 Jan 2045</i></small></h6>
-                    <div class="text-primary mb-2">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star-half-alt"></i>
-                        <i class="far fa-star"></i>
+
+        <div class="@((ViewData["IsLoggedIn"] != null && (bool)ViewData["IsLoggedIn"]!) ? "col-md-6" : "col-md-12")">
+            @if (Model.Any())
+            {
+                @foreach (var item in Model)
+                {
+                    <div class="media mb-4">
+                        <img src="~/img/user1.jpg" class="img-fluid mr-3 mt-1" style="width: 45px;">
+                        <div class="media-body">
+                            <h6>@item.Name <small> - <i>@item.CreatedAt.ToString("MMMM-dd-yyyy")</i></small></h6>
+                            <div class="text-primary mb-2">
+                                @for (int i = 0; i < item.Rate; i++)
+                                {
+                                    <i class="fas fa-star"></i>
+                                }
+                            </div>
+                            <p>@item.Content</p>
+                        </div>
                     </div>
-                    <p>Diam amet duo labore stet elitr ea clita ipsum, tempor labore accusam ipsum et no at. Kasd diam tempor rebum magna dolores sed sed eirmod ipsum.</p>
+                }
+            }
+            else
+            {
+                <div class="alert alert-primary" role="alert">
+                    Be the first to review this product!
                 </div>
-            </div>
+            }
         </div>
-        <div class="col-md-6">
-            <h4 class="mb-4">Leave a review</h4>
-            <small>Your email address will not be published. Required fields are marked *</small>
-            <div class="d-flex my-3">
-                <p class="mb-0 mr-2">Your Rating * :</p>
-                <div class="text-primary">
-                    <i class="far fa-star"></i>
-                    <i class="far fa-star"></i>
-                    <i class="far fa-star"></i>
-                    <i class="far fa-star"></i>
-                    <i class="far fa-star"></i>
+
+        @if (isLoggedIn)
+        {
+            <div class="col-md-6">
+                <h4 class="mb-4">Leave a Comment</h4>
+                <div class="d-flex align-items-center my-3">
+                    <p class="mb-0 mr-2">Rate:</p>
+                    <div class="rating-stars">
+                        @for (int i = 1; i <= 5; i++)
+                        {
+                            <i class="far fa-star" data-value="@i"></i>
+                        }
+                    </div>
                 </div>
+                <form method="post" asp-controller="ProductList" asp-action="AddComment" class="comment-form">
+                    <input type="hidden" id="Rate" name="Rate" value="0">
+                    <input type="hidden" id="UserId" name="UserId" value="@userInfo!.Id">
+                    <input type="hidden" id="Name" name="Name" value="@userInfo!.Name">
+                    <input type="hidden" id="Surname" name="Surname" value="@userInfo!.Surname">
+                    <input type="hidden" id="Username" name="Username" value="@userInfo!.Username">
+                    <input type="hidden" id="Email" name="Email" value="@userInfo!.Email">
+                    <input type="hidden" id="ProductId" name="ProductId" value="@ViewBag.ProductId">
+                    <input type="hidden" id="UserImageUrl" name="UserImageUrl" value="~/img/user.png">
+
+                    <div class="form-group">
+                        <label for="Content">Comment</label>
+                        <textarea class="form-control" id="Content" name="Content" rows="5" placeholder="Write your comment here..."></textarea>
+                    </div>
+
+                    <button type="submit" class="btn btn-outline-dark py-2 px-4 mt-3 animate__animated animate__fadeInUp rounded">Leave Comment</button>
+                </form>
             </div>
-            <form>
-                <div class="form-group">
-                    <label for="message">Your Review *</label>
-                    <textarea id="message" cols="30" rows="5" class="form-control"></textarea>
-                </div>
-                <div class="form-group">
-                    <label for="name">Your Name *</label>
-                    <input type="text" class="form-control" id="name">
-                </div>
-                <div class="form-group">
-                    <label for="email">Your Email *</label>
-                    <input type="email" class="form-control" id="email">
-                </div>
-                <div class="form-group mb-0">
-                    <input type="submit" value="Leave Your Review" class="btn btn-primary px-3">
-                </div>
-            </form>
-        </div>
+        }
     </div>
 </div>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const stars = document.querySelectorAll('.rating-stars .fa-star');
+        const rateInput = document.getElementById('Rate');
+
+        stars.forEach(star => {
+            star.addEventListener('click', function () {
+                const ratingValue = this.getAttribute('data-value');
+                rateInput.value = ratingValue;
+
+                stars.forEach(s => {
+                    if (s.getAttribute('data-value') <= ratingValue) {
+                        s.classList.remove('far');
+                        s.classList.add('fas');
+                    } else {
+                        s.classList.remove('fas');
+                        s.classList.add('far');
+                    }
+                });
+            });
+        });
+    });
+</script>

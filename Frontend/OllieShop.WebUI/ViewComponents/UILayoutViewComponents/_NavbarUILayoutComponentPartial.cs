@@ -1,8 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using OllieShop.DtoLayer.CatalogDtos.Category;
-using OllieShop.WebUI.Services.ApiServices;
 using OllieShop.WebUI.Services.CatalogServices.CategoryServices;
-using OllieShop.WebUI.Services.TokenServices;
 
 namespace OllieShop.WebUI.ViewComponents.UILayoutViewComponents
 {

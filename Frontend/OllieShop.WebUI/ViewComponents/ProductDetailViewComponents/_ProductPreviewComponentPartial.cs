@@ -1,19 +1,19 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using OllieShop.DtoLayer.CatalogDtos.Product;
-using OllieShop.WebUI.Services.ApiServices;
+using OllieShop.WebUI.Services.CatalogServices.ProductServices;
 
 namespace OllieShop.WebUI.ViewComponents.ProductDetailViewComponents
 {
     public class _ProductPreviewComponentPartial: ViewComponent
     {
-        private readonly IApiService _apiService;
-        public _ProductPreviewComponentPartial(IApiService apiService)
+        private readonly IProductService _productService;
+        public _ProductPreviewComponentPartial(IProductService productService)
         {
-            _apiService = apiService;
+            _productService = productService;
         }
+
         public async Task<IViewComponentResult> InvokeAsync(string id)
         {
-            var product = await _apiService.GetAsync<ResultProductDto>($"https://localhost:7220/api/Products/{id}");
+            var product = await _productService.GetByIdProductAsync(id);
             return View(product);
         }
     }

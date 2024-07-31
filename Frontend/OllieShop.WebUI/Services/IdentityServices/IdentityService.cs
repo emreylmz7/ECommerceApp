@@ -37,7 +37,13 @@ namespace OllieShop.WebUI.Services.IdentityServices
 
             var refreshToken = await _httpContextAccessor.HttpContext.GetTokenAsync(OpenIdConnectParameterNames.RefreshToken);
 
-            RefreshTokenRequest refreshTokenRequest = new() 
+            if (string.IsNullOrEmpty(refreshToken))
+            {
+                // Refresh token yoksa uygun bir işlem yapın, örneğin hata döndürün veya false döndürün.
+                return false;
+            }
+
+            RefreshTokenRequest refreshTokenRequest = new()
             {
                 ClientId = _clientSettings.OllieShopAdminClient.ClientId,
                 ClientSecret = _clientSettings.OllieShopAdminClient.ClientSecret,
@@ -46,6 +52,12 @@ namespace OllieShop.WebUI.Services.IdentityServices
             };
 
             var token = await _httpClient.RequestRefreshTokenAsync(refreshTokenRequest);
+
+            if (token.IsError)
+            {
+                // Hata durumunu kontrol edin ve uygun bir işlem yapın
+                return false;
+            }
 
             var authenticationToken = new List<AuthenticationToken>()
             {
@@ -70,7 +82,7 @@ namespace OllieShop.WebUI.Services.IdentityServices
             var properties = result.Properties;
             properties.StoreTokens(authenticationToken);
 
-            await _httpContextAccessor.HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,result.Principal,properties);
+            await _httpContextAccessor.HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, result.Principal, properties);
 
             return true;
         }
@@ -97,15 +109,21 @@ namespace OllieShop.WebUI.Services.IdentityServices
 
             var token = await _httpClient.RequestPasswordTokenAsync(passwordTokenRequest);
 
+            if (token.IsError)
+            {
+                // Hata durumunu kontrol edin ve uygun bir işlem yapın
+                return false;
+            }
+
             var userInfoRequest = new UserInfoRequest
             {
                 Token = token.AccessToken,
                 Address = discoveryEndPoint.UserInfoEndpoint
             };
 
-            var userValues =await _httpClient.GetUserInfoAsync(userInfoRequest);
+            var userValues = await _httpClient.GetUserInfoAsync(userInfoRequest);
 
-            ClaimsIdentity claimsIdentity = new ClaimsIdentity(userValues.Claims,CookieAuthenticationDefaults.AuthenticationScheme,"name","role");
+            ClaimsIdentity claimsIdentity = new ClaimsIdentity(userValues.Claims, CookieAuthenticationDefaults.AuthenticationScheme, "name", "role");
 
             ClaimsPrincipal claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
 
@@ -133,7 +151,7 @@ namespace OllieShop.WebUI.Services.IdentityServices
 
             authenticationProperties.IsPersistent = false; //BENİ HATIRLA DEĞERİ
 
-            await _httpContextAccessor.HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,claimsPrincipal, authenticationProperties);
+            await _httpContextAccessor.HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, claimsPrincipal, authenticationProperties);
 
             return true;
         }

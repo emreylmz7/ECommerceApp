@@ -1,17 +1,36 @@
-﻿@model ResultProductDto
+﻿@model GetByIdProductDto
+
+@functions {
+    public string GenerateStars(double rating)
+    {
+        string stars = "";
+        for (int i = 1; i <= 5; i++)
+        {
+            if (rating >= i)
+            {
+                stars += "<small class='fas fa-star'></small>";
+            }
+            else if (rating >= i - 0.5)
+            {
+                stars += "<small class='fas fa-star-half-alt'></small>";
+            }
+            else
+            {
+                stars += "<small class='far fa-star'></small>";
+            }
+        }
+        return stars;
+    }
+}
 
 <div class="col-lg-7 h-auto mb-30 ">
     <div class="h-100 bg-light p-30 rounded">
         <h3>@Model.Name</h3>
         <div class="d-flex mb-3">
             <div class="text-primary mr-2">
-                <small class="fas fa-star"></small>
-                <small class="fas fa-star"></small>
-                <small class="fas fa-star"></small>
-                <small class="fas fa-star-half-alt"></small>
-                <small class="far fa-star"></small>
+                @Html.Raw(GenerateStars(ViewBag.RateAverage))
             </div>
-            <small class="pt-1">(14 Reviews)</small>
+            <small class="pt-1">(@ViewBag.RateCount Reviews)</small>
         </div>
         <h3 class="font-weight-semi-bold mb-4">$@Model.Price</h3>
         <p class="mb-4">

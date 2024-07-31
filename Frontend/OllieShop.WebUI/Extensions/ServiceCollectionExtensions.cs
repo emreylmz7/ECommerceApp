@@ -5,6 +5,8 @@ using OllieShop.WebUI.Services.ApiServices;
 using OllieShop.WebUI.Services.CatalogServices.AboutServices;
 using OllieShop.WebUI.Services.CatalogServices.CarouselServices;
 using OllieShop.WebUI.Services.CatalogServices.CategoryServices;
+using OllieShop.WebUI.Services.CatalogServices.CommentServices;
+using OllieShop.WebUI.Services.CatalogServices.ContactServices;
 using OllieShop.WebUI.Services.CatalogServices.FeatureServices;
 using OllieShop.WebUI.Services.CatalogServices.OfferServices;
 using OllieShop.WebUI.Services.CatalogServices.ProductDetailServices;
@@ -12,10 +14,10 @@ using OllieShop.WebUI.Services.CatalogServices.ProductImageServices;
 using OllieShop.WebUI.Services.CatalogServices.ProductServices;
 using OllieShop.WebUI.Services.CatalogServices.VendorServices;
 using OllieShop.WebUI.Services.ClientCredentialTokenService;
+using OllieShop.WebUI.Services.CommentServices;
 using OllieShop.WebUI.Services.IdentityServices;
 using OllieShop.WebUI.Services.IUserService;
 using OllieShop.WebUI.Services.LoginServices;
-using OllieShop.WebUI.Services.TokenServices;
 using OllieShop.WebUI.Settings;
 
 namespace OllieShop.WebUI.Extensions
@@ -110,6 +112,18 @@ namespace OllieShop.WebUI.Extensions
                 opt.BaseAddress = new Uri($"{values.OcelotUrl}/{values.Catalog.Path}");
             }).AddHttpMessageHandler<ClientCredentialTokenHandler>();
 
+            services.AddHttpClient<IContactService, ContactService>(opt =>
+            {
+                opt.BaseAddress = new Uri($"{values.OcelotUrl}/{values.Catalog.Path}");
+            }).AddHttpMessageHandler<ClientCredentialTokenHandler>();
+
+
+            //COMMENT MICROSERVICE CONFIGS
+
+            services.AddHttpClient<ICommentService, CommentService>(opt =>
+            {
+                opt.BaseAddress = new Uri($"{values.OcelotUrl}/{values.Comment.Path}");
+            }).AddHttpMessageHandler<ClientCredentialTokenHandler>();
 
 
             services.AddScoped<ResourceOwnerPasswordTokenHandler>();
@@ -118,14 +132,11 @@ namespace OllieShop.WebUI.Extensions
             services.AddHttpClient<IIdentityService, IdentityService>();
             services.AddHttpClient<IClientCredentialTokenService, ClientCredentialTokenService>();
             services.AddScoped<IApiService, ApiService>();
-            services.AddScoped<ILoginService, LoginService>();
-            services.AddScoped<ITokenService, TokenService>();
+            services.AddScoped<ILoginService, LoginService>(); 
             
-
             return services;
         }
     }
-
 }
 
 

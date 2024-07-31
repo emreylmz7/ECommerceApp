@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using OllieShop.Comment.Entities;
 
 namespace OllieShop.Comment.Context
 {

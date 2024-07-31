@@ -13,7 +13,9 @@ namespace OllieShop.WebUI.Services.IUserService
 
         public async Task<UserDetailViewModel> GetUserInfoAsync()
         {
-            return await _httpClient.GetFromJsonAsync<UserDetailViewModel>("/api/user/getUserInfo");
+            var result = await _httpClient.GetFromJsonAsync<UserDetailViewModel>("/api/user/getUserInfo");
+            return result ?? new UserDetailViewModel();
         }
+
     }
 }

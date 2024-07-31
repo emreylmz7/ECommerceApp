@@ -1,22 +1,24 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using OllieShop.DtoLayer.CatalogDtos.About;
 using OllieShop.DtoLayer.CatalogDtos.Contact;
-using OllieShop.WebUI.Services.ApiServices;
+using OllieShop.WebUI.Services.CatalogServices.AboutServices;
+using OllieShop.WebUI.Services.CatalogServices.ContactServices;
 
 namespace OllieShop.WebUI.Controllers
 {
     public class ContactController : Controller
     {
-        private readonly IApiService _apiService;
-        public ContactController(IApiService apiService)
+        private readonly IAboutService _aboutService;
+        private readonly IContactService _contactService;
+        public ContactController(IAboutService aboutService, IContactService contactService)
         {
-            _apiService = apiService;
+            _aboutService = aboutService;
+            _contactService = contactService;
         }
 
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var abouts = (await _apiService.GetAsync<List<ResultAboutDto>>("https://localhost:7220/api/Abouts")).Take(1).ToList();
+            var abouts = (await _aboutService.GetAllAboutAsync()).Take(1).ToList();
             return View(abouts);
         }
 
@@ -26,7 +28,7 @@ namespace OllieShop.WebUI.Controllers
             createContactDto.SendDate = DateTime.Now;
             createContactDto.IsRead = true;
 
-            var responseMessage = await _apiService.PostAsync("https://localhost:7220/api/Contacts", createContactDto);
+            var responseMessage = await _contactService.CreateContactAsync(createContactDto);
             if (responseMessage.IsSuccessStatusCode)
             {
                 return RedirectToAction("Index", "Default");

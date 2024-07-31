@@ -1,7 +1,26 @@
-﻿@model List<ResultProductDto>
+﻿@model List<ResultProductsWithRates>
 
-@{
-    int comment = 8;
+@functions {
+    public string GenerateStars(double rating)
+    {
+        string stars = "";
+        for (int i = 1; i <= 5; i++)
+        {
+            if (rating >= i)
+            {
+                stars += "<p class='fas fa-star' style='color:#f0ad4e'></p>";
+            }
+            else if (rating >= i - 0.5)
+            {
+                stars += "<p class='fas fa-star-half-alt' style='color:#f0ad4e'></p>";
+            }
+            else
+            {
+                stars += "<p class='far fa-star' style='color:#f0ad4e'></p>";
+            }
+        }
+        return stars;
+    }
 }
 
 <div class="pt-5 pb-3">
@@ -9,7 +28,6 @@
     <div class="row">
         @foreach(var item in Model)
         {
-            comment += 8;
             <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
                 <div class="product-item bg-light mb-4">
                     <div class="product-img position-relative overflow-hidden">
@@ -27,12 +45,8 @@
                             <h5>$@item.Price</h5><h6 class="text-muted ml-2"><del>$@(item.Price + 100)</del></h6>
                         </div>
                         <div class="d-flex align-items-center justify-content-center mb-1">
-                            <small class="fa fa-star text-primary mr-1"></small>
-                            <small class="fa fa-star text-primary mr-1"></small>
-                            <small class="fa fa-star text-primary mr-1"></small>
-                            <small class="fa fa-star text-primary mr-1"></small>
-                            <small class="fa fa-star text-primary mr-1"></small>
-                            <small>(@comment)</small>
+                            @Html.Raw(GenerateStars(item.AverageRate))
+                            <p>(@item.TotalComments)</p>
                         </div>
                     </div>
                 </div>

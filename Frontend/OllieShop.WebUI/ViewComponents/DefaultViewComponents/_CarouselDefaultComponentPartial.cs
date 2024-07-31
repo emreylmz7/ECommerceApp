@@ -1,20 +1,19 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using OllieShop.DtoLayer.CatalogDtos.Carousel;
-using OllieShop.DtoLayer.CatalogDtos.Category;
-using OllieShop.WebUI.Services.ApiServices;
+using OllieShop.WebUI.Services.CatalogServices.CarouselServices;
 
 namespace OllieShop.WebUI.ViewComponents.DefaultViewComponents
 {
     public class _CarouselDefaultComponentPartial: ViewComponent
     {
-        private readonly IApiService _apiService;
-        public _CarouselDefaultComponentPartial(IApiService apiService)
+        private readonly ICarouselService _carouselService;
+        public _CarouselDefaultComponentPartial(ICarouselService carouselService)
         {
-            _apiService = apiService;
+            _carouselService = carouselService;
         }
+
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            var carousels = await _apiService.GetAsync<List<ResultCarouselDto>>("https://localhost:7220/api/Carousels");
+            var carousels = await _carouselService.GetAllCarouselAsync();
             return View(carousels);
         }
     }

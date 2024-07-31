@@ -67,10 +67,13 @@ namespace OllieShop.IdentityServer
                     "OrderReadPermission",
                     "CargoReadPermission",
                     "BasketReadPermission",
+                    "BasketFullPermission",
                     "CommentReadPermission",
+                    "CommentFullPermission",
                     "PaymentReadPermission",
                     "ImagesReadPermission",
                     "OcelotFullPermission",
+                    IdentityServerConstants.LocalApi.ScopeName,
                     IdentityServerConstants.StandardScopes.OpenId,
                     IdentityServerConstants.StandardScopes.Profile
                 }
@@ -90,6 +93,7 @@ namespace OllieShop.IdentityServer
                     "CargoReadPermission",
                     "BasketReadPermission",
                     "CommentReadPermission",
+                    "CommentFullPermission",
                     "PaymentReadPermission",
                     "ImagesReadPermission",
                     "OcelotFullPermission",

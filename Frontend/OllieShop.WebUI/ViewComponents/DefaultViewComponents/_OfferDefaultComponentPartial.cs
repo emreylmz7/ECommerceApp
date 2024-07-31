@@ -1,19 +1,19 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using OllieShop.DtoLayer.CatalogDtos.Offer;
-using OllieShop.WebUI.Services.ApiServices;
+using OllieShop.WebUI.Services.CatalogServices.OfferServices;
 
 namespace OllieShop.WebUI.ViewComponents.DefaultViewComponents
 {
     public class _OfferDefaultComponentPartial:ViewComponent
     {
-        private readonly IApiService _apiService;
-        public _OfferDefaultComponentPartial(IApiService apiService)
+        private readonly IOfferService _offerService;
+        public _OfferDefaultComponentPartial(IOfferService offerService)
         {
-            _apiService = apiService;
+            _offerService = offerService;
         }
+
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            var offers = await _apiService.GetAsync<List<ResultOfferDto>>("https://localhost:7220/api/Offers");
+            var offers = await _offerService.GetAllOfferAsync();
             return View(offers);
         }
     }

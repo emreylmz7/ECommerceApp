@@ -10,5 +10,6 @@ namespace OllieShop.WebUI.Services.CatalogServices.ProductServices
         Task<HttpResponseMessage> UpdateProductAsync(UpdateProductDto updateProductDto);
         Task<HttpResponseMessage> DeleteProductAsync(string id);
         Task<GetByIdProductDto> GetByIdProductAsync(string id);
+        Task<List<ResultProductsWithCategoryDto>> ProductListByCategoryId(string id);
     }
 }

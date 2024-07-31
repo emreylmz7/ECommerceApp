@@ -8,7 +8,7 @@
     <div class="container">
         <div class="row ">
             <div class="col-lg-3 d-none d-lg-block">
-                <a class="btn d-flex align-items-center justify-content-between bg-light w-80 rounded" data-toggle="collapse" href="#navbar-vertical" style="height: 65px; padding: 0 30px;">
+                <a class="btn d-flex align-items-center justify-content-between bg-light w-80 rounded" data-toggle="collapse" href="#navbar-vertical" style="height: 50px; padding: 0 10px;">
                     <h6 class="text-dark m-0"><i class="fa fa-bars mr-2"></i>Categories</h6>
                     <i class="fa fa-angle-down text-dark"></i>
                 </a>
@@ -41,7 +41,6 @@
                         <div class="navbar-nav mr-auto py-0">
                             <a href="/Default/Index" class="nav-item nav-link text-dark">Home</a>
                             <a href="/ProductList/Index" class="nav-item nav-link text-dark">Shop</a>
-                            <a href="/ProductList/ProductDetail" class="nav-item nav-link text-dark ">Shop Detail</a>
                             <div class="nav-item dropdown">
                                 <a href="#" class="nav-link dropdown-toggle text-dark rounded" data-toggle="dropdown">Pages <i class="fa fa-angle-down mt-1"></i></a>
                                 <div class="dropdown-menu bg-light rounded-0 border-0 m-0">
@@ -60,9 +59,23 @@
                                 <i class="fas fa-shopping-cart text-warning"></i>
                                 <span class="badge text-dark border border-dark rounded-circle" style="padding-bottom: 2px;">0</span>
                             </a>
-                            <a href="" class="btn px-0 ml-3">
-                                <i class="fas fa-user text-dark"></i>
-                            </a>
+                            @if (User.Identity!.IsAuthenticated)
+                            {
+                                <a href="" class="btn px-0 ml-3">
+                                    <i class="fas fa-user text-dark"></i>
+                                </a>
+
+                                <a href="/Auth/Logout" class="btn px-0 ml-3">
+                                    Logout
+                                </a>
+                            }
+                            else
+                            {
+                                <a href="/Login/Index" class="btn px-0 ml-3">
+                                    Login
+                                </a>
+                            }
+                           
                         </div>
                     </div>
                 </nav>

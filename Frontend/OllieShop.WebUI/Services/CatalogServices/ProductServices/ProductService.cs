@@ -45,6 +45,13 @@ namespace OllieShop.WebUI.Services.CatalogServices.ProductServices
             return product;
         }
 
+        public async Task<List<ResultProductsWithCategoryDto>> ProductListByCategoryId(string id)
+        {
+            var responseMessage = await _httpClient.GetAsync($"Products/ProductListByCategory?id={id}");
+            var products = await responseMessage.Content.ReadFromJsonAsync<List<ResultProductsWithCategoryDto>>();
+            return products;
+        }
+
         public async Task<HttpResponseMessage> UpdateProductAsync(UpdateProductDto updateProductDto)
         {
             var responseMessage = await _httpClient.PutAsJsonAsync<UpdateProductDto>("products", updateProductDto);

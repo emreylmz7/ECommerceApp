@@ -1,5 +1,4 @@
-﻿
-using Microsoft.AspNetCore.Authentication;
+﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using OllieShop.WebUI.Services.IdentityServices;
 using System.Net;
@@ -22,18 +21,22 @@ namespace OllieShop.WebUI.Handlers
         {
             var accessToken = await _contextAccessor.HttpContext.GetTokenAsync(OpenIdConnectParameterNames.AccessToken);
             request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
-            var response = await base.SendAsync(request,cancellationToken);
+            var response = await base.SendAsync(request, cancellationToken);
 
             if (response.StatusCode == HttpStatusCode.Unauthorized)
             {
-                var tokenResponse = await _identityService.GetRefreshToken();
-                response = await base.SendAsync(request, cancellationToken);
-
-            }
-
-            if (response.StatusCode == HttpStatusCode.Unauthorized)
-            {
-                //Error Message
+                var tokenRefreshed = await _identityService.GetRefreshToken();
+                if (tokenRefreshed)
+                {
+                    // Refresh token başarılı olduysa, yeniden yetkilendirilen isteği gönder
+                    accessToken = await _contextAccessor.HttpContext.GetTokenAsync(OpenIdConnectParameterNames.AccessToken);
+                    request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+                    response = await base.SendAsync(request, cancellationToken);
+                }
+                else
+                {
+                    //Error Message
+                }
             }
 
             return response;

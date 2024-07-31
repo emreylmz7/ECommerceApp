@@ -1,14 +1,7 @@
-﻿using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using OllieShop.DtoLayer.IdentityDtos;
-using OllieShop.WebUI.Models;
 using OllieShop.WebUI.Services.ApiServices;
 using OllieShop.WebUI.Services.IdentityServices;
-using OllieShop.WebUI.Services.LoginServices;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text.Json;
 
 namespace OllieShop.WebUI.Controllers
 {
@@ -31,8 +24,12 @@ namespace OllieShop.WebUI.Controllers
         [HttpPost]
         public async Task<IActionResult> Index(LoginDto loginDto)
         {
-            await _identityService.SignIn(loginDto);
-            return RedirectToAction("Index", "User");
+            var result = await _identityService.SignIn(loginDto);
+            if (result == true)
+            {
+                return RedirectToAction("Index", "Default");
+            }
+            return View();
         }
     }
 }
