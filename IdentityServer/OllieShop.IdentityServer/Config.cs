@@ -67,7 +67,6 @@ namespace OllieShop.IdentityServer
                     "OrderReadPermission",
                     "CargoReadPermission",
                     "BasketReadPermission",
-                    "BasketFullPermission",
                     "CommentReadPermission",
                     "CommentFullPermission",
                     "PaymentReadPermission",

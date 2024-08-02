@@ -1,0 +1,238 @@
+@* <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet"> *@
+
+<div class="container" id="shoppingCart">
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-md-9">
+                <div class="ibox">
+                    <div class="ibox-title">
+                        <h5>Shopping Cart</h5>
+                        <span class="pull-right">(<strong>1</strong>) items</span>
+                    </div>
+                    <div class="ibox-content">
+                        <div class="table-responsive">
+                            <table class="table shoping-cart-table">
+                                <tbody>
+                                    @foreach(var item in Model.BasketItems)
+                                    {
+                                        <tr class="pt-3">
+                                            <td width="90">
+                                                <div class="cart-product-imitation">
+                                                    <img class="w-100" src="~/img/products/@item.ImageUrl" alt="Image">
+                                                </div>
+                                            </td>
+                                            <td class="desc">
+                                                <h3>
+                                                    <a href="#" class="text-navy">
+                                                        @item.ProductName
+                                                    </a>
+                                                </h3>
+                                                <p class="small">
+                                                    @item.Description
+                                                </p>
+                                                <dl class="small m-b-none">
+                                                    <dt>Size</dt>
+                                                    <dd>Small (S)</dd>
+                                                </dl>
+
+                                                <div class="m-t-sm">
+                                                    <a href="#" class="text-muted text-decoration-none text-warning"><i class="fa fa-gift"></i> Add gift package</a>
+                                                    |
+                                                    <a href="#" class="text-muted text-decoration-none text-danger"><i class="fa fa-trash"></i> Remove item</a>
+                                                </div>
+                                            </td>
+
+                                            <td>
+                                                $@item.UnitPrice
+                                                <s class="small text-muted">$659,00</s>
+                                            </td>
+                                            <td width="90">
+                                                <input type="number" class="form-control rounded" placeholder="@item.Quantity">
+                                            </td>
+                                            <td>
+                                                <h4>
+                                                    $@(item.UnitPrice*item.Quantity)
+                                                </h4>
+                                            </td>
+                                        </tr>
+                                    }
+                                    
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+             
+                    <div class="ibox-content d-flex justify-content-between">
+                        <button class="btn btn-white"><i class="fa fa-arrow-left"></i> Continue shopping</button>
+                        <a class="btn btn-outline-dark pull-right rounded" href="#">Checkout</a>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-md-3">
+                <div class="ibox">
+                    <div class="ibox-title">
+                        <h5>Cart Summary</h5>
+                    </div>
+                    <div class="ibox-content">
+                        <span>
+                            Total
+                        </span>
+                        <h2 class="font-bold">
+                            $@Model.TotalPrice
+                        </h2>
+
+                        <hr>
+                        <a class="btn btn-outline-dark rounded btn-block btn-sm my-2" href="#">Checkout</a>
+                        <span class="text-muted small">
+                            *For United States, France and Germany applicable sales tax will be applied
+                        </span>
+                    </div>
+                </div>
+
+                <div class="ibox">
+                    <div class="ibox-title">
+                        <h5>Coupon</h5>
+                    </div>
+                    <div class="ibox-content ">
+                        <div>
+                            <input type="text" class="form-control rounded" placeholder="Code">
+                            <a class="btn btn-outline-dark rounded btn-block btn-sm my-2" href="#">Apply</a>
+                        </div>
+              
+                        <span class="small text-muted text-center">
+                            *Get a discount by entering the coupon code.
+                        </span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+//CSS
+
+
+body{
+    background:#eee;
+}
+
+#shoppingCart {
+    padding-top: 15px;
+}
+
+h3 {
+    font-size: 16px;
+}
+
+.text-navy {
+    color: #000000;
+}
+
+.cart-product-imitation {
+    text-align: center;
+    padding-top: 0;
+    height: 130px;
+    width: 130px;
+    background-color: #f8f8f9;
+}
+
+.product-imitation.xl {
+    padding: 120px 0;
+}
+
+.product-desc {
+    padding: 20px;
+    position: relative;
+}
+
+.ecommerce .tag-list {
+    padding: 0;
+}
+
+.ecommerce .fa-star {
+    color: #d1dade;
+}
+
+    .ecommerce .fa-star.active {
+        color: #f8ac59;
+    }
+
+.ecommerce .note-editor {
+    border: 1px solid #e7eaec;
+}
+
+table.shoping-cart-table {
+    margin-bottom: 0;
+}
+
+    table.shoping-cart-table tr td {
+        border: none;
+        text-align: right;
+    }
+
+        table.shoping-cart-table tr td.desc,
+        table.shoping-cart-table tr td:first-child {
+            text-align: left;
+        }
+
+        table.shoping-cart-table tr td:last-child {
+            width: 80px;
+        }
+
+.ibox {
+    clear: both;
+    margin-bottom: 25px;
+    margin-top: 0;
+    padding: 0;
+    border-radius:50px;
+}
+
+    .ibox.collapsed .ibox-content {
+        display: none;
+    }
+
+    .ibox:after,
+    .ibox:before {
+        display: table;
+    }
+
+.ibox-title {
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    background-color: #ffffff;
+    border-color: #e7eaec;
+    border-image: none;
+    border-style: solid solid none;
+    border-width: 3px 0 0;
+    color: inherit;
+    margin-bottom: 0;
+    padding: 14px 15px 7px;
+    min-height: 48px;
+}
+
+.ibox-content {
+    background-color: #ffffff;
+    color: inherit;
+    padding: 15px 20px 20px 20px;
+    border-color: #e7eaec;
+    border-image: none;
+    border-style: solid solid none;
+    border-width: 1px 0;
+}
+
+.ibox-footer {
+    color: inherit;
+    border-top: 1px solid #e7eaec;
+    font-size: 90%;
+    background: #ffffff;
+    padding: 10px 15px;
+}

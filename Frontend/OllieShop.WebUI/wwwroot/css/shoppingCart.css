@@ -1,6 +1,5 @@
-﻿
-body{
-    background:#eee;
+﻿body {
+    background: #eee;
 }
 
 #shoppingCart {
@@ -71,7 +70,7 @@ table.shoping-cart-table {
     margin-bottom: 25px;
     margin-top: 0;
     padding: 0;
-    border-radius:50px;
+    border-radius: 50px;
 }
 
     .ibox.collapsed .ibox-content {

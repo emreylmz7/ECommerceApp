@@ -1,4 +1,4 @@
-﻿namespace OllieShop.Basket.Dtos
+﻿namespace OllieShop.DtoLayer.BasketDtos
 {
     public class BasketItemDto
     {

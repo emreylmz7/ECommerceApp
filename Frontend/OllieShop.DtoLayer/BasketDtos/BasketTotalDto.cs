@@ -1,4 +1,4 @@
-﻿namespace OllieShop.Basket.Dtos
+﻿namespace OllieShop.DtoLayer.BasketDtos
 {
     public class BasketTotalDto
     {
@@ -10,14 +10,14 @@
         public DateTime LastUpdated { get; set; } = DateTime.UtcNow;
         public string Currency { get; set; } = "USD";
 
-        public decimal TotalPrice 
-        { 
-            get => BasketItems?.Sum(x => x.UnitPrice * x.Quantity) ?? 0; 
+        public decimal TotalPrice
+        {
+            get => BasketItems?.Sum(x => x.UnitPrice * x.Quantity) ?? 0;
         }
 
-        public decimal TotalDiscountedPrice 
-        { 
-            get => TotalPrice * (1 - DiscountRate / 100m); 
+        public decimal TotalDiscountedPrice
+        {
+            get => TotalPrice * (1 - DiscountRate / 100m);
         }
     }
 }

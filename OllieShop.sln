@@ -35,12 +35,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OllieShop.IdentityServer", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Requirements", "Requirements", "{1069A14D-44A9-4FDE-BF35-01AF618A0144}"
 	ProjectSection(SolutionItems) = preProject
-		IdentityServerVersionErrorSolution.txt = IdentityServerVersionErrorSolution.txt
 		LoginIndex.txt = LoginIndex.txt
 		OcelotCodeExample.txt = OcelotCodeExample.txt
 		PortainerCMD.txt = PortainerCMD.txt
 		PortNumbers.txt = PortNumbers.txt
 		Users.txt = Users.txt
+		ShoppingCartIndex.txt = ShoppingCartIndex.txt
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Cargo", "Cargo", "{C63FEEB2-BB59-40DC-BEEB-A0C5828ABAB5}"

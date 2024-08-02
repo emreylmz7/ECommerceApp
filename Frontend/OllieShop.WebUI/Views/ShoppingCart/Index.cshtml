@@ -1,11 +1,14 @@
-﻿
+﻿@model BasketTotalDto
+
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/UILayout/_UILayout.cshtml";
     <link rel="stylesheet" href="~/css/shoppingCart.css" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 }
 
 @* <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet"> *@
+
 
 <div class="container" id="shoppingCart">
     <div class="wrapper wrapper-content animated fadeInRight">
@@ -13,58 +16,71 @@
             <div class="col-md-9">
                 <div class="ibox">
                     <div class="ibox-title">
-                        <span class="pull-right">(<strong>1</strong>) items</span>
                         <h5>Shopping Cart</h5>
+                        <span class="pull-right">(<strong>@Model.BasketItems.Count()</strong>) items</span>
                     </div>
-                    <div class="ibox-content">
-                        <div class="table-responsive">
-                            <table class="table shoping-cart-table">
-                                <tbody>
-                                    <tr>
-                                        <td width="90">
-                                            <div class="cart-product-imitation">
-                                                <img class="w-100" src="~/img/products/product1/4.png" alt="Image">
-                                            </div>
-                                        </td>
-                                        <td class="desc">
-                                            <h3>
-                                                <a href="#" class="text-navy">
-                                                    Navy Blue Polo T-Shirt
-                                                </a>
-                                            </h3>
-                                            <p class="small">
-                                                Experience ultimate comfort and timeless style with our Navy Blue Polo T-Shirt. Perfect for any occasion, this classic piece is a must-have for your wardrobe.
-                                            </p>
-                                            <dl class="small m-b-none">
-                                                <dt>Size</dt>
-                                                <dd>Small (S)</dd>
-                                            </dl>
-
-                                            <div class="m-t-sm">
-                                                <a href="#" class="text-muted text-decoration-none text-warning"><i class="fa fa-gift"></i> Add gift package</a>
-                                                |
-                                                <a href="#" class="text-muted text-decoration-none text-danger"><i class="fa fa-trash"></i> Remove item</a>
-                                            </div>
-                                        </td>
-
-                                        <td>
-                                            $599,00
-                                            <s class="small text-muted">$659,00</s>
-                                        </td>
-                                        <td width="90">
-                                            <input type="number" class="form-control rounded" placeholder="2">
-                                        </td>
-                                        <td>
-                                            <h4>
-                                                $1198,00
-                                            </h4>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                    @if(Model.BasketItems.Count() == 0)
+                    {
+                        <div class="alert alert-warning mb-0" role="alert">
+                            <strong>Hey there!</strong> It looks like your cart is empty. Browse our products and fill it up!
                         </div>
-                    </div>
-             
+
+                    }
+                    else
+                    {
+                        @foreach (var item in Model.BasketItems)
+                        {
+                            <div class="ibox-content" style="height:250px">
+                                <div>
+                                    <table class="table shoping-cart-table">
+                                        <tbody>
+                                            <tr class="pt-3">
+                                                <td width="90">
+                                                    <div class="cart-product-imitation">
+                                                        <img class="w-100" src="~/img/products/@item.ImageUrl" alt="Image">
+                                                    </div>
+                                                </td>
+                                                <td class="desc">
+                                                    <h3>
+                                                        <a href="#" class="text-navy">
+                                                            @item.ProductName
+                                                        </a>
+                                                    </h3>
+                                                    <p class="small">
+                                                        @item.Description
+                                                    </p>
+                                                    <dl class="small m-b-none">
+                                                        <dt>Size</dt>
+                                                        <dd>Small (S)</dd>
+                                                    </dl>
+
+                                                    <div class="m-t-sm">
+                                                        <a href="#" class="text-muted text-decoration-none text-warning"><i class="fa fa-gift"></i> Add gift package</a>
+                                                        |
+                                                        <a href="/ShoppingCart/RemoveItemFromBasket?productId=@item.ProductId" class="text-muted text-decoration-none text-danger"><i class="fa fa-trash"></i> Remove item</a>
+                                                    </div>
+                                                </td>
+
+                                                <td>
+                                                    $@item.UnitPrice.ToString("F0")
+                                                    <s class="small text-muted">$659</s>
+                                                </td>
+                                                <td width="90">
+                                                    <input type="number" name="quantity" class="form-control rounded quantity-input" data-product-id="@item.ProductId" value="@item.Quantity" min="1" />
+                                                </td>
+                                                <td>
+                                                    <h4 class="item-total">
+                                                        $@((item.UnitPrice * item.Quantity).ToString("F0"))
+                                                    </h4>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        }
+                    }
+
                     <div class="ibox-content d-flex justify-content-between">
                         <button class="btn btn-white"><i class="fa fa-arrow-left"></i> Continue shopping</button>
                         <a class="btn btn-outline-dark pull-right rounded" href="#">Checkout</a>
@@ -81,8 +97,8 @@
                         <span>
                             Total
                         </span>
-                        <h2 class="font-bold">
-                            $1198,00
+                        <h2 class="font-bold" id="total-price">
+                            $@(Model.TotalPrice.ToString("F0"))
                         </h2>
 
                         <hr>
@@ -102,7 +118,7 @@
                             <input type="text" class="form-control rounded" placeholder="Code">
                             <a class="btn btn-outline-dark rounded btn-block btn-sm my-2" href="#">Apply</a>
                         </div>
-              
+
                         <span class="small text-muted text-center">
                             *Get a discount by entering the coupon code.
                         </span>
@@ -114,3 +130,29 @@
     </div>
 </div>
 
+<script>
+    $(document).ready(function () {
+        $('.quantity-input').on('change', function () {
+            var productId = $(this).data('product-id');
+            var quantity = $(this).val();
+            $.ajax({
+                url: '/ShoppingCart/UpdateItemQuantity',
+                type: 'POST',
+                data: {
+                    productId: productId,
+                    quantity: quantity
+                },
+                success: function (result) {
+                    // AJAX isteği başarılı olduğunda yapılacak işlemler
+                    // Örneğin, toplam fiyatı ve öğe toplam fiyatını güncelleyebilirsin
+                    var updatedItem = result.updatedItem;
+                    $('input[data-product-id="' + productId + '"]').closest('tr').find('.item-total').text('$' + (updatedItem.unitPrice * updatedItem.quantity).toFixed(0));
+                    $('#total-price').text('$' + result.totalPrice.toFixed(0));
+                },
+                error: function () {
+                    alert('An error occurred while updating the quantity.');
+                }
+            });
+        });
+    });
+</script>

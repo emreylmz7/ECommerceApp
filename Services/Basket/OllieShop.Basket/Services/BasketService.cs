@@ -27,7 +27,20 @@ namespace OllieShop.Basket.Services
 
             if (basketData.IsNullOrEmpty)
             {
-                return null!;
+                var newBasket = new BasketTotalDto
+                {
+                    UserId = userId,
+                    BasketItems = new List<BasketItemDto>(),
+                    DateCreated = DateTime.Now,
+                    Currency = "USD",
+                    DiscountCode = "",
+                    DiscountRate = 0,
+                    LastUpdated = DateTime.Now,
+                };
+
+                await SaveBasket(newBasket);
+
+                return newBasket;
             }
 
             return JsonSerializer.Deserialize<BasketTotalDto>(basketData!)!;

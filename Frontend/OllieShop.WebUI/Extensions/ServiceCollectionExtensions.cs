@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using OllieShop.WebUI.Handlers;
 using OllieShop.WebUI.Services.ApiServices;
+using OllieShop.WebUI.Services.BasketServices;
 using OllieShop.WebUI.Services.CatalogServices.AboutServices;
 using OllieShop.WebUI.Services.CatalogServices.CarouselServices;
 using OllieShop.WebUI.Services.CatalogServices.CategoryServices;
@@ -124,6 +125,13 @@ namespace OllieShop.WebUI.Extensions
             {
                 opt.BaseAddress = new Uri($"{values.OcelotUrl}/{values.Comment.Path}");
             }).AddHttpMessageHandler<ClientCredentialTokenHandler>();
+
+            //BASKET MICROSERVICE CONFIGS
+
+            services.AddHttpClient<IBasketService, BasketService>(opt =>
+            {
+                opt.BaseAddress = new Uri($"{values.OcelotUrl}/{values.Basket.Path}");
+            }).AddHttpMessageHandler<ResourceOwnerPasswordTokenHandler>();
 
 
             services.AddScoped<ResourceOwnerPasswordTokenHandler>();
