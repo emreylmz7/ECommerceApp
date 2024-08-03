@@ -1,5 +1,5 @@
-﻿using OllieShop.DtoLayer.CatalogDtos.Product;
-using System.Net.Http.Json;
+﻿using OllieShop.DtoLayer.CatalogDtos.Color;
+using OllieShop.DtoLayer.CatalogDtos.Product;
 
 namespace OllieShop.WebUI.Services.CatalogServices.ProductServices
 {
@@ -31,11 +31,25 @@ namespace OllieShop.WebUI.Services.CatalogServices.ProductServices
             return products ?? new List<ResultProductDto>();
         }
 
+        public async Task<ResultAllProductDetailsDto> GetAllProductDetailsById(string id)
+        {
+            var responseMessage = await _httpClient.GetAsync($"Products/GetAllProductDetails?id={id}");
+            var product = await responseMessage.Content.ReadFromJsonAsync<ResultAllProductDetailsDto>();
+            return product!;
+        }
+
         public async Task<List<ResultProductsWithCategoryDto>> GetAllProductsWithCategoryAsync()
         {
             var responseMessage = await _httpClient.GetAsync("Products/ProductListWithCategory");
             var products = await responseMessage.Content.ReadFromJsonAsync<List<ResultProductsWithCategoryDto>>();
             return products ?? new List<ResultProductsWithCategoryDto>();
+        }
+
+        public async Task<List<ResultColorDto>> GetAvailableColorsForSize(string sizeId, string id)
+        {
+            var responseMessage = await _httpClient.GetAsync($"Products/GetAvailableColorsForSize?sizeId={sizeId}&productId={id}");
+            var colors = await responseMessage.Content.ReadFromJsonAsync<List<ResultColorDto>>();
+            return colors!;
         }
 
         public async Task<GetByIdProductDto> GetByIdProductAsync(string id)

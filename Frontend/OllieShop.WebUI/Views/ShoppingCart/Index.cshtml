@@ -19,7 +19,7 @@
                         <h5>Shopping Cart</h5>
                         <span class="pull-right">(<strong>@Model.BasketItems.Count()</strong>) items</span>
                     </div>
-                    @if(Model.BasketItems.Count() == 0)
+                    @if (Model.BasketItems.Count() == 0)
                     {
                         <div class="alert alert-warning mb-0" role="alert">
                             <strong>Hey there!</strong> It looks like your cart is empty. Browse our products and fill it up!
@@ -51,13 +51,17 @@
                                                     </p>
                                                     <dl class="small m-b-none">
                                                         <dt>Size</dt>
-                                                        <dd>Small (S)</dd>
+                                                        <dd>@item.Size</dd>
+                                                    </dl>
+                                                    <dl class="small m-b-none">
+                                                        <dt>Color</dt>
+                                                        <dd>@item.Color</dd>
                                                     </dl>
 
                                                     <div class="m-t-sm">
                                                         <a href="#" class="text-muted text-decoration-none text-warning"><i class="fa fa-gift"></i> Add gift package</a>
                                                         |
-                                                        <a href="/ShoppingCart/RemoveItemFromBasket?productId=@item.ProductId" class="text-muted text-decoration-none text-danger"><i class="fa fa-trash"></i> Remove item</a>
+                                                        <a href="/ShoppingCart/RemoveItemFromBasket?productId=@item.ProductId&sizeId=@item.SizeId&colorId=@item.ColorId" class="text-muted text-decoration-none text-danger"><i class="fa fa-trash"></i> Remove item</a>
                                                     </div>
                                                 </td>
 
@@ -66,7 +70,7 @@
                                                     <s class="small text-muted">$659</s>
                                                 </td>
                                                 <td width="90">
-                                                    <input type="number" name="quantity" class="form-control rounded quantity-input" data-product-id="@item.ProductId" value="@item.Quantity" min="1" />
+                                                    <input type="number" name="quantity" class="form-control rounded quantity-input" data-product-id="@item.ProductId" data-size-id="@item.SizeId" data-color-id="@item.ColorId" value="@item.Quantity" min="1" />
                                                 </td>
                                                 <td>
                                                     <h4 class="item-total">
@@ -134,19 +138,21 @@
     $(document).ready(function () {
         $('.quantity-input').on('change', function () {
             var productId = $(this).data('product-id');
+            var sizeId = $(this).data('size-id');
+            var colorId = $(this).data('color-id');
             var quantity = $(this).val();
             $.ajax({
                 url: '/ShoppingCart/UpdateItemQuantity',
                 type: 'POST',
                 data: {
                     productId: productId,
+                    sizeId: sizeId,
+                    colorId: colorId,
                     quantity: quantity
                 },
                 success: function (result) {
-                    // AJAX isteği başarılı olduğunda yapılacak işlemler
-                    // Örneğin, toplam fiyatı ve öğe toplam fiyatını güncelleyebilirsin
                     var updatedItem = result.updatedItem;
-                    $('input[data-product-id="' + productId + '"]').closest('tr').find('.item-total').text('$' + (updatedItem.unitPrice * updatedItem.quantity).toFixed(0));
+                    $('input[data-product-id="' + productId + '"][data-size-id="' + sizeId + '"][data-color-id="' + colorId + '"]').closest('tr').find('.item-total').text('$' + (updatedItem.unitPrice * updatedItem.quantity).toFixed(0));
                     $('#total-price').text('$' + result.totalPrice.toFixed(0));
                 },
                 error: function () {

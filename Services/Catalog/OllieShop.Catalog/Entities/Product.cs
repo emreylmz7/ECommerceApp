@@ -15,5 +15,8 @@ namespace OllieShop.Catalog.Entities
         [BsonIgnore]
         public Category? Category { get; set; }
         public string? ImageUrl { get; set; }
+
+        [BsonIgnore]
+        public List<ProductStock> ProductStocks { get; set; } = new List<ProductStock>();
     }
 }

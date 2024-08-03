@@ -2,12 +2,15 @@
 using OllieShop.Catalog.Dtos.AboutDtos;
 using OllieShop.Catalog.Dtos.CarouselDtos;
 using OllieShop.Catalog.Dtos.CategoryDtos;
+using OllieShop.Catalog.Dtos.ColorDtos;
 using OllieShop.Catalog.Dtos.ContactDtos;
 using OllieShop.Catalog.Dtos.FeatureDtos;
 using OllieShop.Catalog.Dtos.OfferDtos;
 using OllieShop.Catalog.Dtos.ProductDetailDtos;
 using OllieShop.Catalog.Dtos.ProductDtos;
 using OllieShop.Catalog.Dtos.ProductImageDtos;
+using OllieShop.Catalog.Dtos.ProductStockDtos;
+using OllieShop.Catalog.Dtos.SizeDtos;
 using OllieShop.Catalog.Dtos.VendorDtos;
 using OllieShop.Catalog.Entities;
 
@@ -27,6 +30,7 @@ namespace OllieShop.Catalog.Mapping
             CreateMap<Product, UpdateProductDto>().ReverseMap();
             CreateMap<Product, GetByIdProductDto>().ReverseMap();
             CreateMap<Product, ResultProductsWithCategoryDto>().ReverseMap();
+            CreateMap<Product, ResultAllProductDetailsDto>().ReverseMap();
 
             CreateMap<ProductDetail, ResultProductDetailDto>().ReverseMap();
             CreateMap<ProductDetail, CreateProductDetailDto>().ReverseMap();
@@ -67,6 +71,21 @@ namespace OllieShop.Catalog.Mapping
             CreateMap<Contact, CreateContactDto>().ReverseMap();
             CreateMap<Contact, UpdateContactDto>().ReverseMap();
             CreateMap<Contact, GetContactByIdDto>().ReverseMap();
+
+            CreateMap<Color, ResultColorDto>().ReverseMap();
+            CreateMap<Color, CreateColorDto>().ReverseMap();
+            CreateMap<Color, UpdateColorDto>().ReverseMap();
+            CreateMap<Color, GetColorByIdDto>().ReverseMap();
+
+            CreateMap<Size, ResultSizeDto>().ReverseMap();
+            CreateMap<Size, CreateSizeDto>().ReverseMap();
+            CreateMap<Size, UpdateSizeDto>().ReverseMap();
+            CreateMap<Size, GetSizeByIdDto>().ReverseMap();
+
+            CreateMap<ProductStock, ResultProductStockDto>().ReverseMap();
+            CreateMap<ProductStock, CreateProductStockDto>().ReverseMap();
+            CreateMap<ProductStock, UpdateProductStockDto>().ReverseMap();
+            CreateMap<ProductStock, GetProductStockByIdDto>().ReverseMap();
         }
     }
 }

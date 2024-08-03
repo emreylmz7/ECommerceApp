@@ -16,7 +16,7 @@ namespace OllieShop.WebUI.Services.BasketServices
             var values = await GetBasket();
             if (values != null)
             {
-                var existingItem = values.BasketItems.FirstOrDefault(x => x.ProductId == basketItemDto.ProductId);
+                var existingItem = values.BasketItems.FirstOrDefault(x => x.ProductId == basketItemDto.ProductId && x.SizeId == basketItemDto.SizeId && x.ColorId == basketItemDto.ColorId);
                 if (existingItem == null)
                 {
                     values.BasketItems.Add(basketItemDto);
@@ -67,13 +67,13 @@ namespace OllieShop.WebUI.Services.BasketServices
             return response;
         }
 
-        public async Task<BasketItemDto> UpdateBasketItem(string productId, int quantity)
+        public async Task<BasketItemDto> UpdateBasketItem(string productId, int quantity, string sizeId, string colorId)
         {
             var values = await GetBasket();
             var existingItem = new BasketItemDto();
             if (values != null)
             {
-                existingItem = values.BasketItems.FirstOrDefault(x => x.ProductId == productId);
+                existingItem = values.BasketItems.FirstOrDefault(x => x.ProductId == productId && x.SizeId == sizeId && x.ColorId == colorId);
                 if (existingItem != null)
                 {
                     existingItem.Quantity = quantity;

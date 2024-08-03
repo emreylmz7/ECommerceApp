@@ -13,6 +13,9 @@ namespace OllieShop.Catalog.Services.ProductService
         private readonly IMongoCollection<Category> _categoryCollection;
         private readonly IMongoCollection<ProductImage> _productImageCollection;
         private readonly IMongoCollection<ProductDetail> _productDetailCollection;
+        private readonly IMongoCollection<ProductStock> _productStockCollection;
+        private readonly IMongoCollection<Color> _colorCollection;
+        private readonly IMongoCollection<Size> _sizeCollection;
         private readonly IMapper _mapper;
 
         public ProductService(IMapper mapper, IDatabaseSettings databaseSettings)
@@ -23,6 +26,9 @@ namespace OllieShop.Catalog.Services.ProductService
             _categoryCollection = database.GetCollection<Category>(databaseSettings.CategoryCollectionName);
             _productImageCollection = database.GetCollection<ProductImage>(databaseSettings.ProductImageCollectionName);
             _productDetailCollection = database.GetCollection<ProductDetail>(databaseSettings.ProductDetailCollectionName); 
+            _productStockCollection = database.GetCollection<ProductStock>(databaseSettings.ProductStockCollectionName); 
+            _colorCollection = database.GetCollection<Color>(databaseSettings.ColorCollectionName); 
+            _sizeCollection = database.GetCollection<Size>(databaseSettings.SizeCollectionName); 
             _mapper = mapper;
         }
 
@@ -64,10 +70,79 @@ namespace OllieShop.Catalog.Services.ProductService
             return _mapper.Map<List<ResultProductDto>>(values);
         }
 
+        public async Task<ResultAllProductDetailsDto> GetAllProductDetailsAsync(string id)
+        {
+            var product = await _productCollection.Find<Product>(x => x.ProductId == id).FirstOrDefaultAsync();
+            if (product == null)
+            {
+                // Product bulunamadıysa uygun bir hata dönebilirsiniz.
+                return null;
+            }
+
+            var category = await _categoryCollection.Find<Category>(x => x.CategoryId == product.CategoryId).FirstOrDefaultAsync();
+            var productStocks = await _productStockCollection.Find<ProductStock>(x => x.ProductId == id).ToListAsync();
+
+            var productSizes = new List<Size>();
+            var productColors = new List<Color>();
+            int totalStock = 0;
+
+            // Renkleri ve bedenleri almak için görevler listesi
+            var colorTasks = new List<Task<Color>>();
+            var sizeTasks = new List<Task<Size>>();
+
+            foreach (var productStock in productStocks)
+            {
+                totalStock += productStock.Stock;
+                if (productStock.ColorId != null)
+                {
+                    colorTasks.Add(_colorCollection.Find(x => x.ColorId == productStock.ColorId).FirstOrDefaultAsync());
+                }
+                if (productStock.SizeId != null)
+                {
+                    sizeTasks.Add(_sizeCollection.Find(x => x.SizeId == productStock.SizeId).FirstOrDefaultAsync());
+                }
+            }
+
+            var colors = await Task.WhenAll(colorTasks);
+            productColors.AddRange(colors.Where(color => color != null));
+
+            var sizes = await Task.WhenAll(sizeTasks);
+            productSizes.AddRange(sizes.Where(size => size != null));
+
+            var mappedProduct = _mapper.Map<ResultAllProductDetailsDto>(product);
+
+            mappedProduct.CategoryName = category?.Name; // Category null olabilir, kontrol ekledik.
+            mappedProduct.Sizes = productSizes;
+            mappedProduct.Colors = productColors;
+            mappedProduct.TotalStock = totalStock;
+
+            return mappedProduct;
+        }
+
+
         public async Task<GetByIdProductDto> GetByIdProductAsync(string id) 
         {
             var values = await _productCollection.Find<Product>(x => x.ProductId == id).FirstOrDefaultAsync(); 
             return _mapper.Map<GetByIdProductDto>(values);
+        }
+
+        public async Task<List<Color>> GetColorsForSize(string sizeId, string id)
+        {
+            var productStocks = await _productStockCollection
+                .Find(stock => stock.SizeId == sizeId && stock.ProductId == id)
+                .ToListAsync();
+
+            var colorIds = productStocks
+                .Where(stock => stock.ColorId != null)
+                .Select(stock => stock.ColorId)
+                .Distinct()
+                .ToList();
+
+            var colors = await _colorCollection
+                .Find(color => colorIds.Contains(color.ColorId))
+                .ToListAsync();
+
+            return colors;
         }
 
         public async Task<List<ResultProductsWithCategoryDto>> GetProductsByCategoryIdAsync(string categoryId)
@@ -106,5 +181,7 @@ namespace OllieShop.Catalog.Services.ProductService
             var value = _mapper.Map<Product>(updateProductDto);
             await _productCollection.FindOneAndReplaceAsync(x => x.ProductId == updateProductDto.ProductId, value); 
         }
+
+        
     }
 }

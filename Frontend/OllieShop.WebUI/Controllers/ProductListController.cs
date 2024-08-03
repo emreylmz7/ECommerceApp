@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using OllieShop.DtoLayer.CommentDtos;
+using OllieShop.WebUI.Services.CatalogServices.ProductServices;
 using OllieShop.WebUI.Services.CommentServices;
 using System.Net;
 
@@ -9,8 +10,10 @@ namespace OllieShop.WebUI.Controllers
     public class ProductListController : Controller
     {
         private readonly ICommentService _commentService;
-        public ProductListController(ICommentService commentService)
+        private readonly IProductService _productService;
+        public ProductListController(ICommentService commentService, IProductService productService)
         {
+            _productService = productService;
             _commentService = commentService;
         }
 
@@ -45,6 +48,20 @@ namespace OllieShop.WebUI.Controllers
             }
 
             return Redirect($"/ProductList/ProductDetail/{createCommentDto.ProductId}");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetColorsForSize(string sizeId, string productId)
+        {
+            var colors = await _productService.GetAvailableColorsForSize(sizeId, productId);
+            return Json(colors);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetProductWithAllDetails(string id)
+        {
+            var values = await _productService.GetAllProductDetailsById(id);
+            return Json(values);
         }
     }
 }

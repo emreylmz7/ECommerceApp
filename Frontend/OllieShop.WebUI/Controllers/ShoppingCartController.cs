@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using OllieShop.DtoLayer.BasketDtos;
 using OllieShop.WebUI.Services.BasketServices;
+using OllieShop.WebUI.Services.CatalogServices.ColorServices;
 using OllieShop.WebUI.Services.CatalogServices.ProductServices;
+using OllieShop.WebUI.Services.CatalogServices.SizeServices;
 
 namespace OllieShop.WebUI.Controllers
 {
@@ -9,10 +11,14 @@ namespace OllieShop.WebUI.Controllers
     {
         private readonly IProductService _productService;
         private readonly IBasketService _basketService;
-        public ShoppingCartController(IProductService productService, IBasketService basketService)
+        private readonly ISizeService _sizeService;
+        private readonly IColorService _colorService;
+        public ShoppingCartController(IProductService productService, IBasketService basketService, ISizeService sizeService, IColorService colorService)
         {
             _productService = productService;
             _basketService = basketService;
+            _sizeService = sizeService;
+            _colorService = colorService;
         }
 
         public async Task<IActionResult> Index()
@@ -21,9 +27,16 @@ namespace OllieShop.WebUI.Controllers
             return View(values);
         }
 
-        public async Task<IActionResult> AddItemToBasket(string productId)
+        public async Task<IActionResult> AddItemToBasket(string productId,string sizeId,string colorId)
         {
+            if(!User.Identity!.IsAuthenticated)
+            {
+                return RedirectToAction("Index","Login");
+            }
             var product = await _productService.GetByIdProductAsync(productId);
+            var size = await _sizeService.GetByIdSizeAsync(sizeId);
+            var color = await _colorService.GetByIdColorAsync(colorId);
+
             if (product != null)
             {
                 await _basketService.AddItemToBasket(new BasketItemDto
@@ -33,7 +46,11 @@ namespace OllieShop.WebUI.Controllers
                     ImageUrl = product.ImageUrl!,
                     ProductName = product.Name!,
                     Quantity = 1,
-                    UnitPrice = product.Price
+                    UnitPrice = product.Price,
+                    Color = color.Name,
+                    ColorId = color.ColorId,
+                    Size = size.Name,
+                    SizeId = size.SizeId
                 });
 
                 return RedirectToAction("Index");
@@ -47,9 +64,9 @@ namespace OllieShop.WebUI.Controllers
             return RedirectToAction("Index");
         }
 
-        public async Task<IActionResult> UpdateItemQuantity(string productId, int quantity)
+        public async Task<IActionResult> UpdateItemQuantity(string productId, int quantity, string sizeId, string colorId)
         {
-            var updatedItem = await _basketService.UpdateBasketItem(productId,quantity);
+            var updatedItem = await _basketService.UpdateBasketItem(productId,quantity,sizeId,colorId);
             var totalPrice = await CalculateTotalPrice();
             return Json(new { updatedItem, totalPrice });
         }

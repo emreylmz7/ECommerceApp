@@ -2884,36 +2884,37 @@ fieldset:disabled a.btn {
 }
 
 .btn-outline-dark {
-  color: #3D464D;
-  border-color: #3D464D;
+    color: #000; /* Siyah */
+    border-color: #000; /* Siyah */
 }
 
 .btn-outline-dark:hover {
-  color: #fff;
-  background-color: #3D464D;
-  border-color: #3D464D;
+    color: #fff; /* Beyaz */
+    background-color: #000; /* Siyah */
+    border-color: #000; /* Siyah */
 }
 
 .btn-outline-dark:focus, .btn-outline-dark.focus {
-  box-shadow: 0 0 0 0.2rem rgba(61, 70, 77, 0.5);
+    box-shadow: 0 0 0 0.2rem rgba(0, 0, 0, 0.5); /* Siyah gölge */
 }
 
 .btn-outline-dark.disabled, .btn-outline-dark:disabled {
-  color: #3D464D;
-  background-color: transparent;
+    color: #000; /* Siyah */
+    background-color: transparent;
 }
 
 .btn-outline-dark:not(:disabled):not(.disabled):active, .btn-outline-dark:not(:disabled):not(.disabled).active,
 .show > .btn-outline-dark.dropdown-toggle {
-  color: #fff;
-  background-color: #3D464D;
-  border-color: #3D464D;
+    color: #fff; /* Beyaz */
+    background-color: #000; /* Siyah */
+    border-color: #000; /* Siyah */
 }
 
 .btn-outline-dark:not(:disabled):not(.disabled):active:focus, .btn-outline-dark:not(:disabled):not(.disabled).active:focus,
 .show > .btn-outline-dark.dropdown-toggle:focus {
-  box-shadow: 0 0 0 0.2rem rgba(61, 70, 77, 0.5);
+    box-shadow: 0 0 0 0.2rem rgba(0, 0, 0, 0.5); /* Siyah gölge */
 }
+
 
 .btn-link {
   font-weight: 400;

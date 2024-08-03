@@ -1,4 +1,5 @@
 ﻿using OllieShop.Catalog.Dtos.ProductDtos;
+using OllieShop.Catalog.Entities;
 
 namespace OllieShop.Catalog.Services.ProductServices
 {
@@ -10,7 +11,9 @@ namespace OllieShop.Catalog.Services.ProductServices
         Task DeleteProductAsync(string id);
         Task<GetByIdProductDto> GetByIdProductAsync(string id);
         Task<List<ResultProductsWithCategoryDto>> GetProductsWithCategoryAsync();
+        Task<ResultAllProductDetailsDto> GetAllProductDetailsAsync(string id);
         Task<List<ResultProductsWithCategoryDto>> GetProductsByCategoryIdAsync(string CategoryId);
+        Task<List<Color>> GetColorsForSize(string sizeId,string id);
 
     }
 }

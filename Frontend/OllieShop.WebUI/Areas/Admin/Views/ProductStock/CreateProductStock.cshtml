@@ -1,0 +1,60 @@
+﻿@model CreateProductStockDto
+
+@{
+    ViewData["Title"] = "Create Product Stock";
+    Layout = "~/Areas/Admin/Views/AdminLayout/Index.cshtml";
+}
+
+<div class="container-xxl flex-grow-1 container-p-y">
+    <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Add /</span> Add Product Stock</h4>
+
+    <div class="row">
+        <div class="col-xl">
+            <div class="card mb-4">
+                <h5 class="card-header">Create New Product Stock</h5>
+                <div class="card-body">
+                    <form method="post" asp-action="CreateProductStock">
+                        <div class="mb-3">
+                            <label for="productSelect" class="form-label">Product</label>
+                            <select class="form-select" id="productSelect" name="ProductId" required>
+                                @foreach (var product in ViewBag.Products)
+                                {
+                                    <option value="@product.Value">@product.Text</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="colorSelect" class="form-label">Color</label>
+                            <select class="form-select" id="colorSelect" name="ColorId" required>
+                                @foreach (var color in ViewBag.Colors)
+                                {
+                                    <option value="@color.Value">@color.Text</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="sizeSelect" class="form-label">Size</label>
+                            <select class="form-select" id="sizeSelect" name="SizeId" required>
+                                @foreach (var size in ViewBag.Sizes)
+                                {
+                                    <option value="@size.Value">@size.Text</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="stock" class="form-label">Stock Quantity</label>
+                            <input type="number"
+                                   class="form-control"
+                                   id="stock"
+                                   name="Stock"
+                                   placeholder="Enter stock quantity"
+                                   min="0"
+                                   required />
+                        </div>
+                        <button type="submit" class="btn btn-primary">Create Product Stock</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

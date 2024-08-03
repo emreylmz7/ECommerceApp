@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using MongoDB.Driver;
 using OllieShop.Catalog.Dtos.CarouselDtos;
-using OllieShop.Catalog.Dtos.CategoryDtos;
 using OllieShop.Catalog.Entities;
 using OllieShop.Catalog.Settings;
 

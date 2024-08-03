@@ -6,6 +6,7 @@ using OllieShop.WebUI.Services.BasketServices;
 using OllieShop.WebUI.Services.CatalogServices.AboutServices;
 using OllieShop.WebUI.Services.CatalogServices.CarouselServices;
 using OllieShop.WebUI.Services.CatalogServices.CategoryServices;
+using OllieShop.WebUI.Services.CatalogServices.ColorServices;
 using OllieShop.WebUI.Services.CatalogServices.CommentServices;
 using OllieShop.WebUI.Services.CatalogServices.ContactServices;
 using OllieShop.WebUI.Services.CatalogServices.FeatureServices;
@@ -13,6 +14,8 @@ using OllieShop.WebUI.Services.CatalogServices.OfferServices;
 using OllieShop.WebUI.Services.CatalogServices.ProductDetailServices;
 using OllieShop.WebUI.Services.CatalogServices.ProductImageServices;
 using OllieShop.WebUI.Services.CatalogServices.ProductServices;
+using OllieShop.WebUI.Services.CatalogServices.ProductStockServices;
+using OllieShop.WebUI.Services.CatalogServices.SizeServices;
 using OllieShop.WebUI.Services.CatalogServices.VendorServices;
 using OllieShop.WebUI.Services.ClientCredentialTokenService;
 using OllieShop.WebUI.Services.CommentServices;
@@ -114,6 +117,21 @@ namespace OllieShop.WebUI.Extensions
             }).AddHttpMessageHandler<ClientCredentialTokenHandler>();
 
             services.AddHttpClient<IContactService, ContactService>(opt =>
+            {
+                opt.BaseAddress = new Uri($"{values.OcelotUrl}/{values.Catalog.Path}");
+            }).AddHttpMessageHandler<ClientCredentialTokenHandler>();
+
+            services.AddHttpClient<IColorService, ColorService>(opt =>
+            {
+                opt.BaseAddress = new Uri($"{values.OcelotUrl}/{values.Catalog.Path}");
+            }).AddHttpMessageHandler<ClientCredentialTokenHandler>();
+
+            services.AddHttpClient<ISizeService, SizeService>(opt =>
+            {
+                opt.BaseAddress = new Uri($"{values.OcelotUrl}/{values.Catalog.Path}");
+            }).AddHttpMessageHandler<ClientCredentialTokenHandler>();
+
+            services.AddHttpClient<IProductStockService, ProductStockService>(opt =>
             {
                 opt.BaseAddress = new Uri($"{values.OcelotUrl}/{values.Catalog.Path}");
             }).AddHttpMessageHandler<ClientCredentialTokenHandler>();

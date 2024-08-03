@@ -13,7 +13,7 @@ namespace OllieShop.WebUI.ViewComponents.ProductDetailViewComponents
 
         public async Task<IViewComponentResult> InvokeAsync(string id)
         {
-            var product = await _productService.GetByIdProductAsync(id);
+            var product = await _productService.GetAllProductDetailsById(id);
             return View(product);
         }
     }

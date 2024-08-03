@@ -8,32 +8,64 @@
         {
             if (rating >= i)
             {
-                stars += "<p class='fas fa-star' style='color:#f0ad4e'></p>";
+                stars += "<i class='fas fa-star' style='color:#f0ad4e'></i>";
             }
             else if (rating >= i - 0.5)
             {
-                stars += "<p class='fas fa-star-half-alt' style='color:#f0ad4e'></p>";
+                stars += "<i class='fas fa-star-half-alt' style='color:#f0ad4e'></i>";
             }
             else
             {
-                stars += "<p class='far fa-star' style='color:#f0ad4e'></p>";
+                stars += "<i class='far fa-star' style='color:#f0ad4e'></i>";
             }
         }
         return stars;
     }
 }
 
+
+<!-- Modal -->
+<div class="modal fade" id="productModal" tabindex="-1" aria-labelledby="productModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header border-bottom-0">
+                <h5 class="modal-title" id="productModalLabel">Add to Basket</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="productForm" action="/ShoppingCart/AddItemToBasket" method="post">
+                    <input type="hidden" name="productId" id="modalProductId" />
+                    <div class="mb-3">
+                        <label for="sizeSelect" class="form-label">Select Size</label>
+                        <select class="form-select" id="sizeSelect" name="sizeId">
+                            <!-- Options will be populated dynamically -->
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="colorSelect" class="form-label">Select Color</label>
+                        <select class="form-select" id="colorSelect" name="colorId">
+                            <!-- Options will be populated dynamically -->
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-outline-dark w-100">Add to Basket</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <div class="pt-5 pb-3">
     <h2 class="section-title position-relative mb-4"><span class="bg-secondary pr-3">Best Sellers</span></h2>
     <div class="row">
-        @foreach(var item in Model)
+        @foreach (var item in Model)
         {
             <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
                 <div class="product-item bg-light mb-4">
                     <div class="product-img position-relative overflow-hidden">
                         <img class="img-fluid w-100" src="~/img/products/@item.ImageUrl" alt="" style="height:300px;object-fit:cover">
                         <div class="product-action">
-                            <a class="btn btn-outline-dark btn-square" href="/ShoppingCart/AddItemToBasket?productId=@item.ProductId"><i class="fa fa-shopping-cart"></i></a>
+                            <a class="btn btn-outline-dark btn-square add-to-basket" data-product-id="@item.ProductId" href="#"><i class="fa fa-shopping-cart"></i></a>
                             <a class="btn btn-outline-dark btn-square" href=""><i class="far fa-heart"></i></a>
                             <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-sync-alt"></i></a>
                             <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-search"></i></a>
@@ -54,3 +86,5 @@
         }
     </div>
 </div>
+
+

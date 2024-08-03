@@ -1,0 +1,79 @@
+﻿@model UpdateProductStockDto
+
+@{
+    ViewData["Title"] = "Update Product Stock";
+    Layout = "~/Areas/Admin/Views/AdminLayout/Index.cshtml";
+}
+
+<div class="container-xxl flex-grow-1 container-p-y">
+    <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Update /</span> Update Product Stock</h4>
+
+    <div class="row">
+        <div class="col-xl">
+            <div class="card mb-4">
+                <h5 class="card-header">Update Product Stock</h5>
+                <div class="card-body">
+                    <form method="post">
+                        <input type="hidden" asp-for="ProductStockId"/>
+                        
+                        <div class="mb-3">
+                            <label for="productSelect" class="form-label">Product</label>
+                            <select class="form-select" id="productSelect" name="ProductId" required>
+                                @foreach (var product in ViewBag.Products)
+                                {
+                                    if (Model.ProductId == product.Value)
+                                    {
+                                        <option value="@product.Value" selected>@product.Text</option>
+                                    }
+                                    <option value="@product.Value">@product.Text</option>
+                                }
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="colorSelect" class="form-label">Color</label>
+                            <select class="form-select" id="colorSelect" name="ColorId" required>
+                                @foreach (var color in ViewBag.Colors)
+                                {
+                                    if (Model.ColorId == color.Value)
+                                    {
+                                        <option value="@color.Value" selected>@color.Text</option>
+                                    }
+                                    <option value="@color.Value">@color.Text</option>
+                                }
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="sizeSelect" class="form-label">Size</label>
+                            <select class="form-select" id="sizeSelect" name="SizeId" required>
+                                @foreach (var size in ViewBag.Sizes)
+                                {
+                                    if(Model.SizeId == size.Value)
+                                    {
+                                        <option value="@size.Value" selected>@size.Text</option>
+                                    }
+                                    <option value="@size.Value">@size.Text</option>
+                                }
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="stock" class="form-label">Stock Quantity</label>
+                            <input type="number"
+                                   class="form-control"
+                                   id="stock"
+                                   name="Stock"
+                                   asp-for="Stock"
+                                   placeholder="Enter stock quantity"
+                                   min="0"
+                                   required />
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary">Update Product Stock</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

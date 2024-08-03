@@ -14,5 +14,8 @@
         public string VendorCollectionName { get ; set ; } = null!;
         public string AboutCollectionName { get ; set ; } = null!;
         public string ContactCollectionName { get ; set ; } = null!;
+        public string SizeCollectionName { get ; set ; } = null!;
+        public string ColorCollectionName { get ; set ; } = null!;
+        public string ProductStockCollectionName { get ; set ; } = null!;
     }
 }
