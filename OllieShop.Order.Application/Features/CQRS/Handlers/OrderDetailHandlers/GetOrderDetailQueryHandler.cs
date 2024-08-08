@@ -22,10 +22,10 @@ namespace OllieShop.Order.Application.Features.CQRS.Handlers.OrderDetailHandlers
                 OrderDetailId = x.OrderDetailId,
                 ProductId = x.ProductId,
                 ProductName = x.ProductName,
-                ProductPrice = x.ProductPrice,
-                ProductAmount = x.ProductAmount,
-                ProductTotalPrice = x.ProductTotalPrice,
-                OrderingId = x.OrderingId
+                OrderingId = x.OrderingId,
+                Quantity = x.Quantity,
+                TotalPrice = x.TotalPrice,
+                UnitPrice = x.UnitPrice,
             }).ToList();
         }
     }

@@ -1,15 +1,7 @@
-﻿using OllieShop.Order.Application.Features.CQRS.Queries.AddressQueries;
-using OllieShop.Order.Application.Features.CQRS.Queries.OrderDetailQueries;
-using OllieShop.Order.Application.Features.CQRS.Results.AddressResults;
+﻿using OllieShop.Order.Application.Features.CQRS.Queries.OrderDetailQueries;
 using OllieShop.Order.Application.Features.CQRS.Results.OrderDetailResults;
 using OllieShop.Order.Application.Interfaces;
 using OllieShop.Order.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace OllieShop.Order.Application.Features.CQRS.Handlers.OrderDetailHandlers
 {
     public class GetOrderDetailByIdQueryHandler
@@ -29,10 +21,10 @@ namespace OllieShop.Order.Application.Features.CQRS.Handlers.OrderDetailHandlers
                 OrderDetailId = values.OrderDetailId,
                 ProductId = values.ProductId,
                 ProductName = values.ProductName,
-                ProductPrice = values.ProductPrice,
-                ProductAmount = values.ProductAmount,
-                ProductTotalPrice = values.ProductTotalPrice,
-                OrderingId = values.OrderingId
+                OrderingId = values.OrderingId,
+                Quantity = values.Quantity,
+                TotalPrice = values.TotalPrice,
+                UnitPrice = values.UnitPrice,
             };
         }
     }

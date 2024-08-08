@@ -6,7 +6,8 @@ using OllieShop.Order.Application.Features.CQRS.Queries.OrderDetailQueries;
 
 namespace OllieShop.Order.WebApi.Controllers
 {
-    [Authorize]
+    [AllowAnonymous]
+
     [Route("api/[controller]")]
     [ApiController]
     public class OrderDetailsController : ControllerBase

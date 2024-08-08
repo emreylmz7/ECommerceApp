@@ -1,4 +1,6 @@
 ﻿using MediatR;
+using OllieShop.Order.Application.Features.CQRS.Results.AddressResults;
+using OllieShop.Order.Application.Features.CQRS.Results.OrderDetailResults;
 using OllieShop.Order.Application.Features.Mediator.Queries.OrderingQueries;
 using OllieShop.Order.Application.Features.Mediator.Results.OrderingResults;
 using OllieShop.Order.Application.Interfaces;
@@ -18,12 +20,14 @@ namespace OllieShop.Order.Application.Features.Mediator.Handlers.OrderingHandler
         public async Task<List<GetOrderingQueryResult>> Handle(GetOrderingQuery request, CancellationToken cancellationToken)
         {
             var values = await _repository.GetAllAsync();
-            return values.Select(x => new GetOrderingQueryResult
+            return values.Select(ordering => new GetOrderingQueryResult
             {
-                OrderingId = x.OrderingId,
-                OrderDate = x.OrderDate,
-                TotalPrice = x.TotalPrice,
-                UserId = x.UserId
+                OrderingId = ordering.OrderingId,
+                OrderDate = ordering.OrderDate,
+                TotalPrice = ordering.TotalPrice,
+                UserId = ordering.UserId,
+                AddressId = ordering.AddressId,
+                Status = ordering.Status,
             }).ToList();
         }
     }

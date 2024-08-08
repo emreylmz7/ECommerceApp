@@ -37,6 +37,10 @@ namespace OllieShop.Order.WebApi.Controllers
         public async Task<IActionResult> AddressListById(int id)
         {
             var values = await _getAddressByIdQueryHandler.Handle(new GetAddressByIdQuery(id));
+            if (values == null)
+            {
+                return NotFound();
+            }
             return Ok(values);
         }
 

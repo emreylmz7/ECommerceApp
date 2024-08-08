@@ -20,7 +20,9 @@ namespace OllieShop.Order.Application.Features.Mediator.Handlers.OrderingHandler
                 OrderingId = request.OrderingId,
                 OrderDate = request.OrderDate,
                 TotalPrice = request.TotalPrice,
-                UserId  = request.UserId
+                UserId = request.UserId,
+                Status = request.Status,
+                AddressId = request.AddressId,
             });
         }
     }

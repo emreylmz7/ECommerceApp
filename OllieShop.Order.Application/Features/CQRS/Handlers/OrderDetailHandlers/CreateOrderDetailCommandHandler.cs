@@ -19,10 +19,10 @@ namespace OllieShop.Order.Application.Features.CQRS.Handlers.OrderDetailHandlers
             {
                 ProductId = command.ProductId,
                 ProductName = command.ProductName,
-                ProductPrice = command.ProductPrice,
-                ProductAmount = command.ProductAmount,
-                ProductTotalPrice = command.ProductTotalPrice,
-                OrderingId = command.OrderingId
+                TotalPrice = command.TotalPrice,
+                OrderingId = command.OrderingId,
+                Quantity = command.Quantity,
+                UnitPrice = command.UnitPrice,
             });
         }
     }

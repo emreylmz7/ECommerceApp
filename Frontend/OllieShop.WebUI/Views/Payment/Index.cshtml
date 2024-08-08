@@ -1,0 +1,143 @@
+﻿@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/UILayout/_UILayout.cshtml";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <!-- Custom CSS file link -->
+    <link rel="stylesheet" href="~/css/payment.css">
+</head>
+
+<body class="payment-page">
+
+    <div class="payment-container">
+        <div class="payment-card-container">
+            <div class="payment-card-front card">
+                <div class="payment-card-image d-flex align-items-center">
+                    <img src="~/img/chip.png" alt="Chip">
+                    <img src="~/img/visa.png" alt="Visa">
+                </div>
+                <div class="payment-card-number-box">################</div>
+                <div class="payment-card-details">
+                    <div class="payment-card-holder">
+                        <span>Card Holder</span>
+                        <div class="payment-card-holder-name">Full Name</div>
+                    </div>
+                    <div class="payment-card-expiration">
+                        <span>Expires</span>
+                        <div class="payment-expiration-date">
+                            <span class="payment-exp-month">MM</span>
+                            <span class="payment-exp-year">YY</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="payment-card-back card">
+                <div class="payment-card-stripe"></div>
+                <div class="payment-card-cvv">
+                    <span>CVV</span>
+                    <div class="payment-cvv-box"></div>
+                    <img src="~/img/visa.png" alt="Visa" style="width:50px">
+                </div>
+            </div>
+        </div>
+
+        <form class="payment-form">
+            <div class="form-group">
+                <label for="cardNumber">Card Number</label>
+                <input type="text" id="cardNumber" maxlength="16" class="form-control payment-card-number-input">
+            </div>
+            <div class="form-group">
+                <label for="cardHolder">Card Holder</label>
+                <input type="text" id="cardHolder" class="form-control payment-card-holder-input">
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="expirationMonth">Expiration MM</label>
+                    <select id="expirationMonth" class="form-control payment-month-input">
+                        <option value="month" selected disabled>Month</option>
+                        <option value="01">01</option>
+                        <option value="02">02</option>
+                        <option value="03">03</option>
+                        <option value="04">04</option>
+                        <option value="05">05</option>
+                        <option value="06">06</option>
+                        <option value="07">07</option>
+                        <option value="08">08</option>
+                        <option value="09">09</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                        <option value="12">12</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="expirationYear">Expiration YY</label>
+                    <select id="expirationYear" class="form-control payment-year-input">
+                        <option value="year" selected disabled>year</option>
+                        <option value="2021">2021</option>
+                        <option value="2022">2022</option>
+                        <option value="2023">2023</option>
+                        <option value="2024">2024</option>
+                        <option value="2025">2025</option>
+                        <option value="2026">2026</option>
+                        <option value="2027">2027</option>
+                        <option value="2028">2028</option>
+                        <option value="2029">2029</option>
+                        <option value="2030">2030</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-12">
+                    <label for="cvv">CVV</label>
+                    <input type="text" id="cvv" maxlength="4" class="form-control payment-cvv-input">
+                </div>
+            </div>
+            <button type="submit" class="btn payment-submit-btn">Submit</button>
+        </form>
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        document.querySelector('.payment-card-number-input').oninput = () => {
+            document.querySelector('.payment-card-number-box').innerText = document.querySelector('.payment-card-number-input').value;
+        }
+
+        document.querySelector('.payment-card-holder-input').oninput = () => {
+            document.querySelector('.payment-card-holder-name').innerText = document.querySelector('.payment-card-holder-input').value;
+        }
+
+        document.querySelector('.payment-month-input').oninput = () => {
+            document.querySelector('.payment-exp-month').innerText = document.querySelector('.payment-month-input').value;
+        }
+
+        document.querySelector('.payment-year-input').oninput = () => {
+            document.querySelector('.payment-exp-year').innerText = document.querySelector('.payment-year-input').value;
+        }
+
+        document.querySelector('.payment-cvv-input').onmouseenter = () => {
+            document.querySelector('.payment-card-front').style.transform = 'perspective(1000px) rotateY(-180deg)';
+            document.querySelector('.payment-card-back').style.transform = 'perspective(1000px) rotateY(0deg)';
+        }
+
+        document.querySelector('.payment-cvv-input').onmouseleave = () => {
+            document.querySelector('.payment-card-front').style.transform = 'perspective(1000px) rotateY(0deg)';
+            document.querySelector('.payment-card-back').style.transform = 'perspective(1000px) rotateY(180deg)';
+        }
+
+        document.querySelector('.payment-cvv-input').oninput = () => {
+            document.querySelector('.payment-cvv-box').innerText = document.querySelector('.payment-cvv-input').value;
+        }
+    </script>
+</body>
+
+
+</html>

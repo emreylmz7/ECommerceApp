@@ -17,10 +17,15 @@ namespace OllieShop.Order.Application.Features.CQRS.Handlers.AddressHandlers
         {
             await _repository.CreateAsync(new Address
             {
-                City = createAddressCommand.City,
-                Detail = createAddressCommand.Detail,
-                District = createAddressCommand.District,
                 UserId = createAddressCommand.UserId,
+                Surname = createAddressCommand.Surname, 
+                City = createAddressCommand.City,
+                Country = createAddressCommand.Country,
+                Description = createAddressCommand.Description,
+                Email = createAddressCommand.Email,
+                Name = createAddressCommand.Name,
+                PhoneNumber = createAddressCommand.PhoneNumber,
+                ZipCode = createAddressCommand.ZipCode,
             });
         }
     }

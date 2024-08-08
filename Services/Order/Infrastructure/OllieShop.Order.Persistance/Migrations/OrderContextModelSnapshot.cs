@@ -31,15 +31,39 @@ namespace OllieShop.Order.Persistance.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AddressId"), 1L, 1);
 
                     b.Property<string>("City")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Detail")
+                    b.Property<string>("Country")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("District")
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Surname")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ZipCode")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("AddressId");
@@ -58,19 +82,19 @@ namespace OllieShop.Order.Persistance.Migrations
                     b.Property<int>("OrderingId")
                         .HasColumnType("int");
 
-                    b.Property<int>("ProductAmount")
-                        .HasColumnType("int");
-
                     b.Property<string>("ProductId")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ProductName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal>("ProductPrice")
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("TotalPrice")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<decimal>("ProductTotalPrice")
+                    b.Property<decimal>("UnitPrice")
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("OrderDetailId");
@@ -88,8 +112,14 @@ namespace OllieShop.Order.Persistance.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OrderingId"), 1L, 1);
 
+                    b.Property<int>("AddressId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("OrderDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
 
                     b.Property<decimal>("TotalPrice")
                         .HasColumnType("decimal(18,2)");
@@ -98,6 +128,8 @@ namespace OllieShop.Order.Persistance.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("OrderingId");
+
+                    b.HasIndex("AddressId");
 
                     b.ToTable("Orderings");
                 });
@@ -111,6 +143,17 @@ namespace OllieShop.Order.Persistance.Migrations
                         .IsRequired();
 
                     b.Navigation("Ordering");
+                });
+
+            modelBuilder.Entity("OllieShop.Order.Domain.Entities.Ordering", b =>
+                {
+                    b.HasOne("OllieShop.Order.Domain.Entities.Address", "ShippingAddress")
+                        .WithMany()
+                        .HasForeignKey("AddressId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ShippingAddress");
                 });
 
             modelBuilder.Entity("OllieShop.Order.Domain.Entities.Ordering", b =>

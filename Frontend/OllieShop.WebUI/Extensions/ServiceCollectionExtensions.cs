@@ -4,11 +4,13 @@ using OllieShop.WebUI.Handlers;
 using OllieShop.WebUI.Services.ApiServices;
 using OllieShop.WebUI.Services.BasketServices;
 using OllieShop.WebUI.Services.CatalogServices.AboutServices;
+using OllieShop.WebUI.Services.CatalogServices.AddressServices;
 using OllieShop.WebUI.Services.CatalogServices.CarouselServices;
 using OllieShop.WebUI.Services.CatalogServices.CategoryServices;
 using OllieShop.WebUI.Services.CatalogServices.ColorServices;
 using OllieShop.WebUI.Services.CatalogServices.CommentServices;
 using OllieShop.WebUI.Services.CatalogServices.ContactServices;
+using OllieShop.WebUI.Services.CatalogServices.CouponServices;
 using OllieShop.WebUI.Services.CatalogServices.FeatureServices;
 using OllieShop.WebUI.Services.CatalogServices.OfferServices;
 using OllieShop.WebUI.Services.CatalogServices.ProductDetailServices;
@@ -19,9 +21,11 @@ using OllieShop.WebUI.Services.CatalogServices.SizeServices;
 using OllieShop.WebUI.Services.CatalogServices.VendorServices;
 using OllieShop.WebUI.Services.ClientCredentialTokenService;
 using OllieShop.WebUI.Services.CommentServices;
+using OllieShop.WebUI.Services.CouponServices;
 using OllieShop.WebUI.Services.IdentityServices;
 using OllieShop.WebUI.Services.IUserService;
 using OllieShop.WebUI.Services.LoginServices;
+using OllieShop.WebUI.Services.OrderServices.AddressServices;
 using OllieShop.WebUI.Settings;
 
 namespace OllieShop.WebUI.Extensions
@@ -150,6 +154,21 @@ namespace OllieShop.WebUI.Extensions
             {
                 opt.BaseAddress = new Uri($"{values.OcelotUrl}/{values.Basket.Path}");
             }).AddHttpMessageHandler<ResourceOwnerPasswordTokenHandler>();
+
+            //DISCOUNT MICROSERVICE CONFIGS
+
+            services.AddHttpClient<ICouponService, CouponService>(opt =>
+            {
+                opt.BaseAddress = new Uri($"{values.OcelotUrl}/{values.Discount.Path}");
+            }).AddHttpMessageHandler<ClientCredentialTokenHandler>();
+
+            //ORDER MICROSERVICE CONFIGS
+
+            services.AddHttpClient<IAddressService, AddressService>(opt =>
+            {
+                opt.BaseAddress = new Uri($"{values.OcelotUrl}/{values.Order.Path}");
+            }).AddHttpMessageHandler<ResourceOwnerPasswordTokenHandler>();
+
 
 
             services.AddScoped<ResourceOwnerPasswordTokenHandler>();

@@ -18,9 +18,9 @@ namespace OllieShop.Order.Application.Features.CQRS.Handlers.OrderDetailHandlers
             var values = await _repository.GetByIdAsync(command.OrderDetailId);
             values.ProductId = command.ProductId;
             values.ProductName = command.ProductName;
-            values.ProductPrice = command.ProductPrice;
-            values.ProductAmount = command.ProductAmount;
-            values.ProductTotalPrice = command.ProductTotalPrice;
+            values.UnitPrice = command.UnitPrice;
+            values.Quantity = command.Quantity;
+            values.TotalPrice = command.TotalPrice;
             values.OrderingId = command.OrderingId;
 
             await _repository.UpdateAsync(values);

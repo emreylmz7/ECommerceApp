@@ -44,6 +44,11 @@ namespace OllieShop.Order.Persistance.Repositories
             return value!;
         }
 
+        public async Task<List<T>> GetListByFilterAsync(Expression<Func<T, bool>> filter)
+        {
+            return await _context.Set<T>().Where(filter).ToListAsync();
+        }
+
         public async Task UpdateAsync(T entity)
         {
             _context.Set<T>().Update(entity);

@@ -1,0 +1,230 @@
+﻿@model List<ResultAddressDto>
+
+@{
+    ViewData["Title"] = "Checkout";
+    Layout = "~/Views/UILayout/_UILayout.cshtml";
+}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/5.3.45/css/materialdesignicons.css" integrity="sha256-NAxhqDvtY0l4xn+YVa6WjAcmd94NNfttjNsDmNatFVc=" crossorigin="anonymous" />
+<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+<link href='~/css/checkout.css' rel='stylesheet'>
+
+<div class="container mt-3">
+
+    <div class="row">
+        <div class="col-xl-8">
+            <form method="post" asp-action="Index" asp-controller="Order">
+
+                <div class="card">
+                    <div class="card-body">
+                        <ol class="activity-checkout mb-0 px-4 mt-3">
+                            <li class="checkout-item">
+                                <div class="avatar checkout-icon p-1">
+                                    <div class="avatar-title rounded-circle bg-primary">
+                                        <i class="bx bxs-receipt text-white font-size-20"></i>
+                                    </div>
+                                </div>
+                                <div class="feed-item-list">
+                                    <div>
+                                        <h5 class="font-size-16 mb-1">Address Information</h5>
+                                        <p class="text-muted text-truncate mb-4">Please enter your address details</p>
+                                        <div class="mb-3">
+
+                                            <div>
+                                                <div class="row">
+                                                    <div class="col-lg-4">
+                                                        <div class="mb-3">
+                                                            <label class="form-label" for="billing-name">Name</label>
+                                                            <input type="text" name="Name" id="Name" class="form-control" placeholder="Enter name">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-4">
+                                                        <div class="mb-3">
+                                                            <label class="form-label" for="billing-email-address">Email Address</label>
+                                                            <input type="email" name="Email" id="Email" class="form-control" placeholder="Enter email">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-4">
+                                                        <div class="mb-3">
+                                                            <label class="form-label" for="billing-phone">Phone</label>
+                                                            <input type="text" name="PhoneNumber" id="PhoneNumber" class="form-control" placeholder="Enter phone number">
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="mb-3">
+                                                    <label class="form-label" for="billing-address">Address</label>
+                                                    <textarea class="form-control" name="Description" id="Description" rows="3" placeholder="Enter full address"></textarea>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-lg-4">
+                                                        <div class="mb-4 mb-lg-0">
+                                                            <label class="form-label">Country</label>
+                                                            <select class="form-control form-select" title="Country" name="Country" id="Country">
+                                                                <option value="0">Select Country</option>
+                                                                <option value="Turkey">Turkey</option>
+                                                                <option value="England">England</option>
+                                                                <option value="Denmark">Denmark</option>
+                                                                <option value="America">America</option>
+                                                                <option value="Germany">Germany</option>
+                                                                <option value="France">France</option>
+                                                                <option value="Belgium">Belgium</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-lg-4">
+                                                        <div class="mb-4 mb-lg-0">
+                                                            <label class="form-label" for="billing-city">City</label>
+                                                            <input type="text" class="form-control" name="City" id="City" placeholder="Enter city">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-lg-4">
+                                                        <div class="mb-0">
+                                                            <label class="form-label" for="zip-code">Zip / Postal Code</label>
+                                                            <input type="text" class="form-control" name="ZipCode" id="ZipCode" placeholder="Enter postal code">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="checkout-item">
+                                <div class="avatar checkout-icon p-1">
+                                    <div class="avatar-title rounded-circle bg-primary">
+                                        <i class="bx bxs-truck text-white font-size-20"></i>
+                                    </div>
+                                </div>
+                                <div class="feed-item-list">
+                                    <div>
+                                        <h5 class="font-size-16 mb-1">Registered Addresses</h5>
+                                        <p class="text-muted text-truncate mb-4">Select an address from your saved addresses</p>
+                                        <div class="mb-3">
+                                            <div class="row">
+                                                @if (Model.Any())
+                                                {
+                                                    @foreach (var item in Model)
+                                                    {
+                                                        <div class="col-lg-6 col-sm-6">
+                                                            <div data-bs-toggle="collapse">
+                                                                <label class="card-radio-label mb-0">
+                                                                    <input type="radio" name="address" id="info-address1" class="card-radio-input" checked="">
+                                                                    <div class="card-radio text-truncate p-3">
+                                                                        <span class="fs-14 mb-4 d-block">Address 1</span>
+                                                                        <span class="fs-14 mb-2 d-block">@item.Name @item.Surname</span>
+                                                                        <span class="fs-14 mb-2 d-block">@item.City / @item.Country</span>
+                                                                        <span class="text-muted fw-normal text-wrap mb-1 d-block">@item.Description</span>
+
+                                                                        <span class="text-muted fw-normal d-block">Phone @item.PhoneNumber</span>
+                                                                    </div>
+                                                                </label>
+                                                                <div class="edit-btn bg-light rounded">
+                                                                    <a href="#" data-bs-toggle="tooltip" data-placement="top" title="Edit">
+                                                                        <i class="bx bx-pencil font-size-16"></i>
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    }
+
+                                                }
+                                                else
+                                                {
+                                                    <div class="alert alert-primary" role="alert">
+                                                        There are no registered addresses.
+                                                    </div>
+                                                }
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="checkout-item">
+                                <div class="avatar checkout-icon p-1">
+                                    <div class="avatar-title rounded-circle bg-primary">
+                                        <i class="bx bxs-wallet-alt text-white font-size-20"></i>
+                                    </div>
+                                </div>
+                                <div class="feed-item-list">
+                                    <div>
+                                        <h5 class="font-size-16 mb-1">Payment Information</h5>
+                                        <p class="text-muted text-truncate mb-4">Choose your preferred payment method</p>
+                                    </div>
+                                    <div>
+                                        <h5 class="font-size-14 mb-3">Payment method :</h5>
+                                        <div class="row">
+                                            <div class="col-lg-3 col-sm-6">
+                                                <div data-bs-toggle="collapse">
+                                                    <label class="card-radio-label">
+                                                        <input type="radio" name="pay-method" id="pay-methodoption1" class="card-radio-input">
+                                                        <span class="card-radio py-3 text-center text-truncate">
+                                                            <i class="bx bx-credit-card d-block h2 mb-3"></i>
+                                                            Credit / Debit Card
+                                                        </span>
+                                                    </label>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-3 col-sm-6">
+                                                <div>
+                                                    <label class="card-radio-label">
+                                                        <input type="radio" name="pay-method" id="pay-methodoption2" class="card-radio-input">
+                                                        <span class="card-radio py-3 text-center text-truncate">
+                                                            <i class="bx bxl-paypal d-block h2 mb-3"></i>
+                                                            PayPal
+                                                        </span>
+                                                    </label>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-3 col-sm-6">
+                                                <div>
+                                                    <label class="card-radio-label">
+                                                        <input type="radio" name="pay-method" id="pay-methodoption3" class="card-radio-input" checked="">
+
+                                                        <span class="card-radio py-3 text-center text-truncate">
+                                                            <i class="bx bx-money d-block h2 mb-3"></i>
+                                                            <span>Cash on Delivery</span>
+                                                        </span>
+                                                    </label>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ol>
+                    </div>
+                    <hr />
+                    <div class="d-flex justify-content-between" style="margin:1.5rem">
+                        <div class="">
+                            <a href="/ProductList/Index" class="btn btn-outline-dark pull-right rounded">
+                                <i class="mdi mdi-arrow-left me-1"></i> Continue Shopping
+                            </a>
+                        </div> <!-- end col -->
+                        <div class="">
+                            <div class="text-end mt-2 mt-sm-0">
+                                <button type="submit" class="btn btn-outline-success pull-right rounded">
+                                    <i class="mdi mdi-cart-outline me-1"></i> Proceed
+                                </button>
+                            </div>
+                        </div> <!-- end col -->
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        @await Component.InvokeAsync("_OrderSummaryComponentPartial")
+
+
+    </div>
+    <!-- end row -->
+
+</div>

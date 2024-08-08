@@ -3,25 +3,26 @@ using OllieShop.Order.Application.Features.Mediator.Commands.OrderingCommands;
 using OllieShop.Order.Application.Interfaces;
 using OllieShop.Order.Domain.Entities;
 
-namespace OllieShop.Order.Application.Features.Mediator.Handlers.OrderingHandlers
+public class CreateOrderingCommandHandler : IRequestHandler<CreateOrderingCommand>
 {
-    public class CreateOrderingCommandHandler : IRequestHandler<CreateOrderingCommand>
+    private readonly IRepository<Ordering> _repository;
+
+    public CreateOrderingCommandHandler(IRepository<Ordering> repository)
     {
-        private readonly IRepository<Ordering> _repository;
+        _repository = repository;
+    }
 
-        public CreateOrderingCommandHandler(IRepository<Ordering> repository)
+    public async Task Handle(CreateOrderingCommand request, CancellationToken cancellationToken)
+    {
+        var ordering = new Ordering
         {
-            _repository = repository;
-        }
+            OrderDate = request.OrderDate,
+            TotalPrice = request.TotalPrice,
+            UserId = request.UserId,
+            Status = request.Status,
+            AddressId = request.AddressId,
+        };
 
-        public async Task Handle(CreateOrderingCommand request, CancellationToken cancellationToken)
-        {
-            await _repository.CreateAsync(new Ordering
-            {
-                OrderDate = request.OrderDate,
-                TotalPrice = request.TotalPrice,
-                UserId = request.UserId
-            });
-        }
+        await _repository.CreateAsync(ordering);
     }
 }

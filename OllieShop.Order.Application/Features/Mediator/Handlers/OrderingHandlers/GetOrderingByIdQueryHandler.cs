@@ -14,15 +14,24 @@ namespace OllieShop.Order.Application.Features.Mediator.Handlers.OrderingHandler
         {
             _repository = repository;
         }
+
         public async Task<GetOrderingByIdQueryResult> Handle(GetOrderingByIdQuery request, CancellationToken cancellationToken)
         {
-            var value = await _repository.GetByIdAsync(request.Id);
+            var ordering = await _repository.GetByIdAsync(request.Id);
+            if (ordering == null)
+            {
+                // Handle the case where the ordering is not found, e.g., throw an exception or return null
+                return null; // Or throw new NotFoundException($"Ordering with ID {request.Id} not found.");
+            }
+
             return new GetOrderingByIdQueryResult
             {
-                OrderingId = value.OrderingId,
-                OrderDate = value.OrderDate,
-                TotalPrice = value.TotalPrice,
-                UserId = value.UserId
+                OrderingId = ordering.OrderingId,
+                OrderDate = ordering.OrderDate,
+                TotalPrice = ordering.TotalPrice,
+                UserId = ordering.UserId,
+                AddressId = ordering.AddressId,
+                Status = ordering.Status,
             };
         }
     }

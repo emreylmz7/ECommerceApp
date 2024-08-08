@@ -63,7 +63,7 @@ namespace OllieShop.IdentityServer
                 ClientSecrets={new Secret("ollieshopsecret".Sha256())},
                 AllowedScopes={
                     "CatalogFullPermission",
-                    "DiscountReadPermission",
+                    "DiscountFullPermission",
                     "OrderReadPermission",
                     "CargoReadPermission",
                     "BasketReadPermission",
