@@ -113,13 +113,12 @@
                                                         <div class="col-lg-6 col-sm-6">
                                                             <div data-bs-toggle="collapse">
                                                                 <label class="card-radio-label mb-0">
-                                                                    <input type="radio" name="address" id="info-address1" class="card-radio-input" checked="">
+                                                                    <input type="radio" name="SelectedAddressId" id="info-address1" class="card-radio-input" value="@item.AddressId" />
                                                                     <div class="card-radio text-truncate p-3">
-                                                                        <span class="fs-14 mb-4 d-block">Address 1</span>
+                                                                        <span class="fs-14 mb-4 d-block">Address</span>
                                                                         <span class="fs-14 mb-2 d-block">@item.Name @item.Surname</span>
                                                                         <span class="fs-14 mb-2 d-block">@item.City / @item.Country</span>
                                                                         <span class="text-muted fw-normal text-wrap mb-1 d-block">@item.Description</span>
-
                                                                         <span class="text-muted fw-normal d-block">Phone @item.PhoneNumber</span>
                                                                     </div>
                                                                 </label>
@@ -131,7 +130,6 @@
                                                             </div>
                                                         </div>
                                                     }
-
                                                 }
                                                 else
                                                 {
@@ -139,8 +137,8 @@
                                                         There are no registered addresses.
                                                     </div>
                                                 }
-
                                             </div>
+
                                         </div>
                                     </div>
                                 </div>
@@ -228,3 +226,13 @@
     <!-- end row -->
 
 </div>
+
+
+<script>
+    // Kullanıcı bir adres seçtiğinde, hidden input'a o adresin ID'sini yerleştirin
+    document.querySelectorAll('input[name="SelectedAddressId"]').forEach(function (radio) {
+        radio.addEventListener('change', function () {
+            document.getElementById('selectedAddressId').value = this.value;
+        });
+    });
+</script>

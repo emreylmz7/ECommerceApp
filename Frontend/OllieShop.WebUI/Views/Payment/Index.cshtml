@@ -52,7 +52,9 @@
             </div>
         </div>
 
-        <form class="payment-form">
+        <form method="post" class="payment-form">
+            <input type="hidden" name="OrderId" id="OrderId" value="@ViewBag.OrderId">
+
             <div class="form-group">
                 <label for="cardNumber">Card Number</label>
                 <input type="text" id="cardNumber" maxlength="16" class="form-control payment-card-number-input">

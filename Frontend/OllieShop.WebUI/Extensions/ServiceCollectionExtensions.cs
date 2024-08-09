@@ -13,6 +13,8 @@ using OllieShop.WebUI.Services.CatalogServices.ContactServices;
 using OllieShop.WebUI.Services.CatalogServices.CouponServices;
 using OllieShop.WebUI.Services.CatalogServices.FeatureServices;
 using OllieShop.WebUI.Services.CatalogServices.OfferServices;
+using OllieShop.WebUI.Services.CatalogServices.OrderDetailServices;
+using OllieShop.WebUI.Services.CatalogServices.OrderingServices;
 using OllieShop.WebUI.Services.CatalogServices.ProductDetailServices;
 using OllieShop.WebUI.Services.CatalogServices.ProductImageServices;
 using OllieShop.WebUI.Services.CatalogServices.ProductServices;
@@ -26,6 +28,8 @@ using OllieShop.WebUI.Services.IdentityServices;
 using OllieShop.WebUI.Services.IUserService;
 using OllieShop.WebUI.Services.LoginServices;
 using OllieShop.WebUI.Services.OrderServices.AddressServices;
+using OllieShop.WebUI.Services.OrderServices.OrderDetailServices;
+using OllieShop.WebUI.Services.OrderServices.OrderingServices;
 using OllieShop.WebUI.Settings;
 
 namespace OllieShop.WebUI.Extensions
@@ -165,6 +169,16 @@ namespace OllieShop.WebUI.Extensions
             //ORDER MICROSERVICE CONFIGS
 
             services.AddHttpClient<IAddressService, AddressService>(opt =>
+            {
+                opt.BaseAddress = new Uri($"{values.OcelotUrl}/{values.Order.Path}");
+            }).AddHttpMessageHandler<ResourceOwnerPasswordTokenHandler>();
+
+            services.AddHttpClient<IOrderDetailService, OrderDetailService>(opt =>
+            {
+                opt.BaseAddress = new Uri($"{values.OcelotUrl}/{values.Order.Path}");
+            }).AddHttpMessageHandler<ResourceOwnerPasswordTokenHandler>();
+
+            services.AddHttpClient<IOrderingService, OrderingService>(opt =>
             {
                 opt.BaseAddress = new Uri($"{values.OcelotUrl}/{values.Order.Path}");
             }).AddHttpMessageHandler<ResourceOwnerPasswordTokenHandler>();

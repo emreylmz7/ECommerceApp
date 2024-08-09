@@ -14,14 +14,15 @@ namespace OllieShop.Order.WebApi.Controllers
     {
         private readonly GetOrderDetailQueryHandler _getOrderDetailQueryHandler;
         private readonly GetOrderDetailByIdQueryHandler _getOrderDetailByIdQueryHandler;
+        private readonly GetOrderDetailsByOrderingIdQueryHandler _orderDetailsByOrderingIdQueryHandler;
         private readonly CreateOrderDetailCommandHandler _createOrderDetailCommandHandler;
         private readonly UpdateOrderDetailCommandHandler _updateOrderDetailCommandHandler;
         private readonly RemoveOrderDetailCommandHandler _removeOrderDetailCommandHandler;
-
-        public OrderDetailsController(GetOrderDetailQueryHandler getOrderDetailQueryHandler, GetOrderDetailByIdQueryHandler getOrderDetailByIdQueryHandler, CreateOrderDetailCommandHandler createOrderDetailCommandHandler, UpdateOrderDetailCommandHandler updateOrderDetailCommandHandler, RemoveOrderDetailCommandHandler removeOrderDetailCommandHandler)
+        public OrderDetailsController(GetOrderDetailQueryHandler getOrderDetailQueryHandler, GetOrderDetailByIdQueryHandler getOrderDetailByIdQueryHandler, GetOrderDetailsByOrderingIdQueryHandler orderDetailsByOrderingIdQueryHandler, CreateOrderDetailCommandHandler createOrderDetailCommandHandler, UpdateOrderDetailCommandHandler updateOrderDetailCommandHandler, RemoveOrderDetailCommandHandler removeOrderDetailCommandHandler)
         {
             _getOrderDetailQueryHandler = getOrderDetailQueryHandler;
             _getOrderDetailByIdQueryHandler = getOrderDetailByIdQueryHandler;
+            _orderDetailsByOrderingIdQueryHandler = orderDetailsByOrderingIdQueryHandler;
             _createOrderDetailCommandHandler = createOrderDetailCommandHandler;
             _updateOrderDetailCommandHandler = updateOrderDetailCommandHandler;
             _removeOrderDetailCommandHandler = removeOrderDetailCommandHandler;
@@ -41,6 +42,13 @@ namespace OllieShop.Order.WebApi.Controllers
             return Ok(values);
         }
 
+        [HttpGet("OrderDetailsByOrderingId")]
+        public async Task<IActionResult> OrderDetailsByOrderingId(int id)
+        {
+            var values = await _orderDetailsByOrderingIdQueryHandler.Handle(new GetOrderDetailsByOrderingIdQuery(id));
+            return Ok(values);
+        }
+
         [HttpPost]
         public async Task<IActionResult> CreateOrderDetail(CreateOrderDetailCommand command)
         {
@@ -55,7 +63,7 @@ namespace OllieShop.Order.WebApi.Controllers
             return Ok("Order detail updated successfully.");
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete]
         public async Task<IActionResult> DeleteOrderDetail(int id)
         {
             await _removeOrderDetailCommandHandler.Handle(new RemoveOrderDetailCommand(id));
