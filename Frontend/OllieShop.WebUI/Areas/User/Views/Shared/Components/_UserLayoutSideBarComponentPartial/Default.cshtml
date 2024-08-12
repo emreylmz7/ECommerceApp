@@ -1,0 +1,78 @@
+﻿<div id="sidebar" class="active">
+    <div class="sidebar-wrapper active">
+        <div class="sidebar-header">
+            <div class="d-flex justify-content-between">
+                <div class="logo">
+                    <a href="index.html"><img class="img-fluid" src="~/img/ollie_userpanel.png" width="150px" alt=""></a>
+                </div>
+                <div class="toggler">
+                    <a href="#" class="sidebar-hide d-xl-none d-block"><i class="bi bi-x bi-middle"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="sidebar-menu">
+            <ul class="menu">
+                <li class="sidebar-title my-3">Welcome <strong class="font-bold">@User.Identity!.Name</strong> </li>
+
+                <li class="sidebar-item active">
+                    <a href="index.html" class='sidebar-link'>
+                        <i class="bi bi-grid-fill"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+
+                <li class="sidebar-title">Manage Orders</li>
+
+                <li class="sidebar-item">
+                    <a href="/User/Orders/Index" class='sidebar-link'>
+                        <i class="bi bi-bag-fill"></i>
+                        <span>Orders Overview</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="track-orders.html" class='sidebar-link'>
+                        <i class="bi bi-map"></i>
+                        <span>Track Orders</span>
+                    </a>
+                </li>
+
+                <li class="sidebar-title">Account Settings</li>
+
+                <li class="sidebar-item">
+                    <a href="profile.html" class='sidebar-link'>
+                        <i class="bi bi-person-fill"></i>
+                        <span>Profile</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="security.html" class='sidebar-link'>
+                        <i class="bi bi-shield-lock-fill"></i>
+                        <span>Security</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="notifications.html" class='sidebar-link'>
+                        <i class="bi bi-bell-fill"></i>
+                        <span>Notifications</span>
+                    </a>
+                </li>
+
+                <li class="sidebar-title">Help & Support</li>
+
+                <li class="sidebar-item">
+                    <a href="faq.html" class='sidebar-link'>
+                        <i class="bi bi-question-circle-fill"></i>
+                        <span>FAQ</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="contact-support.html" class='sidebar-link'>
+                        <i class="bi bi-envelope-fill"></i>
+                        <span>Contact Support</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <button class="sidebar-toggler btn x"><i data-feather="x"></i></button>
+    </div>
+</div>

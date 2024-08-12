@@ -30,6 +30,7 @@ using OllieShop.WebUI.Services.LoginServices;
 using OllieShop.WebUI.Services.OrderServices.AddressServices;
 using OllieShop.WebUI.Services.OrderServices.OrderDetailServices;
 using OllieShop.WebUI.Services.OrderServices.OrderingServices;
+using OllieShop.WebUI.Services.PaymentServices;
 using OllieShop.WebUI.Settings;
 
 namespace OllieShop.WebUI.Extensions
@@ -183,6 +184,12 @@ namespace OllieShop.WebUI.Extensions
                 opt.BaseAddress = new Uri($"{values.OcelotUrl}/{values.Order.Path}");
             }).AddHttpMessageHandler<ResourceOwnerPasswordTokenHandler>();
 
+            //PAYMENT MICROSERVICE CONFIGS
+
+            services.AddHttpClient<IPaymentService, PaymentService>(opt =>
+            {
+                opt.BaseAddress = new Uri($"{values.OcelotUrl}/{values.Payment.Path}");
+            }).AddHttpMessageHandler<ResourceOwnerPasswordTokenHandler>();
 
 
             services.AddScoped<ResourceOwnerPasswordTokenHandler>();

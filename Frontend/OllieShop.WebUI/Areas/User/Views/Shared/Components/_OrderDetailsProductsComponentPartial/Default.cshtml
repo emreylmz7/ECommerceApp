@@ -1,0 +1,22 @@
+﻿@model List<GetByIdOrderDetailDto>
+
+@foreach (var item in Model)
+{
+    <tr>
+        <td>
+            <div class="d-flex mb-2">
+                <div class="flex-shrink-0">
+                    <img src="https://via.placeholder.com/35" alt="@item.ProductName" width="35" class="img-fluid">
+                </div>
+                <div class="flex-lg-grow-1 ms-3">
+                    <h6 class="small mb-0">
+                        <a href="#" class="text-reset">@item.ProductName</a>
+                    </h6>
+                </div>
+            </div>
+        </td>
+        <td>@item.Quantity</td>
+        <td class="text-end">@item.UnitPrice.ToString("C")</td>
+        <td class="text-end">@item.TotalPrice.ToString("C")</td>
+    </tr>
+}

@@ -82,7 +82,7 @@
 
                     <div class="ibox-content d-flex justify-content-between">
                         <button class="btn btn-white"><i class="fa fa-arrow-left"></i> Continue shopping</button>
-                        <a class="btn btn-outline-dark pull-right rounded" href="#">Checkout</a>
+                        <a class="btn btn-outline-dark pull-right rounded" href="/Order/Index">Checkout</a>
                     </div>
                 </div>
             </div>
@@ -97,29 +97,45 @@
                             <span class="font-bold" id="products-total-price">$@(Model.TotalPrice.ToString("F0"))</span>
                         </div>
 
-                        <div class="d-flex justify-content-between">
-                            <p>VAT (@(Model.VATRate * 100)%):</p>
-                            <span class="font-bold" id="vat-price">$@((Model.TotalPrice * Model.VATRate).ToString("F0"))</span>
-                        </div>
-                        <div class="d-flex justify-content-between">
-                            <p>Shipping:</p>
-                            <span class="font-bold">$@(Model.ShippingCost.ToString("F0"))</span>
-                        </div>
+                        @if (Model.BasketItems.Count() != 0 && Model.BasketItems != null)
+                        {
+                            <div class="d-flex justify-content-between">
+                                <p>VAT (@(Model.VATRate * 100)%):</p>
+                                <span class="font-bold" id="vat-price">$@((Model.TotalPrice * Model.VATRate).ToString("F0"))</span>
+                            </div>
+                        
+                            <div class="d-flex justify-content-between">
+                                <p>Shipping:</p>
+                                <span class="font-bold">$@(Model.ShippingCost.ToString("F0"))</span>
+                            </div>
+                        }
                         @if (!string.IsNullOrEmpty(Model.DiscountCode))
                         {
-                            <hr id="discount-amount-label">
-                            <div class="d-flex justify-content-between" id="discount-amount-label">
-                                <p>Discount Amount:</p>
-                                <span class="font-bold text-danger" id="discount-amount">- $@((((Model.TotalPrice * (1 + Model.VATRate)) / 100) * Model.DiscountRate).ToString("F0"))</span>
+                            <div id="discount-amount-label">
+                                <hr>
+                                <div class="d-flex justify-content-between" id="discount-amount-label">
+                                    <p>Discount Amount:</p>
+                                    <span class="font-bold text-danger" id="discount-amount">- $@((((Model.TotalPrice * (1 + Model.VATRate)) / 100) * Model.DiscountRate).ToString("F0"))</span>
+                                </div>
                             </div>
                         }
                         <hr>
 
                         <div class="d-flex justify-content-between">
                             <h3 class="font-bold">Total:</h3>
-                            <h2 class="font-bold" id="total-discounted-price-with-shipping">
-                                $@(Model.TotalDiscountedPriceWithShipping.ToString("F0"))
-                            </h2>
+                            @if (Model.BasketItems!.Count() != 0 && Model.BasketItems != null)
+                            {
+                                <h2 class="font-bold" id="total-discounted-price-with-shipping">
+                                    $@(Model.TotalDiscountedPriceWithShipping.ToString("F0"))
+                                </h2>
+                            }
+                            else
+                            {
+                                <h2 class="font-bold" id="total-discounted-price-with-shipping">
+                                    $@(Model.TotalPrice.ToString("F0"))
+                                </h2>
+                            }
+
                         </div>
 
                         <hr>

@@ -1,0 +1,34 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+    @await Component.InvokeAsync("_UserLayoutHeadComponentPartial")
+    <body>
+        <div id="app">
+            @await Component.InvokeAsync("_UserLayoutSideBarComponentPartial")
+
+            <div id="main">
+                <header class="mb-3">
+                    <a href="#" class="burger-btn d-block d-xl-none">
+                        <i class="bi bi-justify fs-3"></i>
+                    </a>
+                </header>
+
+                <div class="page-heading">
+                    <h3>@ViewBag.Title</h3>
+                </div>
+
+                @RenderBody()
+
+                @await Component.InvokeAsync("_UserLayoutFooterComponentPartial")
+            </div>
+        </div>
+
+        @await Component.InvokeAsync("_UserLayoutScriptsComponentPartial")
+
+    </body>
+</html>

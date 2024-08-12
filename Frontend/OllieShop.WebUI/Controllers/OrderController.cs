@@ -33,6 +33,12 @@ namespace OllieShop.WebUI.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
+            var basket = await _basketService.GetBasket();
+
+            if (basket.BasketItems.Count() == 0 && basket.BasketItems.IsNullOrEmpty())
+            {
+                return Redirect("/ShoppingCart/Index");
+            }
             var addresses = await _addressService.GetAllAddressAsync();
             return View(addresses);
         }
@@ -42,14 +48,22 @@ namespace OllieShop.WebUI.Controllers
         {
             var basket = await _basketService.GetBasket();
 
+            if (basket.BasketItems.Count() == 0 && basket.BasketItems.IsNullOrEmpty())
+            {
+                return Redirect("/ShoppingCart/Index");
+            }
+
             if (!selectedAddressId.IsNullOrEmpty())
             {
                 // Kullanıcı kayıtlı bir adres seçtiyse
                 var selectedAddress = await _addressService.GetByIdAddressAsync(selectedAddressId!);
                 if (selectedAddress != null)
                 {
-                    await CreateOrder(selectedAddress.AddressId, selectedAddress.UserId, basket);
-                    return RedirectToAction("Index", "Payment");
+                    var orderingId = await CreateOrder(selectedAddress.AddressId, selectedAddress.UserId, basket);
+                    if (orderingId != 0)
+                    {
+                        return Redirect($"/Payment/Index?orderId={orderingId}");
+                    }
                 }
             }
             else
@@ -66,15 +80,18 @@ namespace OllieShop.WebUI.Controllers
 
                 if (result.IsSuccessStatusCode && address != null)
                 {
-                    await CreateOrder(address.AddressId, createAddressDto.UserId, basket);
-                    return RedirectToAction("Index", "Payment");
+                    var orderingId = await CreateOrder(address.AddressId, createAddressDto.UserId, basket);
+                    if (orderingId != 0)
+                    {
+                        return Redirect($"/Payment/Index?orderId={orderingId}");
+                    }
                 }
             }
 
             return View();
         }
 
-        private async Task CreateOrder(int addressId, string userId, BasketTotalDto basket)
+        private async Task<int> CreateOrder(int addressId, string userId, BasketTotalDto basket)
         {
             // Sipariş oluşturuluyor
             var result = await _orderingService.CreateOrderingAsync(new CreateOrderingDto
@@ -105,7 +122,11 @@ namespace OllieShop.WebUI.Controllers
                         UnitPrice = item.UnitPrice
                     });
                 }
+
+                return orderingId;
             }
+
+            return 0;
         }
     }
 }

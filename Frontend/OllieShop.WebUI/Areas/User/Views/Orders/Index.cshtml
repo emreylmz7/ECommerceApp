@@ -1,0 +1,77 @@
+﻿@using OllieShop.DtoLayer.Enums
+@model List<ResultOrderingDto>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/User/Views/UserLayout/Index.cshtml";
+}
+
+<section class="section">
+    <div class="row" id="basic-table">
+        <div class="col-12 col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">Orders</h4>
+                </div>
+                <div class="card-content">
+                    <div class="card-body">
+                        <p class="card-text">
+                            Below is a list of your recent orders. You can view the details of each order, including the total price, date, status, and delivery address.
+                        </p>
+                        <!-- Table with outer spacing -->
+                        <div class="table-responsive">
+                            <table class="table table-lg">
+                                <thead>
+                                    <tr>
+                                        <th>Order ID</th>
+                                        <th>Total Price</th>
+                                        <th>Order Date</th>
+                                        <th>Status</th>
+                                        <th>Address ID</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td class="text-bold-500"># @item.OrderingId</td>
+                                            <td class="text-bold-500">$ @item.TotalPrice</td>
+                                            <td class="text-bold-500">@item.OrderDate.Date.ToString("dd/MMM/yyyy")</td>
+                                            <td class="text-bold-500">
+                                                @if (item.Status == OrderStatus.Pending)
+                                                {
+                                                    <span class="badge bg-warning">Pending</span>
+                                                }
+                                                else if (item.Status == OrderStatus.Processing)
+                                                {
+                                                    <span class="badge bg-primary">Processing</span>
+                                                }
+                                                else if (item.Status == OrderStatus.Shipped)
+                                                {
+                                                    <span class="badge bg-info">Shipped</span>
+                                                }
+                                                else if (item.Status == OrderStatus.Delivered)
+                                                {
+                                                    <span class="badge bg-success">Delivered</span>
+                                                }
+                                                else if (item.Status == OrderStatus.Cancelled)
+                                                {
+                                                    <span class="badge bg-danger">Cancelled</span>
+                                                }
+                                            </td>
+                                            <td class="text-bold-500">@item.AddressId</td>
+                                            <td class="text-bold-500">
+                                                <a href="/User/Orders/OrderDetails?id=@item.OrderingId"> <i class="fas fa-align-right"></i> Order Details</a>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

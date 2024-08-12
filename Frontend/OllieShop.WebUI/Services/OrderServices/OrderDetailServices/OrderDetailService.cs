@@ -44,10 +44,10 @@ namespace OllieShop.WebUI.Services.CatalogServices.OrderDetailServices
             return orderDetail;
         }
 
-        public async Task<GetByIdOrderDetailDto> GetOrderDetailsByOrderingIdAsync(string id)
+        public async Task<List<GetByIdOrderDetailDto>> GetOrderDetailsByOrderingIdAsync(string id)
         {
             var responseMessage = await _httpClient.GetAsync($"orderdetails/OrderDetailsByOrderingId?id={id}");
-            var orderDetails = await responseMessage.Content.ReadFromJsonAsync<GetByIdOrderDetailDto>();
+            var orderDetails = await responseMessage.Content.ReadFromJsonAsync<List<GetByIdOrderDetailDto>>();
             return orderDetails;
         }
     }

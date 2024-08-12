@@ -34,9 +34,9 @@ namespace OllieShop.WebUI.Services.BasketServices
             return await SaveBasket(values);
         }
 
-        public async Task<HttpResponseMessage> DeleteBasket(string userId)
+        public async Task<HttpResponseMessage> DeleteBasket()
         {
-            var response = await _httpClient.DeleteAsync($"baskets/{userId}");
+            var response = await _httpClient.DeleteAsync("baskets");
             return response;
         }
 

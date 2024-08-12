@@ -9,6 +9,6 @@ namespace OllieShop.WebUI.Services.OrderServices.OrderDetailServices
         Task<HttpResponseMessage> UpdateOrderDetailAsync(UpdateOrderDetailDto updateOrderDetailDto);
         Task<HttpResponseMessage> DeleteOrderDetailAsync(string id);
         Task<GetByIdOrderDetailDto> GetByIdOrderDetailAsync(string id);
-        Task<GetByIdOrderDetailDto> GetOrderDetailsByOrderingIdAsync(string id);
+        Task<List<GetByIdOrderDetailDto>> GetOrderDetailsByOrderingIdAsync(string id);
     }
 }
