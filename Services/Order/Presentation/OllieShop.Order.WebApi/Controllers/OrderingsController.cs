@@ -33,6 +33,13 @@ namespace OllieShop.Order.WebApi.Controllers
             return Ok(value);
         }
 
+        [HttpGet("GetOrderingsByUser")]
+        public async Task<IActionResult> GetOrderingsByUser()
+        {
+            var value = await _mediator.Send(new GetOrderingsByUserQuery());
+            return Ok(value);
+        }
+
         [HttpPost]
         public async Task<IActionResult> CreateOrdering(CreateOrderingCommand command)
         {

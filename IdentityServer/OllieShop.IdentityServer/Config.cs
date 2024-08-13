@@ -1,7 +1,4 @@
-﻿// Copyright (c) Brock Allen & Dominick Baier. All rights reserved.
-// Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
-
-using IdentityServer4;
+﻿using IdentityServer4;
 using IdentityServer4.Models;
 using System.Collections.Generic;
 
@@ -11,16 +8,55 @@ namespace OllieShop.IdentityServer
     {
         public static IEnumerable<ApiResource> ApiResources => new ApiResource[]
         {
-            new ApiResource("ResourceCatalog") { Scopes = { "CatalogFullPermission", "CatalogReadPermission" } },
-            new ApiResource("ResourceDiscount") { Scopes = { "DiscountFullPermission", "DiscountReadPermission" } },
-            new ApiResource("ResourceOrder") { Scopes = { "OrderFullPermission", "OrderReadPermission" } },
-            new ApiResource("ResourceCargo") { Scopes = { "CargoFullPermission", "CargoReadPermission" } },
-            new ApiResource("ResourceBasket") { Scopes = { "BasketFullPermission", "BasketReadPermission" } },
-            new ApiResource("ResourceComment") { Scopes = { "CommentFullPermission", "CommentReadPermission" } },
-            new ApiResource("ResourcePayment") { Scopes = { "PaymentFullPermission", "PaymentReadPermission" } },
-            new ApiResource("ResourceImages") { Scopes = { "ImagesFullPermission", "ImagesReadPermission" } },
-            new ApiResource("ResourceOcelot") { Scopes = { "OcelotFullPermission" } },
+            new ApiResource("ResourceCatalog")
+            {
+                Scopes = { "CatalogFullPermission", "CatalogReadPermission" },
+                UserClaims = { "role" }  // Rol claim'ini dahil et
+            },
+            new ApiResource("ResourceDiscount")
+            {
+                Scopes = { "DiscountFullPermission", "DiscountReadPermission" },
+                UserClaims = { "role" }
+            },
+            new ApiResource("ResourceOrder")
+            {
+                Scopes = { "OrderFullPermission", "OrderReadPermission" },
+                UserClaims = { "role" }
+            },
+            new ApiResource("ResourceCargo")
+            {
+                Scopes = { "CargoFullPermission", "CargoReadPermission" },
+                UserClaims = { "role" }
+            },
+            new ApiResource("ResourceBasket")
+            {
+                Scopes = { "BasketFullPermission", "BasketReadPermission" },
+                UserClaims = { "role" }
+            },
+            new ApiResource("ResourceComment")
+            {
+                Scopes = { "CommentFullPermission", "CommentReadPermission" },
+                UserClaims = { "role" }
+            },
+            new ApiResource("ResourcePayment")
+            {
+                Scopes = { "PaymentFullPermission", "PaymentReadPermission" },
+                UserClaims = { "role" }
+            },
+            new ApiResource("ResourceImages")
+            {
+                Scopes = { "ImagesFullPermission", "ImagesReadPermission" },
+                UserClaims = { "role" }
+            },
+            new ApiResource("ResourceOcelot")
+            {
+                Scopes = { "OcelotFullPermission" },
+                UserClaims = { "role" }
+            },
             new ApiResource(IdentityServerConstants.LocalApi.ScopeName)
+            {
+                UserClaims = { "role" }  // Local API için de rol claim'i ekle
+            }
         };
 
         public static IEnumerable<IdentityResource> IdentityResources => new IdentityResource[]
@@ -127,6 +163,5 @@ namespace OllieShop.IdentityServer
                 AccessTokenLifetime=300
             }
         };
-
     }
 }

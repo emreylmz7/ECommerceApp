@@ -43,5 +43,19 @@ namespace OllieShop.WebUI.Services.CatalogServices.OrderingServices
             var responseMessage = await _httpClient.PutAsJsonAsync<UpdateOrderingDto>("orderings", updateOrderingDto);
             return responseMessage;
         }
+
+        public async Task<int> GetTotalOrdersCountAsync()
+        {
+            var responseMessage = await _httpClient.GetAsync("orderings");
+            var orderings = await responseMessage.Content.ReadFromJsonAsync<List<ResultOrderingDto>>();
+            return orderings!.Count();
+        }
+
+        public async Task<List<ResultOrderingDto>> GetOrderingsByUserAsync()
+        {
+            var responseMessage = await _httpClient.GetAsync("orderings/GetOrderingsByUser");
+            var orderings = await responseMessage.Content.ReadFromJsonAsync<List<ResultOrderingDto>>();
+            return orderings ?? new List<ResultOrderingDto>();
+        }
     }
 }

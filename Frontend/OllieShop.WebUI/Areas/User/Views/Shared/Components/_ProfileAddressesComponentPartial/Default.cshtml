@@ -1,0 +1,28 @@
+﻿@model List<ResultAddressDto>
+
+<div class="card">
+    <h3 class="m-4">Registered Addresses</h3>
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="col-lg-6 col-md-12 mb-4">
+                <div class="card border-0 shadow-sm p-3">
+                    <label class="card-radio-label mb-0">
+                        <div class="card-radio text-truncate p-3 bg-light rounded">
+                            <h5 class="fs-14 mb-3 text-primary">Address</h5>
+                            <p class="fs-14 mb-1"><strong>@item.Name @item.Surname</strong></p>
+                            <p class="fs-14 mb-1">@item.City / @item.Country</p>
+                            <p class="text-muted fw-normal text-wrap mb-2">@item.Description</p>
+                            <p class="text-muted fw-normal mb-0">Phone: @item.PhoneNumber</p>
+                        </div>
+                    </label>
+                    <div class="edit-btn bg-primary rounded-circle position-absolute end-0 top-0 m-2">
+                        <a href="#" class="text-white p-2" data-bs-toggle="tooltip" data-placement="top" title="Edit">
+                            <i class="bx bx-pencil font-size-16"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

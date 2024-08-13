@@ -139,7 +139,7 @@
           "Port": 7227
         }
       ],
-      "UpstreamPathTemplate": "/services/iamges/{everything}",
+      "UpstreamPathTemplate": "/services/images/{everything}",
       "UpstreamHttpMethod": [ "Get", "Put", "Post", "Delete" ],
       "UpstreamScheme": "http",
       "AuthenticationOptions": {

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using OllieShop.WebUI.Services.IdentityServices;
 using System.Net;
@@ -35,7 +36,9 @@ namespace OllieShop.WebUI.Handlers
                 }
                 else
                 {
-                    //Error Message
+                    // Refresh token yenileme başarısız olduysa kullanıcıyı çıkış yap
+                    await _contextAccessor.HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+                    _contextAccessor.HttpContext.Response.Redirect("/Login/Index");
                 }
             }
 

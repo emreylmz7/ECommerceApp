@@ -34,6 +34,14 @@ namespace OllieShop.WebUI.Services.BasketServices
             return await SaveBasket(values);
         }
 
+        public async Task<int> BasketTotalCount()
+        {
+            var responseMessage = await _httpClient.GetAsync("baskets");
+            var values = await responseMessage.Content.ReadFromJsonAsync<BasketTotalDto>();
+            var count = values!.BasketItems.Count();
+            return count;
+        }
+
         public async Task<HttpResponseMessage> DeleteBasket()
         {
             var response = await _httpClient.DeleteAsync("baskets");

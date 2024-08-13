@@ -1,14 +1,15 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using OllieShop.DtoLayer.BasketDtos;
 using OllieShop.WebUI.Services.BasketServices;
 using OllieShop.WebUI.Services.CatalogServices.ColorServices;
 using OllieShop.WebUI.Services.CatalogServices.ProductServices;
 using OllieShop.WebUI.Services.CatalogServices.SizeServices;
 using OllieShop.WebUI.Services.CouponServices;
-using System.Reflection;
 
 namespace OllieShop.WebUI.Controllers
 {
+    [Authorize]
     public class ShoppingCartController : Controller
     {
         private readonly IProductService _productService;

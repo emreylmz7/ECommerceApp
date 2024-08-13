@@ -1,19 +1,18 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using OllieShop.DtoLayer.OrderDtos.Address;
 using OllieShop.WebUI.Services.IUserService;
 using OllieShop.WebUI.Services.OrderServices.AddressServices;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace OllieShop.WebUI.Areas.User.Controllers
 {
-	[Area("User")]
+    [Authorize]
+    [Area("User")]
 	[Route("User/Profile")]
 	public class ProfileController : Controller
 	{
 		private readonly IUserService _userService;
 		private readonly IAddressService _addressService;
-
 		public ProfileController(IUserService userService, IAddressService addressService)
 		{
 			_userService = userService;

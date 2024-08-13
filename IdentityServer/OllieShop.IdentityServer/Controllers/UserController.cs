@@ -35,6 +35,9 @@ namespace OllieShop.IdentityServer.Controllers
                 Email = user.Email,
                 Username = user.UserName,
                 Surname = user.Surname,
+                ProfilePictureUrl = user.ProfilePictureUrl,
+                DateOfBirth = user.DateOfBirth,
+                Gender = user.Gender
             });
         }
     }

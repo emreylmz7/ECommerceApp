@@ -1,17 +1,14 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using OllieShop.DtoLayer.IdentityDtos;
-using OllieShop.WebUI.Services.ApiServices;
 using OllieShop.WebUI.Services.IdentityServices;
 
 namespace OllieShop.WebUI.Controllers
 {
     public class LoginController : Controller
     {
-        private readonly IApiService _apiService;
         private readonly IIdentityService _identityService; 
-        public LoginController(IApiService apiService, IIdentityService identityService )
+        public LoginController(IIdentityService identityService )
         {
-            _apiService = apiService;
             _identityService = identityService;
         }
 
@@ -30,6 +27,12 @@ namespace OllieShop.WebUI.Controllers
                 return RedirectToAction("Index", "Default");
             }
             return View();
+        }
+
+        public async Task<IActionResult> LogOut()
+        {
+            await _identityService.LogOut();
+            return RedirectToAction("Index","Default");
         }
     }
 }

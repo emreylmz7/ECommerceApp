@@ -10,5 +10,6 @@ namespace OllieShop.WebUI.Services.BasketServices
         Task<HttpResponseMessage> AddItemToBasket(BasketItemDto basketItemDto);
         Task<HttpResponseMessage> RemoveItemFromBasket(string productId);
         Task<BasketItemDto> UpdateBasketItem(string productId, int quantity, string sizeId ,string colorId);
+        Task<int> BasketTotalCount();
     }
 }

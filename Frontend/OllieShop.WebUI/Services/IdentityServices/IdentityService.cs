@@ -55,9 +55,12 @@ namespace OllieShop.WebUI.Services.IdentityServices
 
             if (token.IsError)
             {
-                // Hata durumunu kontrol edin ve uygun bir işlem yapın
+                // Hata durumunda kullanıcıyı çıkış yap ve login sayfasına yönlendir
+                await _httpContextAccessor.HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+                _httpContextAccessor.HttpContext.Response.Redirect("/Login/Index");
                 return false;
             }
+
 
             var authenticationToken = new List<AuthenticationToken>()
             {
@@ -111,7 +114,6 @@ namespace OllieShop.WebUI.Services.IdentityServices
 
             if (token.IsError)
             {
-                // Hata durumunu kontrol edin ve uygun bir işlem yapın
                 return false;
             }
 
@@ -123,7 +125,16 @@ namespace OllieShop.WebUI.Services.IdentityServices
 
             var userValues = await _httpClient.GetUserInfoAsync(userInfoRequest);
 
-            ClaimsIdentity claimsIdentity = new ClaimsIdentity(userValues.Claims, CookieAuthenticationDefaults.AuthenticationScheme, "name", "role");
+            var claims = userValues.Claims.ToList();
+
+            //// Özel rol claim'ini standard ClaimTypes.Role olarak ekleyin
+            //var roleClaim = userValues.Claims.FirstOrDefault(c => c.Type == "http://schemas.microsoft.com/ws/2008/06/identity/claims/role");
+            //if (roleClaim != null)
+            //{
+            //    claims.Add(new Claim(ClaimTypes.Role, roleClaim.Value));
+            //}
+
+            ClaimsIdentity claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme, "name", "role");
 
             ClaimsPrincipal claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
 
@@ -155,5 +166,11 @@ namespace OllieShop.WebUI.Services.IdentityServices
 
             return true;
         }
+
+        public async Task LogOut()
+        {
+            await _httpContextAccessor.HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+        }
+
     }
 }

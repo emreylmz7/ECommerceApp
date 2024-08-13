@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using OllieShop.DtoLayer.BasketDtos;
 using OllieShop.DtoLayer.Enums;
@@ -13,6 +14,7 @@ using OllieShop.WebUI.Services.OrderServices.OrderingServices;
 
 namespace OllieShop.WebUI.Controllers
 {
+    [Authorize(Roles = "User")]
     public class OrderController : Controller
     {
         private readonly IAddressService _addressService;

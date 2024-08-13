@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using OllieShop.IdentityServer.Dtos;
 using OllieShop.IdentityServer.Models;
 using OllieShop.IdentityServer.Tools;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace OllieShop.IdentityServer.Controllers
@@ -27,11 +28,19 @@ namespace OllieShop.IdentityServer.Controllers
         {
             var user = await _userManager.FindByNameAsync(userLoginDto.Username);
             var result = await _signInManager.PasswordSignInAsync(userLoginDto.Username, userLoginDto.Password, false, false);
+
             if (result.Succeeded)
             {
-                GetCheckAppUserViewModel model = new GetCheckAppUserViewModel();
-                model.Username = userLoginDto.Username;
-                model.Id = user.Id;
+                var roles = await _userManager.GetRolesAsync(user);
+                var userRole = roles.FirstOrDefault();
+
+                GetCheckAppUserViewModel model = new GetCheckAppUserViewModel
+                {
+                    Username = userLoginDto.Username,
+                    Id = user.Id,
+                    Role = userRole
+                };
+
                 var token = JwtTokenGenerator.GenerateToken(model);
                 return Ok(token);
             }

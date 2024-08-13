@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using OllieShop.DtoLayer.Enums;
 using OllieShop.DtoLayer.OrderDtos.Ordering;
 using OllieShop.DtoLayer.PaymentDtos;
@@ -10,6 +11,7 @@ using OllieShop.WebUI.Services.PaymentServices;
 
 namespace OllieShop.WebUI.Controllers
 {
+    [Authorize]
     public class PaymentController : Controller
     {
         private readonly IOrderingService _orderingService;

@@ -6,7 +6,7 @@
 
 <div class="container-fluid bg-light">
     <div class="container">
-        <div class="row ">
+        <div class="row">
             <div class="col-lg-3 d-none d-lg-block">
                 <a class="btn d-flex align-items-center justify-content-between bg-light w-80 rounded" data-toggle="collapse" href="#navbar-vertical" style="height: 50px; padding: 0 10px;">
                     <h6 class="text-dark m-0"><i class="fa fa-bars mr-2"></i>Categories</h6>
@@ -14,15 +14,7 @@
                 </a>
                 <nav class="collapse position-absolute navbar navbar-vertical navbar-light align-items-start p-0 bg-light" id="navbar-vertical" style="width: calc(100% - 30px); z-index: 999;">
                     <div class="navbar-nav w-100">
-                        @* <div class="nav-item dropdown dropright">
-                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Jewelry <i class="fa fa-angle-right float-right mt-1"></i></a>
-                            <div class="dropdown-menu position-absolute rounded border-0 m-0">
-                                <a href="" class="dropdown-item">Neckalce</a>
-                                <a href="" class="dropdown-item">Chains</a>
-                                <a href="" class="dropdown-item">Bracelet</a>
-                            </div>
-                        </div> *@
-                        @foreach(var item in Model)
+                        @foreach (var item in Model)
                         {
                             <a href="/ProductList/Index/@item.CategoryId" class="nav-item nav-link">@item.Name</a>
                         }
@@ -39,48 +31,54 @@
                     </button>
                     <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                         <div class="navbar-nav mr-auto py-0">
+
                             <a href="/Default/Index" class="nav-item nav-link text-dark">Home</a>
+
                             <a href="/ProductList/Index" class="nav-item nav-link text-dark">Shop</a>
-                            <div class="nav-item dropdown">
-                                <a href="#" class="nav-link dropdown-toggle text-dark rounded" data-toggle="dropdown">Pages <i class="fa fa-angle-down mt-1"></i></a>
-                                <div class="dropdown-menu bg-light rounded-0 border-0 m-0">
-                                    <a href="/ShoppingCart/Index" class="dropdown-item text-dark">Shopping Cart</a>
-                                    <a href="/ShoppingCart/Checkout" class="dropdown-item text-dark">Checkout</a>
-                                </div>
-                            </div>
+
                             <a href="/Contact/Index" class="nav-item nav-link active text-dark">Contact</a>
+
+                            <a href="/AboutUs/Index" class="nav-item nav-link active text-dark">About Us</a>
+
+                            <a href="/FAQ/Index" class="nav-item nav-link active text-dark">FAQ</a>
+
                         </div>
-                        <div class="navbar-nav ml-auto py-0 d-none d-lg-block">
-                            <a href="" class="btn px-0">
-                                <i class="fas fa-heart text-danger"></i>
-                                <span class="badge text-dark border border-dark rounded-circle" style="padding-bottom: 2px;">0</span>
-                            </a>
-                            <a href="" class="btn px-0 ml-3">
-                                <i class="fas fa-shopping-cart text-warning"></i>
-                                <span class="badge text-dark border border-dark rounded-circle" style="padding-bottom: 2px;">0</span>
-                            </a>
+                        <div class="navbar-nav ml-auto py-0 d-flex align-items-center">
                             @if (User.Identity!.IsAuthenticated)
                             {
-                                <a href="" class="btn px-0 ml-3">
-                                    <i class="fas fa-user text-dark"></i>
+                                <a href="User/WishList/Index" class="btn px-0">
+                                    <i class="fas fa-heart text-danger"></i>
+                                    <span class="badge text-dark border border-dark rounded-circle" style="padding-bottom: 2px;">0</span>
                                 </a>
-
-                                <a href="/Auth/Logout" class="btn px-0 ml-3">
-                                    Logout
+                                <a href="/ShoppingCart/Index" class="btn px-0 ml-3">
+                                    <i class="fas fa-shopping-cart text-warning"></i>
+                                    <span class="badge text-dark border border-dark rounded-circle" style="padding-bottom: 2px;">@ViewBag.BasketCount</span>
                                 </a>
+                            
+                                <div class="nav-item dropdown">
+                                    <a href="#" class="btn px-0 ml-3 dropdown-toggle" data-toggle="dropdown">
+                                        <i class="fas fa-user text-dark"></i>
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-right bg-light rounded-0 border-0 m-0">
+                                        <a href="/User/Profile/Index" class="dropdown-item text-dark">Profile</a>
+                                        <a href="/User/Orders/Index" class="dropdown-item text-dark">My Orders</a>
+                                        <a href="/Login/Logout" class="dropdown-item text-dark">Logout</a>
+                                    </div>
+                                </div>
                             }
                             else
                             {
                                 <a href="/Login/Index" class="btn px-0 ml-3">
                                     Login
                                 </a>
+                                <a href="/Register/Index" class="btn px-0 ml-3">
+                                    Register
+                                </a>
                             }
-                           
                         </div>
                     </div>
                 </nav>
             </div>
         </div>
     </div>
-    
 </div>

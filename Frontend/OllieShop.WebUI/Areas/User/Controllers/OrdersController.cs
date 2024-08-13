@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using OllieShop.WebUI.Services.IUserService;
 using OllieShop.WebUI.Services.OrderServices.AddressServices;
 using OllieShop.WebUI.Services.OrderServices.OrderDetailServices;
@@ -6,6 +7,7 @@ using OllieShop.WebUI.Services.OrderServices.OrderingServices;
 
 namespace OllieShop.WebUI.Areas.User.Controllers
 {
+    [Authorize]
     [Area("User")]
     [Route("User/Orders")]
     public class OrdersController : Controller
@@ -25,12 +27,22 @@ namespace OllieShop.WebUI.Areas.User.Controllers
 
         [Route("Index")]
         [HttpGet]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int pageNumber = 1, int pageSize = 10)
         {
             ViewBag.Title = "My Orders";
-            var orders = (await _orderingService.GetAllOrderingAsync()).OrderByDescending(o => o.OrderDate).ToList();
+            var orders = (await _orderingService.GetOrderingsByUserAsync())
+                            .OrderByDescending(o => o.OrderDate)
+                            .Skip((pageNumber - 1) * pageSize)
+                            .Take(pageSize)
+                            .ToList();
+
+            var totalOrders = await _orderingService.GetTotalOrdersCountAsync(); 
+            ViewBag.TotalPages = (int)Math.Ceiling(totalOrders / (double)pageSize);
+            ViewBag.CurrentPage = pageNumber;
+
             return View(orders);
         }
+
 
         [Route("OrderDetails")]
         [HttpGet]

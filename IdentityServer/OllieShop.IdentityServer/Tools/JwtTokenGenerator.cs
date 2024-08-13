@@ -14,7 +14,7 @@ namespace OllieShop.IdentityServer.Tools
             var claims = new List<Claim>();
             if (!string.IsNullOrWhiteSpace(model.Role))
             {
-                claims.Add(new Claim(ClaimTypes.Role, model.Role));
+                claims.Add(new Claim("Role", model.Role));
             }
 
             claims.Add(new Claim(ClaimTypes.NameIdentifier, model.Id));

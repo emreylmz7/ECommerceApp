@@ -39,22 +39,23 @@ namespace OllieShop.WebUI.Extensions
     {
         public static IServiceCollection AddCustomAuthentication(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddCookie(JwtBearerDefaults.AuthenticationScheme, opt =>
-            {
-                opt.LoginPath = "/Login/Index";
-                opt.LogoutPath = "/Default/Index";
-                opt.AccessDeniedPath = "/Pages/AccessDenied/";
-                opt.Cookie.HttpOnly = true;
-                opt.Cookie.SameSite = SameSiteMode.Strict;
-                opt.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest;
-                opt.Cookie.Name = "OllieShopJwt";
-            });
+            //services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddCookie(JwtBearerDefaults.AuthenticationScheme, opt =>
+            //{
+            //    opt.LoginPath = "/Login/Index";
+            //    opt.LogoutPath = "/Default/Index";
+            //    opt.AccessDeniedPath = "/Pages/AccessDenied/";
+            //    opt.Cookie.HttpOnly = true;
+            //    opt.Cookie.SameSite = SameSiteMode.Strict;
+            //    opt.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest;
+            //    opt.Cookie.Name = "OllieShopJwt";
+            //});
 
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, opt =>
             {
                 opt.LoginPath = "/Login/Index";
                 opt.ExpireTimeSpan = TimeSpan.FromDays(5);
                 opt.Cookie.Name = "OllieShopCookie";
+                opt.AccessDeniedPath = "/Default/Index";
                 opt.SlidingExpiration = true;
             });
 

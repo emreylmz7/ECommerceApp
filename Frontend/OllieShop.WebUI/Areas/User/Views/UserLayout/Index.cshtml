@@ -7,28 +7,28 @@
 <html lang="en">
 
     @await Component.InvokeAsync("_UserLayoutHeadComponentPartial")
+
     <body>
         <div id="app">
             @await Component.InvokeAsync("_UserLayoutSideBarComponentPartial")
 
-            <div id="main">
-                <header class="mb-3">
-                    <a href="#" class="burger-btn d-block d-xl-none">
-                        <i class="bi bi-justify fs-3"></i>
-                    </a>
+            <div id="main" class='layout-navbar'>
+                <header class='mb-3'>
+                    @await Component.InvokeAsync("_UserLayoutNavbarComponentPartial")
                 </header>
+                <div id="main-content">
 
-                <div class="page-heading">
-                    <h3>@ViewBag.Title</h3>
+                    @RenderBody()
+
+                    @await Component.InvokeAsync("_UserLayoutFooterComponentPartial")
+
                 </div>
-
-                @RenderBody()
-
-                @await Component.InvokeAsync("_UserLayoutFooterComponentPartial")
             </div>
         </div>
 
         @await Component.InvokeAsync("_UserLayoutScriptsComponentPartial")
-
     </body>
+
 </html>
+
+
