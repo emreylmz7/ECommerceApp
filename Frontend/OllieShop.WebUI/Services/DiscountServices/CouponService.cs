@@ -1,5 +1,4 @@
-﻿
-using OllieShop.DtoLayer.DiscountDtos;
+﻿using OllieShop.DtoLayer.DiscountDtos;
 using OllieShop.WebUI.Services.CouponServices;
 
 namespace OllieShop.WebUI.Services.CatalogServices.CouponServices
@@ -15,33 +14,44 @@ namespace OllieShop.WebUI.Services.CatalogServices.CouponServices
 
         public async Task<HttpResponseMessage> CreateCouponAsync(CreateCouponDto createCouponDto)
         {
-            var responseMessage = await _httpClient.PostAsJsonAsync<CreateCouponDto>("discounts", createCouponDto);
+            var responseMessage = await _httpClient.PostAsJsonAsync("discounts", createCouponDto);
+            responseMessage.EnsureSuccessStatusCode();
             return responseMessage;
         }
 
         public async Task<HttpResponseMessage> DeleteCouponAsync(string id)
         {
             var responseMessage = await _httpClient.DeleteAsync($"discounts?id={id}");
+            responseMessage.EnsureSuccessStatusCode();
             return responseMessage;
         }
 
         public async Task<List<ResultCouponDto>> GetAllCouponAsync()
         {
             var responseMessage = await _httpClient.GetAsync("discounts");
-            var coupons = await responseMessage.Content.ReadFromJsonAsync<List<ResultCouponDto>>();
-            return coupons ?? new List<ResultCouponDto>();
+            if (responseMessage.IsSuccessStatusCode)
+            {
+                var coupons = await responseMessage.Content.ReadFromJsonAsync<List<ResultCouponDto>>();
+                return coupons ?? new List<ResultCouponDto>();
+            }
+            return new List<ResultCouponDto>();
         }
 
-        public async Task<GetByIdCouponDto> GetByIdCouponAsync(string id)
+        public async Task<GetByIdCouponDto?> GetByIdCouponAsync(string id)
         {
             var responseMessage = await _httpClient.GetAsync($"discounts/{id}");
-            var coupon = await responseMessage.Content.ReadFromJsonAsync<GetByIdCouponDto>();
-            return coupon;
+            if (responseMessage.IsSuccessStatusCode)
+            {
+                var coupon = await responseMessage.Content.ReadFromJsonAsync<GetByIdCouponDto>();
+                return coupon;
+            }
+            return null;
         }
 
         public async Task<HttpResponseMessage> UpdateCouponAsync(UpdateCouponDto updateCouponDto)
         {
-            var responseMessage = await _httpClient.PutAsJsonAsync<UpdateCouponDto>("discounts", updateCouponDto);
+            var responseMessage = await _httpClient.PutAsJsonAsync("discounts", updateCouponDto);
+            responseMessage.EnsureSuccessStatusCode();
             return responseMessage;
         }
     }

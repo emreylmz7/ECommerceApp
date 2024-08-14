@@ -1,4 +1,5 @@
 ﻿using OllieShop.WebUI.Models;
+using System.Net.Http.Json;
 
 namespace OllieShop.WebUI.Services.IUserService
 {
@@ -13,9 +14,17 @@ namespace OllieShop.WebUI.Services.IUserService
 
         public async Task<UserDetailViewModel> GetUserInfoAsync()
         {
-            var result = await _httpClient.GetFromJsonAsync<UserDetailViewModel>("/api/user/getUserInfo");
-            return result ?? new UserDetailViewModel();
+            try
+            {
+                var result = await _httpClient.GetFromJsonAsync<UserDetailViewModel>("/api/user/getUserInfo");
+                return result ?? new UserDetailViewModel();
+            }
+            catch (HttpRequestException ex)
+            {
+                // Log the exception details here
+                // Optionally return a default or empty model if needed
+                return new UserDetailViewModel();
+            }
         }
-
     }
 }

@@ -4,12 +4,15 @@ using Microsoft.AspNetCore.Mvc;
 namespace OllieShop.WebUI.Areas.User.Controllers
 {
     [Authorize]
-    public class SupportController : Controller
+    [Area("User")]
+    [Route("User/UserDashboard")]
+    public class UserDashboardController : Controller
     {
+        [Route("Index")]
+        [HttpGet]
         public IActionResult Index()
         {
             return View();
         }
-
     }
 }

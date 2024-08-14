@@ -26,7 +26,6 @@ using OllieShop.WebUI.Services.CommentServices;
 using OllieShop.WebUI.Services.CouponServices;
 using OllieShop.WebUI.Services.IdentityServices;
 using OllieShop.WebUI.Services.IUserService;
-using OllieShop.WebUI.Services.LoginServices;
 using OllieShop.WebUI.Services.OrderServices.AddressServices;
 using OllieShop.WebUI.Services.OrderServices.OrderDetailServices;
 using OllieShop.WebUI.Services.OrderServices.OrderingServices;
@@ -199,7 +198,6 @@ namespace OllieShop.WebUI.Extensions
             services.AddHttpClient<IIdentityService, IdentityService>();
             services.AddHttpClient<IClientCredentialTokenService, ClientCredentialTokenService>();
             services.AddScoped<IApiService, ApiService>();
-            services.AddScoped<ILoginService, LoginService>(); 
             
             return services;
         }

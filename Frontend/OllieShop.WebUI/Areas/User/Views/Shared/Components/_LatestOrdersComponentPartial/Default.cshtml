@@ -1,0 +1,64 @@
+﻿@using OllieShop.DtoLayer.Enums
+@model List<ResultOrderingDto>
+
+<div class="card">
+    <div class="card-header">
+        <h4>Latest Orders</h4>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            @if (Model == null || !Model.Any())
+            {
+                <div class="alert alert-warning" role="alert">
+                    Sipariş bulunamadı.
+                </div>
+            }
+            else
+            {
+                <table class="table table-hover table-lg">
+                    <thead>
+                        <tr>
+                            <th>Order ID</th>
+                            <th>Total Price</th>
+                            <th>Order Date</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var order in Model)
+                        {
+                            <tr>
+                                <td class="col-2">
+                                    @order.OrderingId
+                                </td>
+                                <td class="col-2">
+                                    @order.TotalPrice.ToString("C")
+                                </td>
+                                <td class="col-2">
+                                    @order.OrderDate.ToString("g")
+                                </td>
+                                <td class="col-2">
+                                    <span class="badge
+                                        @if(order.Status == OrderStatus.Pending) {
+                                            <text>bg-warning</text>
+                 }
+                                                        else if(order.Status == OrderStatus.Processing) {
+                                            <text>bg-success</text>
+                 }
+                                                        else if(order.Status == OrderStatus.Cancelled) {
+                                            <text>bg-danger</text>
+                 }
+                                                        else {
+                                            <text>bg-secondary</text>
+                                        }">
+                                        @order.Status.ToString()
+                                    </span>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+        </div>
+    </div>
+</div>

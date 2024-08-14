@@ -15,7 +15,7 @@ var optionsProfileVisit = {
 	plotOptions: {
 	},
 	series: [{
-		name: 'sales',
+		name: 'orders',
 		data: [9,20,30,20,10,20,30,20,10,20,30,20]
 	}],
 	colors: '#435ebe',

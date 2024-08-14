@@ -1,0 +1,99 @@
+﻿@{
+    ViewData["Title"] = "FAQ";
+    Layout = "~/Views/UILayout/_UILayout.cshtml";
+}
+
+<link href='~/css/faq.css' rel='stylesheet'>
+
+<div class="faq_area section_padding_130" id="faq">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-12 col-sm-8 col-lg-6">
+                <!-- Section Heading-->
+                <div class="section_heading text-center wow fadeInUp" data-wow-delay="0.2s">
+                    <h3><span>Frequently </span> Asked Questions</h3>
+                    <p>Discover answers to your most common questions about Ollie Shop and our latest fashion collections.</p>
+                    <div class="line"></div>
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <!-- FAQ Area-->
+            <div class="col-12 col-sm-10 col-lg-8">
+                <div class="accordion faq-accordian" id="faqAccordion">
+                    <!-- Question 1 -->
+                    <div class="card border-0 wow fadeInUp" data-wow-delay="0.2s">
+                        <div class="card-header" id="headingOne">
+                            <h6 class="mb-0 collapsed" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                How do I track my order?<span class="lni-chevron-up"></span>
+                            </h6>
+                        </div>
+                        <div class="collapse" id="collapseOne" aria-labelledby="headingOne" data-parent="#faqAccordion">
+                            <div class="card-body">
+                                <p>You can track your order by logging into your Ollie Shop account and visiting the "Order History" section. There, you'll find all the information you need about your recent purchases.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Question 2 -->
+                    <div class="card border-0 wow fadeInUp" data-wow-delay="0.3s">
+                        <div class="card-header" id="headingTwo">
+                            <h6 class="mb-0 collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                                What is the return policy?<span class="lni-chevron-up"></span>
+                            </h6>
+                        </div>
+                        <div class="collapse" id="collapseTwo" aria-labelledby="headingTwo" data-parent="#faqAccordion">
+                            <div class="card-body">
+                                <p>We offer a 30-day return policy for all items. Products must be unused, unwashed, and in their original packaging. Visit our Returns & Exchanges page for more details.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Question 3 -->
+                    <div class="card border-0 wow fadeInUp" data-wow-delay="0.4s">
+                        <div class="card-header" id="headingThree">
+                            <h6 class="mb-0 collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
+                                How do I find my size?<span class="lni-chevron-up"></span>
+                            </h6>
+                        </div>
+                        <div class="collapse" id="collapseThree" aria-labelledby="headingThree" data-parent="#faqAccordion">
+                            <div class="card-body">
+                                <p>Each product page includes a size guide to help you choose the perfect fit. If you're still unsure, our customer support team is available to assist you.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Question 4 -->
+                    <div class="card border-0 wow fadeInUp" data-wow-delay="0.5s">
+                        <div class="card-header" id="headingFour">
+                            <h6 class="mb-0 collapsed" data-toggle="collapse" data-target="#collapseFour" aria-expanded="true" aria-controls="collapseFour">
+                                Do you offer international shipping?<span class="lni-chevron-up"></span>
+                            </h6>
+                        </div>
+                        <div class="collapse" id="collapseFour" aria-labelledby="headingFour" data-parent="#faqAccordion">
+                            <div class="card-body">
+                                <p>Yes, Ollie Shop ships internationally. Shipping times and costs vary depending on your location. Please refer to our Shipping Information page for more details.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Question 5 -->
+                    <div class="card border-0 wow fadeInUp" data-wow-delay="0.6s">
+                        <div class="card-header" id="headingFive">
+                            <h6 class="mb-0 collapsed" data-toggle="collapse" data-target="#collapseFive" aria-expanded="true" aria-controls="collapseFive">
+                                How can I apply a discount code?<span class="lni-chevron-up"></span>
+                            </h6>
+                        </div>
+                        <div class="collapse" id="collapseFive" aria-labelledby="headingFive" data-parent="#faqAccordion">
+                            <div class="card-body">
+                                <p>During checkout, simply enter your discount code in the "Promo Code" box and click "Apply." The discount will be reflected in your order summary.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Support Button-->
+                <div class="support-button text-center d-flex align-items-center justify-content-center mt-4 wow fadeInUp" data-wow-delay="0.7s">
+                    <i class="lni-emoji-sad"></i>
+                    <p class="mb-0 px-2">Can't find your answers?</p>
+                    <a href="/Contact/Index"> Contact us</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
