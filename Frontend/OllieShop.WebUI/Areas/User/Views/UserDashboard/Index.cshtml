@@ -1,8 +1,11 @@
-﻿
+﻿@model UserDetailViewModel
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Areas/User/Views/UserLayout/Index.cshtml";
 }
+
+<link rel="stylesheet" href="~/mazer/dist/assets/vendors/iconly/bold.css">
+<link rel="stylesheet" href="~/mazer/dist/assets/vendors/bootstrap-icons/bootstrap-icons.css">
 
 <div class="page-heading">
     <div class="page-title">
@@ -45,7 +48,7 @@
                                             </div>
                                         </div>
                                         <div class="col-6">
-                                            <h5 class="mb-0">862</h5>
+                                            <h5 class="mb-0">15</h5>
                                         </div>
                                         <div class="col-12">
                                             <div id="chart-europe"></div>
@@ -58,11 +61,11 @@
                                                      style="width:10px">
                                                     <use xlink:href="assets/vendors/bootstrap-icons/bootstrap-icons.svg#circle-fill" />
                                                 </svg>
-                                                <h5 class="mb-0 ms-3">America</h5>
+                                                <h5 class="mb-0 ms-3">Sweatshirt</h5>
                                             </div>
                                         </div>
                                         <div class="col-6">
-                                            <h5 class="mb-0">375</h5>
+                                            <h5 class="mb-0">12</h5>
                                         </div>
                                         <div class="col-12">
                                             <div id="chart-america"></div>
@@ -75,11 +78,11 @@
                                                      style="width:10px">
                                                     <use xlink:href="assets/vendors/bootstrap-icons/bootstrap-icons.svg#circle-fill" />
                                                 </svg>
-                                                <h5 class="mb-0 ms-3">Indonesia</h5>
+                                                <h5 class="mb-0 ms-3">Hoodie</h5>
                                             </div>
                                         </div>
                                         <div class="col-6">
-                                            <h5 class="mb-0">1025</h5>
+                                            <h5 class="mb-0">9</h5>
                                         </div>
                                         <div class="col-12">
                                             <div id="chart-indonesia"></div>
@@ -98,11 +101,11 @@
                         <div class="card-body py-4 px-5">
                             <div class="d-flex align-items-center">
                                 <div class="avatar avatar-xl">
-                                    <img src="~/mazer/dist/assets/images/faces/1.jpg" alt="Face 1">
+                                    <img src="~/img/UserImages/@Model.ProfilePictureUrl" alt="Face 1">
                                 </div>
                                 <div class="ms-3 name">
-                                    <h5 class="font-bold"></h5>
-                                    <h6 class="text-muted mb-0">@User.Identity!.Name</h6>
+                                    <h5 class="font-bold">@Model.Name @Model.Surname</h5>
+                                    <h6 class="text-muted mb-0">@Model.Username</h6>
                                 </div>
                             </div>
                         </div>
@@ -114,7 +117,7 @@
                         <div class="card-content pb-4">
                             <div class="recent-message d-flex px-4 py-3">
                                 <div class="avatar avatar-lg">
-                                    <img src="assets/images/faces/4.jpg">
+                                    <img src="~/mazer/dist/assets/images/faces/4.jpg">
                                 </div>
                                 <div class="name ms-4">
                                     <h5 class="mb-1">Hank Schrader</h5>
@@ -123,7 +126,7 @@
                             </div>
                             <div class="recent-message d-flex px-4 py-3">
                                 <div class="avatar avatar-lg">
-                                    <img src="assets/images/faces/5.jpg">
+                                    <img src="~/mazer/dist/assets/images/faces/5.jpg">
                                 </div>
                                 <div class="name ms-4">
                                     <h5 class="mb-1">Dean Winchester</h5>
@@ -132,7 +135,7 @@
                             </div>
                             <div class="recent-message d-flex px-4 py-3">
                                 <div class="avatar avatar-lg">
-                                    <img src="assets/images/faces/1.jpg">
+                                    <img src="~/mazer/dist/assets/images/faces/1.jpg">
                                 </div>
                                 <div class="name ms-4">
                                     <h5 class="mb-1">John Dodol</h5>
@@ -161,10 +164,6 @@
     </section>
 </div>
 
-<script src="~/mazer/dist/assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
-<script src="~/mazer/dist/assets/js/bootstrap.bundle.min.js"></script>
-
 <script src="~/mazer/dist/assets/vendors/apexcharts/apexcharts.js"></script>
 <script src="~/mazer/dist/assets/js/pages/dashboard.js"></script>
 
-<script src="~/mazer/dist/assets/js/main.js"></script>

@@ -32,77 +32,86 @@
                     <p class="card-text">
                         Below is a list of your recent orders. You can view the details of each order, including the total price, date, status, and delivery address.
                     </p>
-                    <!-- Table with outer spacing -->
-                    <div class="table-responsive">
-                        <table class="table table-lg">
-                            <thead>
-                                <tr>
-                                    <th>Order ID</th>
-                                    <th>Total Price</th>
-                                    <th>Order Date</th>
-                                    <th>Status</th>
-                                    <th>Address ID</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var item in Model)
-                                {
+
+                    @if (Model == null || !Model.Any())
+                    {
+                        <div class="alert alert-warning" role="alert">
+                            You have no orders yet. Please check back later or make a purchase.
+                        </div>
+                    }
+                    else
+                    {
+                        <!-- Table with outer spacing -->
+                        <div class="table-responsive">
+                            <table class="table table-lg">
+                                <thead>
                                     <tr>
-                                        <td class="text-bold-500"># @item.OrderingId</td>
-                                        <td class="text-bold-500">$ @item.TotalPrice</td>
-                                        <td class="text-bold-500">@item.OrderDate.Date.ToString("dd/MMM/yyyy")</td>
-                                        <td class="text-bold-500">
-                                            @if (item.Status == OrderStatus.Pending)
-                                            {
-                                                <span class="badge bg-warning">Pending</span>
-                                            }
-                                            else if (item.Status == OrderStatus.Processing)
-                                            {
-                                                <span class="badge bg-primary">Processing</span>
-                                            }
-                                            else if (item.Status == OrderStatus.Shipped)
-                                            {
-                                                <span class="badge bg-info">Shipped</span>
-                                            }
-                                            else if (item.Status == OrderStatus.Delivered)
-                                            {
-                                                <span class="badge bg-success">Delivered</span>
-                                            }
-                                            else if (item.Status == OrderStatus.Cancelled)
-                                            {
-                                                <span class="badge bg-danger">Cancelled</span>
-                                            }
-                                        </td>
-                                        <td class="text-bold-500">@item.AddressId</td>
-                                        <td class="text-bold-500">
-                                            <a href="/User/Orders/OrderDetails?id=@item.OrderingId"> <i class="fas fa-align-right"></i> Order Details</a>
-                                        </td>
+                                        <th>Order ID</th>
+                                        <th>Total Price</th>
+                                        <th>Order Date</th>
+                                        <th>Status</th>
+                                        <th>Address ID</th>
+                                        <th></th>
                                     </tr>
-                                }
-                            </tbody>
-                        </table>
-                    </div>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td class="text-bold-500"># @item.OrderingId</td>
+                                            <td class="text-bold-500">$ @item.TotalPrice</td>
+                                            <td class="text-bold-500">@item.OrderDate.Date.ToString("dd/MMM/yyyy")</td>
+                                            <td class="text-bold-500">
+                                                @if (item.Status == OrderStatus.Pending)
+                                                {
+                                                    <span class="badge bg-warning">Pending</span>
+                                                }
+                                                else if (item.Status == OrderStatus.Processing)
+                                                {
+                                                    <span class="badge bg-primary">Processing</span>
+                                                }
+                                                else if (item.Status == OrderStatus.Shipped)
+                                                {
+                                                    <span class="badge bg-info">Shipped</span>
+                                                }
+                                                else if (item.Status == OrderStatus.Delivered)
+                                                {
+                                                    <span class="badge bg-success">Delivered</span>
+                                                }
+                                                else if (item.Status == OrderStatus.Cancelled)
+                                                {
+                                                    <span class="badge bg-danger">Cancelled</span>
+                                                }
+                                            </td>
+                                            <td class="text-bold-500">@item.AddressId</td>
+                                            <td class="text-bold-500">
+                                                <a href="/User/Orders/OrderDetails?id=@item.OrderingId"> <i class="fas fa-align-right"></i> Order Details</a>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
 
-                    <div class="pagination-container">
-                        <nav aria-label="Page navigation example">
-                            <ul class="pagination">
-                                <li class="page-item @(ViewBag.CurrentPage == 1 ? "disabled" : "")">
-                                    <a class="page-link" href="@Url.Action("Index", new { pageNumber = ViewBag.CurrentPage - 1 })">Previous</a>
-                                </li>
-                                @for (int i = 1; i <= ViewBag.TotalPages; i++)
-                                {
-                                    <li class="page-item @(ViewBag.CurrentPage == i ? "active" : "")">
-                                        <a class="page-link" href="@Url.Action("Index", new { pageNumber = i })">@i</a>
+                        <div class="pagination-container">
+                            <nav aria-label="Page navigation example">
+                                <ul class="pagination">
+                                    <li class="page-item @(ViewBag.CurrentPage == 1 ? "disabled" : "")">
+                                        <a class="page-link" href="@Url.Action("Index", new { pageNumber = ViewBag.CurrentPage - 1 })">Previous</a>
                                     </li>
-                                }
-                                <li class="page-item @(ViewBag.CurrentPage == ViewBag.TotalPages ? "disabled" : "")">
-                                    <a class="page-link" href="@Url.Action("Index", new { pageNumber = ViewBag.CurrentPage + 1 })">Next</a>
-                                </li>
-                            </ul>
-                        </nav>
-                    </div>
-
+                                    @for (int i = 1; i <= ViewBag.TotalPages; i++)
+                                    {
+                                        <li class="page-item @(ViewBag.CurrentPage == i ? "active" : "")">
+                                            <a class="page-link" href="@Url.Action("Index", new { pageNumber = i })">@i</a>
+                                        </li>
+                                    }
+                                    <li class="page-item @(ViewBag.CurrentPage == ViewBag.TotalPages ? "disabled" : "")">
+                                        <a class="page-link" href="@Url.Action("Index", new { pageNumber = ViewBag.CurrentPage + 1 })">Next</a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    }
                 </div>
             </div>
         </div>

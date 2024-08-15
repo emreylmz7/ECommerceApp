@@ -38,7 +38,7 @@ namespace OllieShop.WebUI.Areas.User.Controllers
 						Description = "None",
 						Country = "",
 						PhoneNumber = "None",
-						ZipCode = "None"
+						ZipCode = ""
 					}
 				};
 			}
@@ -46,5 +46,25 @@ namespace OllieShop.WebUI.Areas.User.Controllers
 			ViewData["address"] = addresses;
 			return View(user);
 		}
+
+        [Route("CreateAddress")]
+        [HttpGet]
+        public IActionResult CreateAddress(string id)
+        {
+			ViewBag.UserId = id;
+            return View();
+        }
+
+        [Route("CreateAddress")]
+        [HttpPost]
+        public async Task<IActionResult> CreateAddress(CreateAddressDto createAddressDto)
+		{
+			var result = await _addressService.CreateAddressAsync(createAddressDto);
+            if (result.IsSuccessStatusCode)
+            {
+				return Redirect("/User/Profile/Index");
+            }
+			return View();
+        }
 	}
 }

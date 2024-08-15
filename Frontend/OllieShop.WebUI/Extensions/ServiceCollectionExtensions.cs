@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using OllieShop.WebUI.Handlers;
 using OllieShop.WebUI.Services.ApiServices;
 using OllieShop.WebUI.Services.BasketServices;
@@ -38,17 +37,6 @@ namespace OllieShop.WebUI.Extensions
     {
         public static IServiceCollection AddCustomAuthentication(this IServiceCollection services, IConfiguration configuration)
         {
-            //services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddCookie(JwtBearerDefaults.AuthenticationScheme, opt =>
-            //{
-            //    opt.LoginPath = "/Login/Index";
-            //    opt.LogoutPath = "/Default/Index";
-            //    opt.AccessDeniedPath = "/Pages/AccessDenied/";
-            //    opt.Cookie.HttpOnly = true;
-            //    opt.Cookie.SameSite = SameSiteMode.Strict;
-            //    opt.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest;
-            //    opt.Cookie.Name = "OllieShopJwt";
-            //});
-
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, opt =>
             {
                 opt.LoginPath = "/Login/Index";

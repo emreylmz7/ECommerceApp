@@ -1,0 +1,19 @@
+﻿.edit-btn {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 10px;
+    background-color: #007bff; /* Örneğin, Bootstrap mavi */
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+    .edit-btn a {
+        color: #fff;
+        text-decoration: none;
+    }
