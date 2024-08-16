@@ -11,7 +11,7 @@ namespace OllieShop.IdentityServer
             new ApiResource("ResourceCatalog")
             {
                 Scopes = { "CatalogFullPermission", "CatalogReadPermission" },
-                UserClaims = { "role" }  // Rol claim'ini dahil et
+                UserClaims = { "role" }  
             },
             new ApiResource("ResourceDiscount")
             {
@@ -46,6 +46,11 @@ namespace OllieShop.IdentityServer
             new ApiResource("ResourceImages")
             {
                 Scopes = { "ImagesFullPermission", "ImagesReadPermission" },
+                UserClaims = { "role" }
+            },
+            new ApiResource("ResourceMessage")
+            {
+                Scopes = { "MessageFullPermission", "MessageReadPermission" },
                 UserClaims = { "role" }
             },
             new ApiResource("ResourceOcelot")
@@ -84,6 +89,8 @@ namespace OllieShop.IdentityServer
             new ApiScope("PaymentReadPermission", "Reading authority for payment operations"),
             new ApiScope("ImagesFullPermission", "Full authority for images operations"),
             new ApiScope("ImagesReadPermission", "Reading authority for images operations"),
+            new ApiScope("MessageReadPermission", "Reading authority for Messages operations"),
+            new ApiScope("MessageFullPermission", "Full authority for Messages operations"),
             new ApiScope("OcelotFullPermission", "Full authority for Ocelot operations"),
             new ApiScope(IdentityServerConstants.LocalApi.ScopeName)
         };
@@ -107,6 +114,7 @@ namespace OllieShop.IdentityServer
                     "CommentFullPermission",
                     "PaymentReadPermission",
                     "ImagesReadPermission",
+                    "MessageReadPermission",
                     "OcelotFullPermission",
                     IdentityServerConstants.LocalApi.ScopeName,
                     IdentityServerConstants.StandardScopes.OpenId,
@@ -131,6 +139,7 @@ namespace OllieShop.IdentityServer
                     "CommentFullPermission",
                     "PaymentReadPermission",
                     "ImagesReadPermission",
+                    "MessageFullPermission",
                     "OcelotFullPermission",
                     IdentityServerConstants.StandardScopes.Email,
                     IdentityServerConstants.StandardScopes.OpenId,
@@ -154,6 +163,7 @@ namespace OllieShop.IdentityServer
                     "CommentFullPermission",
                     "PaymentFullPermission",
                     "ImagesFullPermission",
+                    "MessageFullPermission",
                     "OcelotFullPermission",
                     IdentityServerConstants.LocalApi.ScopeName,
                     IdentityServerConstants.StandardScopes.Email,

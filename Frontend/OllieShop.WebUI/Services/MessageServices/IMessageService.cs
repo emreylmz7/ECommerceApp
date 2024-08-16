@@ -1,8 +1,8 @@
-﻿using OllieShop.Message.Dtos;
+﻿using OllieShop.DtoLayer.MessageDtos;
 
-namespace OllieShop.Message.Services
+namespace OllieShop.WebUI.Services.MessageServices
 {
-    public interface IUserMessageService
+    public interface IMessageService
     {
         Task<List<ResultMessageDto>> GetAllMessagesAsync();
 
@@ -19,5 +19,5 @@ namespace OllieShop.Message.Services
         Task DeleteMessageAsync(int id);
 
         Task<GetByIdMessageDto> GetMessageByIdAsync(int id);
-    } 
+    }
 }

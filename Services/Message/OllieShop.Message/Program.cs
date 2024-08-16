@@ -1,9 +1,17 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using OllieShop.Message.Dal.Context;
 using OllieShop.Message.MappingProfiles;
 using OllieShop.Message.Services;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(opt =>
+{
+    opt.Authority = builder.Configuration["IdentityServerUrl"];
+    opt.Audience = "ResourceMessage";
+    opt.RequireHttpsMetadata = false;
+});
 
 // Add services to the container.
 
@@ -12,9 +20,11 @@ builder.Services.AddDbContext<MessageContext>(opt =>
     opt.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 
+builder.Services.AddHttpContextAccessor();
+
 builder.Services.AddAutoMapper(typeof(MessageProfile));
 
-builder.Services.AddScoped<IUserMessageService, UserMessageService>();
+builder.Services.AddTransient<IUserMessageService, UserMessageService>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -31,6 +41,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 

@@ -25,6 +25,7 @@ using OllieShop.WebUI.Services.CommentServices;
 using OllieShop.WebUI.Services.CouponServices;
 using OllieShop.WebUI.Services.IdentityServices;
 using OllieShop.WebUI.Services.IUserService;
+using OllieShop.WebUI.Services.MessageServices;
 using OllieShop.WebUI.Services.OrderServices.AddressServices;
 using OllieShop.WebUI.Services.OrderServices.OrderDetailServices;
 using OllieShop.WebUI.Services.OrderServices.OrderingServices;
@@ -177,6 +178,13 @@ namespace OllieShop.WebUI.Extensions
             services.AddHttpClient<IPaymentService, PaymentService>(opt =>
             {
                 opt.BaseAddress = new Uri($"{values.OcelotUrl}/{values.Payment.Path}");
+            }).AddHttpMessageHandler<ResourceOwnerPasswordTokenHandler>();
+
+            //MESSAGE MICROSERVICE CONFIGS
+
+            services.AddHttpClient<IMessageService, MessageService>(opt =>
+            {
+                opt.BaseAddress = new Uri($"{values.OcelotUrl}/{values.Message.Path}");
             }).AddHttpMessageHandler<ResourceOwnerPasswordTokenHandler>();
 
 

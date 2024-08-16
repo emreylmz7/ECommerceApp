@@ -1,0 +1,63 @@
+﻿@{
+    ViewData["Title"] = "SendMessage";
+    Layout = "~/Areas/User/Views/UserLayout/Index.cshtml";
+}
+
+<div class="email-user-list list-group ps ps--active-y">
+    <form asp-action="SendMessage" asp-controller="Notifications" asp-area="User" method="POST">
+        <div class="card">
+            <div class="card-body">
+                <!-- Subject Field -->
+                <div class="form-group mb-3">
+                    <label for="subject">Subject:</label>
+                    <input type="text" id="subject" name="subject" class="form-control" placeholder="Enter subject here" required>
+                </div>
+
+                <!-- Editor Field -->
+                <div class="form-group">
+                    <label for="editor">Message:</label>
+                    <div id="editor" contenteditable="true" class="form-control">
+                        <p>This is some sample content.</p>
+                    </div>
+                </div>
+
+                <!-- Hidden Input Field -->
+                <input type="hidden" id="content" name="content">
+            </div>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="form-group mt-3">
+            <button type="submit" class="btn btn-primary">Send</button>
+        </div>
+    </form>
+
+    <div class="ps__rail-x" style="left: 0px; bottom: 0px;">
+        <div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;"></div>
+    </div>
+    <div class="ps__rail-y" style="top: 0px; height: 733px; right: 0px;">
+        <div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 567px;"></div>
+    </div>
+</div>
+
+<script src="~/mazer/dist/assets/vendors/ckeditor/ckeditor.js"></script>
+
+<script>
+    let editor;
+    ClassicEditor
+        .create(document.querySelector('#editor'))
+        .then(newEditor => {
+            editor = newEditor;
+        })
+        .catch(error => {
+            console.error(error);
+        });
+
+    document.querySelector('form').addEventListener('submit', function (event) {
+        // CKEditor'den içerik al
+        const editorData = editor.getData();
+
+        // Gizli input alanına CKEditor içeriğini ekle
+        document.querySelector('#content').value = editorData;
+    });
+</script>
