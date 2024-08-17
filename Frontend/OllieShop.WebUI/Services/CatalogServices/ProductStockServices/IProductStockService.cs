@@ -9,7 +9,7 @@ namespace OllieShop.WebUI.Services.CatalogServices.ProductStockServices
         Task<HttpResponseMessage> UpdateProductStockAsync(UpdateProductStockDto updateProductStockDto);
         Task<HttpResponseMessage> DeleteProductStockAsync(string id);
         Task<GetByIdProductStockDto> GetByIdProductStockAsync(string id);
-        Task<UpdateProductStockDto> GetProductStocksByProductId(string id);
+        Task<List<GetByIdProductStockDto>> GetProductStocksByProductId(string id);
         Task<List<ResultProductStockWithDetailsDto>> GetProductStocksWithDetails();
 
     }

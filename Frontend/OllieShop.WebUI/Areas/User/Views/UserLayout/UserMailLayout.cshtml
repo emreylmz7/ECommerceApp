@@ -48,21 +48,32 @@
                                     <div class="email-app-menu">
                                         <div class="form-group form-group-compose">
                                             <!-- compose button  -->
-                                            <button type="button" class="btn btn-primary btn-block my-4 compose-btn">
-                                                <i class="bx bx-plus"></i>
-                                                Compose
-                                            </button>
+                                            <a href="/User/Notifications/SendMessage" class="btn btn-primary btn-block my-4 compose-btn">
+                                                <i class="bi bi-plus-lg"></i>
+                                                New Message
+                                            </a>
                                         </div>
                                         <div class="sidebar-menu-list ps">
                                             <!-- sidebar menu  -->
                                             <div class="list-group list-group-messages">
-                                                <a href="/User/Notifications/Inbox" class="list-group-item pt-0 active" id="inbox-menu">
+                                                <a href="/User/Notifications/Index" class="list-group-item pt-0" id="inbox-menu">
                                                     <div class="fonticon-wrap d-inline me-3">
 
                                                         <svg class="bi" width="1.5em" height="1.5em" fill="currentColor">
-                                                            <use xlink:href="/mazer/dist/assets/vendors/bootstrap-icons/bootstrap-icons.svg#envelope" />
+                                                            <use xlink:href="/mazer/dist/assets/vendors/bootstrap-icons/bootstrap-icons.svg#archive" />
                                                         </svg>
                                                         </i>
+                                                    </div>
+                                                    All Messages
+                                                    <span class="badge badge-light-primary badge-pill badge-round float-right mt-50">5</span>
+                                                </a>
+                                                <a href="/User/Notifications/Inbox" class="list-group-item pt-0" id="inbox-menu">
+                                                    <div class="fonticon-wrap d-inline me-3">
+
+                                                        <svg class="bi" width="1.5em" height="1.5em" fill="currentColor">
+                                                            <use xlink:href="/mazer/dist/assets/vendors/bootstrap-icons/bootstrap-icons.svg#envelope-open" />
+                                                        </svg>
+                                               
                                                     </div>
                                                     Inbox
                                                     <span class="badge badge-light-primary badge-pill badge-round float-right mt-50">5</span>
@@ -71,7 +82,7 @@
                                                     <div class="fonticon-wrap d-inline me-3">
 
                                                         <svg class="bi" width="1.5em" height="1.5em" fill="currentColor">
-                                                            <use xlink:href="/mazer/dist/assets/vendors/bootstrap-icons/bootstrap-icons.svg#archive" />
+                                                            <use xlink:href="/mazer/dist/assets/vendors/bootstrap-icons/bootstrap-icons.svg#envelope" />
                                                         </svg>
                                                     </div>
                                                     Sent
@@ -112,31 +123,7 @@
                                                     Trash
                                                 </a>
                                             </div>
-                                            <!-- sidebar menu  end-->
-                                            <!-- sidebar label start -->
-                                            <label class="sidebar-label">Labels</label>
-                                            <div class="list-group list-group-labels">
-                                                <a href="#" class="list-group-item d-flex justify-content-between align-items-center">
-                                                    Product
-                                                    <span class="bullet bullet-success bullet-sm"></span>
-                                                </a>
-                                                <a href="#" class="list-group-item d-flex justify-content-between align-items-center">
-                                                    Work
-                                                    <span class="bullet bullet-primary bullet-sm"></span>
-                                                </a>
-                                                <a href="#" class="list-group-item d-flex justify-content-between align-items-center">
-                                                    Misc
-                                                    <span class="bullet bullet-warning bullet-sm"></span>
-                                                </a>
-                                                <a href="#" class="list-group-item d-flex justify-content-between align-items-center">
-                                                    Family
-                                                    <span class="bullet bullet-danger bullet-sm"></span>
-                                                </a>
-                                                <a href="#" class="list-group-item d-flex justify-content-between align-items-center">
-                                                    Design
-                                                    <span class="bullet bullet-info bullet-sm"></span>
-                                                </a>
-                                            </div>
+                                            
                                             <!-- sidebar label end -->
                                             <div class="ps__rail-x" style="left: 0px; bottom: 0px;">
                                                 <div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;"></div>

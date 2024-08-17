@@ -37,11 +37,11 @@ namespace OllieShop.WebUI.Services.CatalogServices.ProductStockServices
             return productStock;
         }
 
-        public async Task<UpdateProductStockDto> GetProductStocksByProductId(string id)
+        public async Task<List<GetByIdProductStockDto>> GetProductStocksByProductId(string id)
         {
-            var responseMessage = await _httpClient.GetAsync($"ProductStocks/GetProductStocksByProductId?id={id}");
-            var productStock = await responseMessage.Content.ReadFromJsonAsync<UpdateProductStockDto>();
-            return productStock;
+            var responseMessage = await _httpClient.GetAsync($"ProductStocks/GetProductStocksByProductId/{id}");
+            var productStocks = await responseMessage.Content.ReadFromJsonAsync<List<GetByIdProductStockDto>>();
+            return productStocks;
         }
 
         public async Task<List<ResultProductStockWithDetailsDto>> GetProductStocksWithDetails()

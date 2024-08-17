@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using OllieShop.DtoLayer.CatalogDtos.ProductStock;
 using OllieShop.DtoLayer.Enums;
 using OllieShop.DtoLayer.OrderDtos.Ordering;
 using OllieShop.DtoLayer.PaymentDtos;
 using OllieShop.WebUI.Services.BasketServices;
+using OllieShop.WebUI.Services.CatalogServices.ProductStockServices;
 using OllieShop.WebUI.Services.IUserService;
 using OllieShop.WebUI.Services.OrderServices.OrderDetailServices;
 using OllieShop.WebUI.Services.OrderServices.OrderingServices;
@@ -19,19 +21,22 @@ namespace OllieShop.WebUI.Controllers
         private readonly IBasketService _basketService;
         private readonly IOrderDetailService _orderDetailService;
         private readonly IUserService _userService;
+        private readonly IProductStockService _productStockService;
 
         public PaymentController(
             IOrderingService orderingService,
             IPaymentService paymentService,
             IBasketService basketService,
             IOrderDetailService orderDetailService,
-            IUserService userService)
+            IUserService userService,
+            IProductStockService productStockService)
         {
             _orderingService = orderingService;
             _paymentService = paymentService;
             _basketService = basketService;
             _orderDetailService = orderDetailService;
             _userService = userService;
+            _productStockService = productStockService;
         }
 
         [HttpGet]
@@ -45,8 +50,7 @@ namespace OllieShop.WebUI.Controllers
             var order = await _orderingService.GetByIdOrderingAsync(orderId);
             if (order == null)
             {
-                // Handle case where order is not found
-                return RedirectToAction("Error", "Home"); // You can create an error page or appropriate action
+                return RedirectToAction("Error", "Home");
             }
 
             ViewBag.OrderId = orderId;
@@ -59,19 +63,43 @@ namespace OllieShop.WebUI.Controllers
             var order = await _orderingService.GetByIdOrderingAsync(createPaymentDto.OrderId);
             if (order == null)
             {
-                // Handle case where order is not found
-                return RedirectToAction("Error", "Home"); // You can create an error page or appropriate action
+                return RedirectToAction("Error", "Home");
             }
 
             createPaymentDto.Amount = order.TotalPrice;
             createPaymentDto.PaymentMethod = "Credit Card";
 
-            var result = await _paymentService.CreatePaymentAsync(createPaymentDto);
-            if (result.IsSuccessStatusCode)
+            var paymentResult = await _paymentService.CreatePaymentAsync(createPaymentDto);
+            if (paymentResult.IsSuccessStatusCode)
             {
                 var user = await _userService.GetUserInfoAsync();
+                var basket = await _basketService.GetBasket();
 
-                var response = await _basketService.DeleteBasket();
+                if (basket != null)
+                {
+                    foreach (var item in basket.BasketItems)
+                    {
+                        var productStocks = await _productStockService.GetProductStocksByProductId(item.ProductId);
+                        if (productStocks != null)
+                        {
+                            var stock = productStocks.FirstOrDefault(x => x.SizeId == item.SizeId && x.ColorId == item.ColorId);
+                            if (stock != null)
+                            {
+                                stock.Stock -= item.Quantity;
+                                await _productStockService.UpdateProductStockAsync(new UpdateProductStockDto
+                                {
+                                    ColorId = stock.ColorId,
+                                    ProductId = stock.ProductId,
+                                    ProductStockId = stock.ProductId,
+                                    SizeId = stock.SizeId,
+                                    Stock = stock.Stock
+                                });
+                            }
+                        }
+                    }
+                }
+
+                await _basketService.DeleteBasket();
 
                 var updateOrderingDto = new UpdateOrderingDto
                 {
@@ -84,10 +112,9 @@ namespace OllieShop.WebUI.Controllers
                 };
                 await _orderingService.UpdateOrderingAsync(updateOrderingDto);
 
-                return RedirectToAction("Success", "Payment"); // Redirect to a success page
+                return RedirectToAction("Success", "Payment");
             }
 
-            // Handle failure case
             ModelState.AddModelError("", "Payment failed. Please try again.");
             return View(createPaymentDto);
         }

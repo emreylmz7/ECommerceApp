@@ -14,7 +14,7 @@ using OllieShop.WebUI.Services.OrderServices.OrderingServices;
 
 namespace OllieShop.WebUI.Controllers
 {
-    [Authorize(Roles = "User")]
+    [Authorize]
     public class OrderController : Controller
     {
         private readonly IAddressService _addressService;

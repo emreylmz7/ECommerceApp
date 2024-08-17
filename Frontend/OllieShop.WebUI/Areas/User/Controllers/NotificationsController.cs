@@ -73,6 +73,8 @@ namespace OllieShop.WebUI.Areas.User.Controllers
                 createMessageDto.IsRead = false;
 
                 await _messageService.CreateMessageAsync(createMessageDto);
+
+                return Redirect("/User/Notifications/Sendbox");
             }
             return View();
         }
