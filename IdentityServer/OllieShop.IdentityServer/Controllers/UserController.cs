@@ -1,6 +1,4 @@
-﻿using IdentityModel;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -8,6 +6,7 @@ using OllieShop.IdentityServer.Dtos;
 using OllieShop.IdentityServer.Models;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using static IdentityServer4.IdentityServerConstants;
 
@@ -25,12 +24,22 @@ namespace OllieShop.IdentityServer.Controllers
             _userManager = userManager;
         }
 
-        [HttpGet("GetUserInfo")]  
-        public async Task<IActionResult> GetUserInfo() 
+        [HttpGet("GetUserInfo")]
+        public async Task<IActionResult> GetUserInfo()
         {
-            var userClaim = User.Claims.FirstOrDefault(x => x.Type == JwtRegisteredClaimNames.Sub);
-            var user = await _userManager.FindByIdAsync(userClaim.Value);
-            return Ok(new
+            var userId = User.FindFirstValue(JwtRegisteredClaimNames.Sub);
+            if (userId == null)
+            {
+                return Unauthorized("User not authorized.");
+            }
+
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user == null)
+            {
+                return NotFound("User not found.");
+            }
+
+            var userInfo = new ResultUserDto
             {
                 Id = user.Id,
                 Name = user.Name,
@@ -39,16 +48,34 @@ namespace OllieShop.IdentityServer.Controllers
                 Surname = user.Surname,
                 ProfilePictureUrl = user.ProfilePictureUrl,
                 DateOfBirth = user.DateOfBirth,
-                Gender = user.Gender
-            });
+                Gender = user.Gender,
+                PhoneNumber = user.PhoneNumber,
+            };
+
+            return Ok(userInfo);
         }
+
 
         [HttpGet("GetUserList")]
         public async Task<IActionResult> GetUserList()
         {
-            var users = await _userManager.Users.ToListAsync();
+            var users = await _userManager.Users
+                .Select(user => new ResultUserDto
+                {
+                    Id = user.Id,
+                    Email = user.Email,
+                    Username = user.UserName,
+                    Name = user.Name,
+                    Surname = user.Surname,
+                    ProfilePictureUrl = user.ProfilePictureUrl,
+                    DateOfBirth = user.DateOfBirth,
+                    Gender = user.Gender
+                })
+                .ToListAsync();
+
             return Ok(users);
         }
+
 
         [HttpPut("UpdateUser")]
         public async Task<IActionResult> UpdateUser(UpdateUserDto model)
@@ -62,6 +89,8 @@ namespace OllieShop.IdentityServer.Controllers
             user.UserName = model.Username;
             user.DateOfBirth = model.DateOfBirth;
             user.Gender = model.Gender;
+            user.PhoneNumber = model.PhoneNumber;
+            user.ProfilePictureUrl = model.ProfilePictureUrl;
 
             var result = await _userManager.UpdateAsync(user);
             if (result.Succeeded)
@@ -88,7 +117,7 @@ namespace OllieShop.IdentityServer.Controllers
         }
 
         [HttpPost("AddRoleToUser")]
-        public async Task<IActionResult> AddRoleToUser([FromBody] AddRoleDto model)
+        public async Task<IActionResult> AddRoleToUser(AddRoleDto model)
         {
             var user = await _userManager.FindByIdAsync(model.UserId);
             if (user == null) return NotFound("User not found");

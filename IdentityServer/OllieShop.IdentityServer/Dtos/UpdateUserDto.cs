@@ -12,5 +12,6 @@ namespace OllieShop.IdentityServer.Dtos
         public string ProfilePictureUrl { get; set; }
         public DateTime DateOfBirth { get; set; }
         public string Gender { get; set; }
+        public string PhoneNumber { get; set; }
     }
 }
