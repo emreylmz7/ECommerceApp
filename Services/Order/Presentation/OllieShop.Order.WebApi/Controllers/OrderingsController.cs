@@ -67,5 +67,12 @@ namespace OllieShop.Order.WebApi.Controllers
             var value = await _mediator.Send(new GetOrderingStatisticsQuery());
             return Ok(value);
         }
+
+        [HttpGet("GetAdminOrderStatistics")]
+        public async Task<IActionResult> GetAdminOrderStatistics()
+        {
+            var value = await _mediator.Send(new GetAdminOrderingStatisticsQuery());
+            return Ok(value);
+        }
     }
 }

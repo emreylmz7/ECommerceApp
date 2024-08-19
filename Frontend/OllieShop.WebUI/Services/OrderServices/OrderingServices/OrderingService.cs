@@ -87,5 +87,16 @@ namespace OllieShop.WebUI.Services.CatalogServices.OrderingServices
             }
             return new ResultOrderingStatisticsDto();
         }
+
+        public async Task<ResultAdminOrderStatisticsDto> GetAdminOrderingStatisticsAsync()
+        {
+            var responseMessage = await _httpClient.GetAsync("orderings/GetAdminOrderStatistics");
+            if (responseMessage.IsSuccessStatusCode)
+            {
+                var orderings = await responseMessage.Content.ReadFromJsonAsync<ResultAdminOrderStatisticsDto>();
+                return orderings ?? new ResultAdminOrderStatisticsDto();
+            }
+            return new ResultAdminOrderStatisticsDto();
+        }
     }
 }

@@ -12,5 +12,6 @@ namespace OllieShop.WebUI.Services.OrderServices.OrderingServices
         Task<GetByIdOrderingDto> GetByIdOrderingAsync(string id);
         Task<int> GetTotalOrdersCountAsync();
         Task<ResultOrderingStatisticsDto> GetOrderingStatisticsAsync();
+        Task<ResultAdminOrderStatisticsDto> GetAdminOrderingStatisticsAsync();
     }
 }

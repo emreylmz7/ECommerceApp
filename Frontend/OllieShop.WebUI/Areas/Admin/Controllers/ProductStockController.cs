@@ -30,6 +30,10 @@ namespace OllieShop.WebUI.Areas.Admin.Controllers
         public async Task<IActionResult> Index()
         {
             var productStocks = await _productStockService.GetProductStocksWithDetails();
+            var totalStock = productStocks.Select(x => x.Stock).Sum();
+            ViewBag.One = "Total Stock";
+            ViewBag.OneDesc = totalStock.ToString();
+
             return View(productStocks);
         }
 
