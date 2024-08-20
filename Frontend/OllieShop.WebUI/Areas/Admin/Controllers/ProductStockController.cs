@@ -27,12 +27,35 @@ namespace OllieShop.WebUI.Areas.Admin.Controllers
 
         [Route("Index")]
         [HttpGet]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int pageNumber = 1, int pageSize = 10)
         {
-            var productStocks = await _productStockService.GetProductStocksWithDetails();
-            var totalStock = productStocks.Select(x => x.Stock).Sum();
+            var stockStatistics = await _productStockService.GetProductStocksStatistics();
+            var productStocks = (await _productStockService.GetProductStocksWithDetails())
+                                    .OrderByDescending(o => o.ProductId)
+                                    .Skip((pageNumber - 1) * pageSize)
+                                    .Take(pageSize)
+                                    .ToList();
+
+            var totalProductStocks = stockStatistics.TotalProductStocks;
+
+            ViewBag.TotalPages = (int)Math.Ceiling(totalProductStocks / (double)pageSize);
+            ViewBag.CurrentPage = pageNumber;
+
             ViewBag.One = "Total Stock";
-            ViewBag.OneDesc = totalStock.ToString();
+            ViewBag.OneDesc = stockStatistics.TotalStock;
+            ViewBag.OneIcon = "bx bx-box bx-lg text-success p-3";
+
+            ViewBag.Two = "Low Stock Products";
+            ViewBag.TwoDesc = stockStatistics.LowStockCount;
+            ViewBag.TwoIcon = "bx bx-trending-down bx-lg text-info p-3";
+
+            ViewBag.Three = "Out of Stock Products";
+            ViewBag.ThreeDesc = stockStatistics.OutOfStockCount;
+            ViewBag.ThreeIcon = "bx bx-error bx-lg text-warning p-3";
+
+            ViewBag.Four = "Max Stock Product";
+            ViewBag.FourDesc = stockStatistics.MaxStockProductName;
+            ViewBag.FourIcon = "bx bx-up-arrow-alt bx-lg text-primary p-3";
 
             return View(productStocks);
         }

@@ -3,6 +3,7 @@ using Microsoft.IdentityModel.Tokens;
 using OllieShop.DtoLayer.CommentDtos;
 using OllieShop.WebUI.Services.CatalogServices.ProductServices;
 using OllieShop.WebUI.Services.CommentServices;
+using OllieShop.WebUI.Services.IUserService;
 using System.Net;
 
 namespace OllieShop.WebUI.Controllers
@@ -11,10 +12,12 @@ namespace OllieShop.WebUI.Controllers
     {
         private readonly ICommentService _commentService;
         private readonly IProductService _productService;
-        public ProductListController(ICommentService commentService, IProductService productService)
+        private readonly IUserService _userService;
+        public ProductListController(ICommentService commentService, IProductService productService, IUserService userService)
         {
-            _productService = productService;
             _commentService = commentService;
+            _productService = productService;
+            _userService = userService;
         }
 
         public IActionResult Index(string id)
@@ -40,7 +43,9 @@ namespace OllieShop.WebUI.Controllers
         [HttpPost]
         public async Task<IActionResult> AddComment(CreateCommentDto createCommentDto) 
         {
+            var user = await _userService.GetUserInfoAsync();
             createCommentDto.CreatedAt = DateTime.Now;
+            createCommentDto.UserImageUrl = user.ProfilePictureUrl;
             var response = await _commentService.CreateCommentAsync(createCommentDto);
             if (response.StatusCode == HttpStatusCode.OK)
             {

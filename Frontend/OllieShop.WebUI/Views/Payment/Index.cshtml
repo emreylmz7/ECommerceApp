@@ -3,22 +3,9 @@
     Layout = "~/Views/UILayout/_UILayout.cshtml";
 }
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="~/css/payment.css">
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-
-    <!-- Custom CSS file link -->
-    <link rel="stylesheet" href="~/css/payment.css">
-</head>
-
-<body class="payment-page">
-
+<div class="main-payment">
     <div class="payment-container">
         <div class="payment-card-container">
             <div class="payment-card-front card">
@@ -106,40 +93,40 @@
             <button type="submit" class="btn payment-submit-btn">Submit</button>
         </form>
     </div>
-
-    <!-- Scripts -->
-    <script>
-        document.querySelector('.payment-card-number-input').oninput = () => {
-            document.querySelector('.payment-card-number-box').innerText = document.querySelector('.payment-card-number-input').value;
-        }
-
-        document.querySelector('.payment-card-holder-input').oninput = () => {
-            document.querySelector('.payment-card-holder-name').innerText = document.querySelector('.payment-card-holder-input').value;
-        }
-
-        document.querySelector('.payment-month-input').oninput = () => {
-            document.querySelector('.payment-exp-month').innerText = document.querySelector('.payment-month-input').value;
-        }
-
-        document.querySelector('.payment-year-input').oninput = () => {
-            document.querySelector('.payment-exp-year').innerText = document.querySelector('.payment-year-input').value;
-        }
-
-        document.querySelector('.payment-cvv-input').onmouseenter = () => {
-            document.querySelector('.payment-card-front').style.transform = 'perspective(1000px) rotateY(-180deg)';
-            document.querySelector('.payment-card-back').style.transform = 'perspective(1000px) rotateY(0deg)';
-        }
-
-        document.querySelector('.payment-cvv-input').onmouseleave = () => {
-            document.querySelector('.payment-card-front').style.transform = 'perspective(1000px) rotateY(0deg)';
-            document.querySelector('.payment-card-back').style.transform = 'perspective(1000px) rotateY(180deg)';
-        }
-
-        document.querySelector('.payment-cvv-input').oninput = () => {
-            document.querySelector('.payment-cvv-box').innerText = document.querySelector('.payment-cvv-input').value;
-        }
-    </script>
-</body>
+</div>
 
 
-</html>
+
+<!-- Scripts -->
+<script>
+    document.querySelector('.payment-card-number-input').oninput = () => {
+        document.querySelector('.payment-card-number-box').innerText = document.querySelector('.payment-card-number-input').value;
+    }
+
+    document.querySelector('.payment-card-holder-input').oninput = () => {
+        document.querySelector('.payment-card-holder-name').innerText = document.querySelector('.payment-card-holder-input').value;
+    }
+
+    document.querySelector('.payment-month-input').oninput = () => {
+        document.querySelector('.payment-exp-month').innerText = document.querySelector('.payment-month-input').value;
+    }
+
+    document.querySelector('.payment-year-input').oninput = () => {
+        document.querySelector('.payment-exp-year').innerText = document.querySelector('.payment-year-input').value;
+    }
+
+    document.querySelector('.payment-cvv-input').onmouseenter = () => {
+        document.querySelector('.payment-card-front').style.transform = 'perspective(1000px) rotateY(-180deg)';
+        document.querySelector('.payment-card-back').style.transform = 'perspective(1000px) rotateY(0deg)';
+    }
+
+    document.querySelector('.payment-cvv-input').onmouseleave = () => {
+        document.querySelector('.payment-card-front').style.transform = 'perspective(1000px) rotateY(0deg)';
+        document.querySelector('.payment-card-back').style.transform = 'perspective(1000px) rotateY(180deg)';
+    }
+
+    document.querySelector('.payment-cvv-input').oninput = () => {
+        document.querySelector('.payment-cvv-box').innerText = document.querySelector('.payment-cvv-input').value;
+    }
+</script>
+

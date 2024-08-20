@@ -31,11 +31,40 @@ namespace OllieShop.WebUI.Areas.Admin.Controllers
 
         [Route("Index")]
         [HttpGet]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int pageNumber = 1, int pageSize = 10)
         {
-            var products = await _productService.GetAllProductsWithCategoryAsync();
+            var productStatistics = await _productService.GetProductsStatistics();
+            var products = (await _productService.GetAllProductsWithCategoryAsync())
+                                .OrderByDescending(p => p.ProductId)
+                                .Skip((pageNumber - 1) * pageSize)
+                                .Take(pageSize)
+                                .ToList();
+
+            var totalProductCount = productStatistics.TotalProductCount;
+
+            ViewBag.TotalPages = (int)Math.Ceiling(totalProductCount / (double)pageSize);
+            ViewBag.CurrentPage = pageNumber;
+
+            ViewBag.One = "Total Products";
+            ViewBag.OneDesc = productStatistics.TotalProductCount.ToString();
+            ViewBag.OneIcon = "bx bx-package bx-lg text-success p-3";
+
+            ViewBag.Two = "Avg Price";
+            ViewBag.TwoDesc = productStatistics.AverageProductPrice.ToString("C");
+            ViewBag.TwoIcon = "bx bx-dollar bx-lg text-info p-3";
+
+            ViewBag.Three = "Top Category";
+            ViewBag.ThreeDesc = productStatistics.CategoryWithMostProducts ?? "N/A";
+            ViewBag.ThreeIcon = "bx bx-category-alt bx-lg text-warning p-3";
+
+            ViewBag.Four = "Top Product";
+            ViewBag.FourDesc = productStatistics.MostExpensiveProductName ?? "N/A";
+            ViewBag.FourIcon = "bx bx-crown bx-lg text-primary p-3";
+
             return View(products);
         }
+
+
 
         [Route("CreateProduct")]
         [HttpGet]

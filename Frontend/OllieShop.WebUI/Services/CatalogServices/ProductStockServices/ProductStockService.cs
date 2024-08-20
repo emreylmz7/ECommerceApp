@@ -44,6 +44,29 @@ namespace OllieShop.WebUI.Services.CatalogServices.ProductStockServices
             return productStocks;
         }
 
+        public async Task<ProductStocksStatisticsDto> GetProductStocksStatistics()
+        {
+            var productStocks = await GetProductStocksWithDetails();
+            var totalStock = productStocks.Sum(x => x.Stock);
+            var lowStockCount = productStocks.Count(x => x.Stock < 10);
+            var outOfStockCount = productStocks.Count(x => x.Stock == 0);
+            var maxStockProduct = productStocks.OrderByDescending(x => x.Stock).FirstOrDefault();
+            string maxStockProductName = maxStockProduct != null ? maxStockProduct.ProductName : "N/A";
+            var totalProductStocks = productStocks.Count();
+
+            var productStocksStatisticsDto = new ProductStocksStatisticsDto
+            {
+                TotalProductStocks = totalProductStocks,
+                TotalStock = totalStock,
+                LowStockCount = lowStockCount,
+                OutOfStockCount = outOfStockCount,
+                MaxStockProductName = maxStockProductName,
+            };
+
+            return productStocksStatisticsDto;
+        }
+
+
         public async Task<List<ResultProductStockWithDetailsDto>> GetProductStocksWithDetails()
         {
             var responseMessage = await _httpClient.GetAsync("productstocks/GetProductStocksWithDetails");

@@ -1,0 +1,59 @@
+﻿.payment-success {
+    min-height: 100vh; /* Sayfanın en az bir ekran yüksekliği kadar olmasını sağlar */
+    display: flex;
+    margin-top: -60px ;
+    justify-content: center;
+}
+
+    .payment-success .logo {
+        max-width: 300px; /* Logonun genişliğini ayarlayın */
+        height: auto;
+        margin-bottom: 20px; /* Logonun altında boşluk bırakır */
+    }
+
+    .payment-success .alert {
+        background-color: #b4efb7;
+        color: darkgreen;
+        border: none;
+    }
+
+        .payment-success .alert h4 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: darkgreen;
+        }
+
+        .payment-success .alert p {
+            font-size: 1.25rem;
+            color: darkgreen;
+        }
+
+    .payment-success .btn-custom {
+        background-color: #28a745;
+        border: none;
+        color: white;
+        padding: 15px 30px;
+        font-size: 1.2rem;
+        border-radius: 30px;
+        transition: background-color 0.3s ease;
+    }
+
+        .payment-success .btn-custom:hover {
+            background-color: #218838;
+            color: #fff;
+        }
+
+    .payment-success .btn-custom-secondary {
+        background-color: #6c757d;
+        border: none;
+        color: white;
+        padding: 15px 30px;
+        font-size: 1.2rem;
+        border-radius: 30px;
+        transition: background-color 0.3s ease;
+    }
+
+        .payment-success .btn-custom-secondary:hover {
+            background-color: #5a6268;
+            color: #fff;
+        }

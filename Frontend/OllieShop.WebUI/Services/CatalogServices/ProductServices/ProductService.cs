@@ -1,5 +1,6 @@
 ﻿using OllieShop.DtoLayer.CatalogDtos.Color;
 using OllieShop.DtoLayer.CatalogDtos.Product;
+using OllieShop.DtoLayer.CatalogDtos.ProductStock;
 
 namespace OllieShop.WebUI.Services.CatalogServices.ProductServices
 {
@@ -58,6 +59,31 @@ namespace OllieShop.WebUI.Services.CatalogServices.ProductServices
             var product = await responseMessage.Content.ReadFromJsonAsync<GetByIdProductDto>();
             return product;
         }
+
+        public async Task<ProductStatisticsDto> GetProductsStatistics()
+        {
+            var products = await GetAllProductsWithCategoryAsync();
+
+            var totalProductCount = products.Count();
+            var averageProductPrice = products.Average(x => x.Price);
+            var mostExpensiveProduct = products.OrderByDescending(x => x.Price).FirstOrDefault();
+            var categoryWithMostProducts = products
+                .GroupBy(x => x.CategoryName)
+                .OrderByDescending(g => g.Count())
+                .Select(g => g.Key)
+                .FirstOrDefault();
+
+            var productStatistics = new ProductStatisticsDto
+            {
+                TotalProductCount = totalProductCount,
+                AverageProductPrice = averageProductPrice,
+                MostExpensiveProductName = mostExpensiveProduct?.Name,
+                CategoryWithMostProducts = categoryWithMostProducts
+            };
+
+            return productStatistics;
+        }
+
 
         public async Task<List<ResultProductsWithCategoryDto>> ProductListByCategoryId(string id)
         {

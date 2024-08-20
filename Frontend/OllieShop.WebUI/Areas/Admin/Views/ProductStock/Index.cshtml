@@ -3,7 +3,12 @@
 @{
     ViewData["Title"] = "Product Stock Index";
     Layout = "~/Areas/Admin/Views/AdminLayout/Index.cshtml";
-    int count = 0;
+    // Varsayılan değerler
+    int currentPage = ViewBag.CurrentPage ?? 1;
+    int pageSize = ViewBag.PageSize ?? 10;
+
+    // Sayfa numarasına göre sayıcıyı hesapla
+    int count = (currentPage - 1) * pageSize;
 }
 
 <div class="container-xxl flex-grow-1 container-p-y">
@@ -12,48 +17,78 @@
     @await Component.InvokeAsync("_TopLayerStatisticsComponentPartial")
 
     <div class="card">
-        <h5 class="card-header">Product Stock Operations</h5>
-        <div class="table-responsive text-nowrap">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Product Name</th>
-                        <th>Color</th>
-                        <th>Size</th>
-                        <th>Stock</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody class="table-border-bottom-0">
-                    @foreach (var item in Model)
-                    {
-                        count++;
-                        <tr>
-                            <td>@count</td>
-                            <td>@item.ProductName</td>
-                            <td>@item.Color</td>
-                            <td>@item.Size</td>
-                            <td>@item.Stock</td>
-                            <td>
-                                <div class="dropdown">
-                                    <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
-                                        <i class="bx bx-dots-vertical-rounded"></i>
-                                    </button>
-                                    <div class="dropdown-menu">
-                                        <a class="dropdown-item" href="/Admin/ProductStock/UpdateProductStock/@item.ProductStockId"><i class="bx bx-edit-alt me-1"></i> Edit</a>
-                                        <a class="dropdown-item" href="/Admin/ProductStock/DeleteProductStock/@item.ProductStockId"><i class="bx bx-trash me-1"></i> Delete</a>
-                                        <a class="dropdown-item" href="/Admin/ProductStock/ViewProductStockDetails/@item.ProductStockId"><i class="bx bx-detail"></i> Details</a>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-            <button type="button" class="btn btn-primary m-4" onclick="window.location.href='/Admin/ProductStock/CreateProductStock/'">
-                <span class="tf-icons bx bx-plus-medical"></span>&nbsp; Add Product Stock
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">Product Stock Operations</h5>
+            <button type="button" class="btn btn-primary" onclick="window.location.href='/Admin/ProductStock/CreateProductStock/'">
+                Add Product Stock
             </button>
+        </div>
+
+        <div class="card-body">
+            <div class="table-responsive text-nowrap">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Product Name</th>
+                            <th>Color</th>
+                            <th>Size</th>
+                            <th>Stock</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody class="table-border-bottom-0">
+                        @foreach (var item in Model)
+                        {
+                            count++;
+                            <tr>
+                                <td>@count</td>
+                                <td>@item.ProductName</td>
+                                <td>@item.Color</td>
+                                <td>@item.Size</td>
+                                <td>@item.Stock</td>
+                                <td>
+                                    <div class="dropdown">
+                                        <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                                            <i class="bx bx-dots-vertical-rounded"></i>
+                                        </button>
+                                        <div class="dropdown-menu">
+                                            <a class="dropdown-item" href="/Admin/ProductStock/UpdateProductStock/@item.ProductStockId">
+                                                <i class="bx bx-edit-alt me-1"></i> Edit
+                                            </a>
+                                            <a class="dropdown-item" href="/Admin/ProductStock/DeleteProductStock/@item.ProductStockId">
+                                                <i class="bx bx-trash me-1"></i> Delete
+                                            </a>
+                                            <a class="dropdown-item" href="/Admin/ProductStock/ViewProductStockDetails/@item.ProductStockId">
+                                                <i class="bx bx-detail"></i> Details
+                                            </a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="pagination-container m-3">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination">
+                        <li class="page-item @(ViewBag.CurrentPage == 1 ? "disabled" : "")">
+                            <a class="page-link" href="@Url.Action("Index", new { pageNumber = ViewBag.CurrentPage - 1 })">Previous</a>
+                        </li>
+                        @for (int i = 1; i <= ViewBag.TotalPages; i++)
+                        {
+                            <li class="page-item @(ViewBag.CurrentPage == i ? "active" : "")">
+                                <a class="page-link" href="@Url.Action("Index", new { pageNumber = i })">@i</a>
+                            </li>
+                        }
+                        <li class="page-item @(ViewBag.CurrentPage == ViewBag.TotalPages ? "disabled" : "")">
+                            <a class="page-link" href="@Url.Action("Index", new { pageNumber = ViewBag.CurrentPage + 1 })">Next</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
         </div>
     </div>
 </div>

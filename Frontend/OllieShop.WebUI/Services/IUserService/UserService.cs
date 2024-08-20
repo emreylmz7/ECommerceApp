@@ -82,6 +82,29 @@ namespace OllieShop.WebUI.Services.IUserService
             }
         }
 
+        public async Task<UserStatisticsDto> GetUsersStatistics()
+        {
+            var users = await GetUserListAsync();
+            var totalUserCount = users.Count();
+            var maleCount = users.Count(u => u.Gender == "Male");
+            var femaleCount = users.Count(u => u.Gender == "Female");
+            var averageAge = users
+                .Where(u => u.DateOfBirth.HasValue)
+                .Select(u => DateTime.Now.Year - u.DateOfBirth!.Value.Year)
+                .Average();
+
+            var userStatistics = new UserStatisticsDto
+            {
+                TotalUserCount = totalUserCount,
+                MaleCount = maleCount,
+                FemaleCount = femaleCount,
+                AverageAge = averageAge
+            };
+
+            return userStatistics;
+        }
+
+
         public async Task<bool> UpdateUserAsync(UpdateUserDto model)
         {
             try

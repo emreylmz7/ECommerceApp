@@ -11,6 +11,6 @@ namespace OllieShop.WebUI.Services.CatalogServices.ProductStockServices
         Task<GetByIdProductStockDto> GetByIdProductStockAsync(string id);
         Task<List<GetByIdProductStockDto>> GetProductStocksByProductId(string id);
         Task<List<ResultProductStockWithDetailsDto>> GetProductStocksWithDetails();
-
+        Task<ProductStocksStatisticsDto> GetProductStocksStatistics();
     }
 }

@@ -3,16 +3,29 @@
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Areas/Admin/Views/AdminLayout/Index.cshtml";
-    int count = 0;
+    // Varsayılan değerler
+    int currentPage = ViewBag.CurrentPage ?? 1;
+    int pageSize = ViewBag.PageSize ?? 10;
+
+    // Sayfa numarasına göre sayıcıyı hesapla
+    int count = (currentPage - 1) * pageSize;
 }
+
 
 <div class="container-xxl flex-grow-1 container-p-y">
     <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Dashboard /</span> Products</h4>
 
-    <!-- Basic Bootstrap Table -->
+    @await Component.InvokeAsync("_TopLayerStatisticsComponentPartial")
+
     <div class="card">
-        <h5 class="card-header">Product Operations</h5>
-        @* <p class="px-4 text-muted">On this page, you can manage the products of your e-commerce site. You can add new products, edit existing ones, or delete them. Products are the items you sell on your site.</p> *@
+
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">Product Stock Operations</h5>
+            <button type="button" class="btn btn-primary" onclick="window.location.href='/Admin/ProductStock/CreateProductStock/'">
+                Add Product
+            </button>
+        </div>
+        
         <div class="table-responsive text-nowrap">
             <table class="table">
                 <thead>
@@ -53,11 +66,25 @@
 
                 </tbody>
             </table>
-            <button type="button" class="btn btn-primary m-4" onclick="window.location.href='/Admin/Product/CreateProduct/'">
-                <span class="tf-icons bx bx-plus-medical"></span>&nbsp; Add Product
-            </button>
+        </div>
 
-
+        <div class="pagination-container m-3">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                    <li class="page-item @(ViewBag.CurrentPage == 1 ? "disabled" : "")">
+                        <a class="page-link" href="@Url.Action("Index", new { pageNumber = ViewBag.CurrentPage - 1 })">Previous</a>
+                    </li>
+                    @for (int i = 1; i <= ViewBag.TotalPages; i++)
+                    {
+                        <li class="page-item @(ViewBag.CurrentPage == i ? "active" : "")">
+                            <a class="page-link" href="@Url.Action("Index", new { pageNumber = i })">@i</a>
+                        </li>
+                    }
+                    <li class="page-item @(ViewBag.CurrentPage == ViewBag.TotalPages ? "disabled" : "")">
+                        <a class="page-link" href="@Url.Action("Index", new { pageNumber = ViewBag.CurrentPage + 1 })">Next</a>
+                    </li>
+                </ul>
+            </nav>
         </div>
     </div>
 </div>
