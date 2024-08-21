@@ -1,11 +1,16 @@
-﻿namespace OllieShop.Cargo.BusinessLayer.Abstarct
+﻿using System.Linq.Expressions;
+
+namespace OllieShop.Cargo.BusinessLayer.Abstract
 {
-    public interface IGenericService<T> where T : class 
+    public interface IGenericService<T> where T : class
     {
-        void TInsert(T entity);
-        void TUpdate(T entity);
-        void TDelete(int id);
-        T TGetById(int id);
-        List<T> TGetAll();
+        Task TInsertAsync(T entity);
+        Task TUpdateAsync(T entity);
+        Task TDeleteAsync(int id);
+        Task<T> TGetByIdAsync(int id);
+        Task<List<T>> TGetAllAsync();
+        Task<List<T>> TGetByIdsAsync(IEnumerable<int> ids);
+        Task<List<T>> TGetByFilterAsync(Expression<Func<T, bool>> predicate);
+        Task<List<T>> TGetPagedAsync(int pageIndex, int pageSize);
     }
 }

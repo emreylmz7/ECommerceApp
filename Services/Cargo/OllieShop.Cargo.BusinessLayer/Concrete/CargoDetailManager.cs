@@ -1,40 +1,57 @@
 ﻿using OllieShop.Cargo.BusinessLayer.Abstarct;
 using OllieShop.Cargo.DataAccessLayer.Abstract;
 using OllieShop.Cargo.EntityLayer.Concrete;
+using System.Linq.Expressions;
 
 namespace OllieShop.Cargo.BusinessLayer.Concrete
 {
     public class CargoDetailManager : ICargoDetailService
     {
         private readonly ICargoDetailDal _cargoDetailDal;
+
         public CargoDetailManager(ICargoDetailDal cargoDetailDal)
         {
             _cargoDetailDal = cargoDetailDal;
         }
 
-        public void TDelete(int id)
+        public async Task TDeleteAsync(int id)
         {
-            _cargoDetailDal.Delete(id);
+            await _cargoDetailDal.DeleteAsync(id);
         }
 
-        public List<CargoDetail> TGetAll()
+        public async Task<List<CargoDetail>> TGetAllAsync()
         {
-            return _cargoDetailDal.GetAll();
+            return await _cargoDetailDal.GetAllAsync();
         }
 
-        public CargoDetail TGetById(int id)
+        public async Task<List<CargoDetail>> TGetByFilterAsync(Expression<Func<CargoDetail, bool>> predicate)
         {
-            return _cargoDetailDal.GetById(id);
+            return await _cargoDetailDal.GetByFilterAsync(predicate);
         }
 
-        public void TInsert(CargoDetail entity)
+        public async Task<CargoDetail> TGetByIdAsync(int id)
         {
-            _cargoDetailDal.Insert(entity);
+            return await _cargoDetailDal.GetByIdAsync(id);
         }
 
-        public void TUpdate(CargoDetail entity)
+        public async Task<List<CargoDetail>> TGetByIdsAsync(IEnumerable<int> ids)
         {
-            _cargoDetailDal.Update(entity);
+            return await _cargoDetailDal.GetByIdsAsync(ids);
+        }
+
+        public async Task<List<CargoDetail>> TGetPagedAsync(int pageIndex, int pageSize)
+        {
+            return await _cargoDetailDal.GetPagedAsync(pageIndex, pageSize);
+        }
+
+        public async Task TInsertAsync(CargoDetail entity)
+        {
+            await _cargoDetailDal.InsertAsync(entity);
+        }
+
+        public async Task TUpdateAsync(CargoDetail entity)
+        {
+            await _cargoDetailDal.UpdateAsync(entity);
         }
     }
 }

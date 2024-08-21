@@ -1,0 +1,78 @@
+﻿@model GetByIdCargoDto
+
+@{
+    ViewData["Title"] = "Cargo Details";
+    Layout = "~/Areas/Admin/Views/AdminLayout/Index.cshtml";
+}
+
+<style>
+    body {
+        background: #eee;
+    }
+
+    .card {
+        box-shadow: 0 20px 27px 0 rgb(0 0 0 / 5%);
+    }
+
+    .card {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+        word-wrap: break-word;
+        background-color: #fff;
+        background-clip: border-box;
+        border: 0 solid rgba(0, 0, 0, .125);
+        border-radius: 1rem;
+    }
+
+    .text-reset {
+        --bs-text-opacity: 1;
+        color: inherit !important;
+    }
+
+    a {
+        color: #5465ff;
+        text-decoration: none;
+    }
+</style>
+
+
+<div class="container-xxl flex-grow-1 container-p-y">
+    <div>
+        <!-- Main content -->
+        <div class="row">
+            @await Component.InvokeAsync("_CargoDetailsComponentPartial",new { id = Model.CargoId.ToString() })
+            <div class="col-lg-4">
+                <!-- Shipping Information -->
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h4 >Shipping Information</h4>
+                        <div class="d-flex justify-content-between">
+                            <strong>Tracking Number</strong>
+                            <h5 class="font-weight-bold"># @Model.TrackingNumber<i class="bi bi-box-arrow-up-right"></i></h5>
+                        </div>
+                        
+                        <hr>
+                        <h3 class="h6">Status</h3>
+                        <p>@Model.Status</p>
+                        <hr>
+                        <h3 class="h6">Dispatch Date</h3>
+                        <p>@Model.DispatchDate.ToString("dd MMM yyyy")</p>
+                        <hr>
+                        @if (Model.DeliveryDate.HasValue)
+                        {
+                            <h3 class="h6">Delivery Date</h3>
+                            <p>@Model.DeliveryDate.Value.ToString("dd MMM yyyy")</p>
+                        }
+                    </div>
+                </div>
+
+                @await Component.InvokeAsync("_CargoDetailsAddressComponentPartial", new { id = Model.AddressId.ToString() })
+
+            </div>
+        </div>
+    </div>
+</div>
+
+

@@ -1,0 +1,113 @@
+﻿@using OllieShop.DtoLayer.Enums
+@using System.Globalization
+@model List<ResultOrderingDto>
+
+@{
+    ViewData["Title"] = "Order Index";
+    Layout = "~/Areas/Admin/Views/AdminLayout/Index.cshtml";
+    // Default values
+    int currentPage = ViewBag.CurrentPage ?? 1;
+    int pageSize = ViewBag.PageSize ?? 10;
+
+    // Calculate the counter based on the page number
+    int count = (currentPage - 1) * pageSize;
+}
+
+<div class="container-xxl flex-grow-1 container-p-y">
+    <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Dashboard /</span> Orders</h4>
+
+    @await Component.InvokeAsync("_TopLayerStatisticsComponentPartial")
+
+    <div class="card">
+        <h5 class="m-3">Order Operations</h5>
+
+        <div class="card-body">
+            <div class="table-responsive text-nowrap">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>User ID</th>
+                            <th>Total Price</th>
+                            <th>Order Date</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody class="table-border-bottom-0">
+                        @foreach (var item in Model)
+                        {
+                            count++;
+                            <tr>
+                                <td>@count</td>
+                                <td>@item.UserId</td>
+                                <td>@item.TotalPrice.ToString("C", new CultureInfo("en-US"))</td>
+                                <td>@item.OrderDate.ToString("yyyy-MM-dd")</td>
+                                <td>
+                                    @switch (item.Status)
+                                    {
+                                        case OrderStatus.Pending:
+                                            <span class="badge bg-warning text-white">Pending</span>
+                                            break;
+                                        case OrderStatus.Processing:
+                                            <span class="badge bg-info text-white">Processing</span>
+                                            break;
+                                        case OrderStatus.Shipped:
+                                            <span class="badge bg-primary text-white">Shipped</span>
+                                            break;
+                                        case OrderStatus.Delivered:
+                                            <span class="badge bg-success text-white">Delivered</span>
+                                            break;
+                                        case OrderStatus.Cancelled:
+                                            <span class="badge bg-danger text-white">Cancelled</span>
+                                            break;
+                                        default:
+                                            <span class="badge bg-secondary text-white">Unknown</span>
+                                            break;
+                                    }
+                                </td>
+                                <td>
+                                    <div class="dropdown">
+                                        <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                                            <i class="bx bx-dots-vertical-rounded"></i>
+                                        </button>
+                                        <div class="dropdown-menu">
+                                            <a class="dropdown-item" href="/Admin/Order/UpdateOrder/@item.OrderingId">
+                                                <i class="bx bx-edit-alt me-1"></i> Edit
+                                            </a>
+                                            <a class="dropdown-item" href="/Admin/Order/DeleteOrder/@item.OrderingId">
+                                                <i class="bx bx-trash me-1"></i> Delete
+                                            </a>
+                                            <a class="dropdown-item" href="/Admin/Order/ViewOrderDetails/@item.OrderingId">
+                                                <i class="bx bx-detail"></i> Details
+                                            </a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="pagination-container m-3">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination">
+                        <li class="page-item @(ViewBag.CurrentPage == 1 ? "disabled" : "")">
+                            <a class="page-link" href="@Url.Action("Index", new { pageNumber = ViewBag.CurrentPage - 1 })">Previous</a>
+                        </li>
+                        @for (int i = 1; i <= ViewBag.TotalPages; i++)
+                        {
+                            <li class="page-item @(ViewBag.CurrentPage == i ? "active" : "")">
+                                <a class="page-link" href="@Url.Action("Index", new { pageNumber = i })">@i</a>
+                            </li>
+                        }
+                        <li class="page-item @(ViewBag.CurrentPage == ViewBag.TotalPages ? "disabled" : "")">
+                            <a class="page-link" href="@Url.Action("Index", new { pageNumber = ViewBag.CurrentPage + 1 })">Next</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>

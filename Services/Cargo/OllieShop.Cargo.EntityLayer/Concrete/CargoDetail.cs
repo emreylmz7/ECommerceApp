@@ -2,11 +2,13 @@
 {
     public class CargoDetail
     {
-        public int CargoDetailId { get; set; }
-        public string SenderCustomer { get; set; }
-        public string ReceiverCustomer { get; set; }
-        public int Barcode { get; set; }
-        public int CargoCompanyId { get; set; }
-        public CargoCompany CargoCompany { get; set; }
+        public int CargoDetailId { get; set; } // Kargo detayı ID'si
+        public int CargoId { get; set; } // Kargo ID'si
+        public string? ProductName { get; set; } // Ürün adı
+        public int Quantity { get; set; } // Ürün miktarı
+        public decimal UnitPrice { get; set; } // Birim fiyat
+        public decimal TotalPrice { get; set; } // Toplam fiyat
+        public Cargo Cargo { get; set; } = null!;
     }
+
 }

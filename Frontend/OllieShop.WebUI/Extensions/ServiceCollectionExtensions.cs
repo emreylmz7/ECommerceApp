@@ -2,6 +2,7 @@
 using OllieShop.WebUI.Handlers;
 using OllieShop.WebUI.Services.ApiServices;
 using OllieShop.WebUI.Services.BasketServices;
+using OllieShop.WebUI.Services.CargoService;
 using OllieShop.WebUI.Services.CatalogServices.AboutServices;
 using OllieShop.WebUI.Services.CatalogServices.AddressServices;
 using OllieShop.WebUI.Services.CatalogServices.CarouselServices;
@@ -185,6 +186,18 @@ namespace OllieShop.WebUI.Extensions
             services.AddHttpClient<IMessageService, MessageService>(opt =>
             {
                 opt.BaseAddress = new Uri($"{values.OcelotUrl}/{values.Message.Path}");
+            }).AddHttpMessageHandler<ResourceOwnerPasswordTokenHandler>();
+
+            //CARGO MICROSERVICE CONFIGS
+
+            services.AddHttpClient<ICargoService, CargoService>(opt =>
+            {
+                opt.BaseAddress = new Uri($"{values.OcelotUrl}/{values.Cargo.Path}");
+            }).AddHttpMessageHandler<ResourceOwnerPasswordTokenHandler>();
+
+            services.AddHttpClient<ICargoDetailService, CargoDetailService>(opt =>
+            {
+                opt.BaseAddress = new Uri($"{values.OcelotUrl}/{values.Cargo.Path}");
             }).AddHttpMessageHandler<ResourceOwnerPasswordTokenHandler>();
 
 

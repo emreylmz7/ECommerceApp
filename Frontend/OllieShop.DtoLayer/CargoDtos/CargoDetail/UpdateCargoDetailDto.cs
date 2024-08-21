@@ -1,4 +1,4 @@
-﻿namespace OllieShop.Cargo.DtoLayer.Dtos.CargoDetailDtos
+﻿namespace OllieShop.DtoLayer.CargoDtos.CargoDetail
 {
     public class UpdateCargoDetailDto
     {

@@ -1,6 +1,6 @@
-﻿namespace OllieShop.Cargo.DtoLayer.Dtos.CargoDetailDtos
+﻿namespace OllieShop.DtoLayer.CargoDtos.CargoDetail
 {
-    public class UpdateCargoDetailDto
+    public class GetByIdCargoDetailDto
     {
         public int CargoDetailId { get; set; } // Kargo detayı ID'si
         public int CargoId { get; set; } // Kargo ID'si

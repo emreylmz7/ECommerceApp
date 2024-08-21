@@ -17,16 +17,13 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
 });
 
 builder.Services.AddDbContext<CargoContext>();
+builder.Services.AddHttpContextAccessor();
 
-builder.Services.AddScoped<ICargoCompanyDal,EfCargoCompanyDal>();
-builder.Services.AddScoped<ICargoCustomerDal, EfCargoCustomerDal>();
 builder.Services.AddScoped<ICargoDetailDal,EfCargoDetailDal>();
-builder.Services.AddScoped<ICargoOperationDal,EfCargoOperationDal>();
+builder.Services.AddScoped<ICargoDal,EfCargoDal>();
 
-builder.Services.AddScoped<ICargoCompanyService, CargoCompanyManager>();
-builder.Services.AddScoped<ICargoCustomerService, CargoCustomerManager>();
 builder.Services.AddScoped<ICargoDetailService, CargoDetailManager>();
-builder.Services.AddScoped<ICargoOperationService, CargoOperationManager>();
+builder.Services.AddScoped<ICargoService, CargoManager>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

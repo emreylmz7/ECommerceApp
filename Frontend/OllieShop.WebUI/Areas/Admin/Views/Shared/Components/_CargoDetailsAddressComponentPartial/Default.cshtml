@@ -1,0 +1,17 @@
+﻿@model GetByIdAddressDto
+
+<!-- Customer Information -->
+<div class="card mb-4">
+    <div class="card-body">
+        <h4 >Customer Information</h4>
+        <p class="font-weight-bold">@Model.Name @Model.Surname</p>
+        <p><strong>Email:</strong> @Model.Email</p>
+        <p><strong>Phone:</strong> @Model.PhoneNumber</p>
+        <hr>
+        <h3 class="h5">Address</h3>
+        <address>
+            <p>@Model.Description</p>
+            <p>@Model.City, @Model.Country @Model.ZipCode</p>
+        </address>
+    </div>
+</div>

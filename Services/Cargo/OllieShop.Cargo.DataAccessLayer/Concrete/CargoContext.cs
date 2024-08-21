@@ -11,9 +11,7 @@ namespace OllieShop.Cargo.DataAccessLayer.Concrete
             //Database = OllieShopOrderDb; Trusted_Connection = True; TrustServerCertificate = True
         }
         
-        public DbSet<CargoCompany> CargoCompanies { get; set; }
         public DbSet<CargoDetail> CargoDetails { get; set; }
-        public DbSet<CargoCustomer> CargoCustomers { get; set; }
-        public DbSet<CargoOperation> CargoOperations { get; set; }
+        public DbSet<EntityLayer.Concrete.Cargo> Cargos { get; set; }
     }
 }

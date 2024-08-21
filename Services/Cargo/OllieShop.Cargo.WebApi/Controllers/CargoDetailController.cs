@@ -19,51 +19,60 @@ namespace OllieShop.Cargo.WebApi.Controllers
         }
 
         [HttpGet]
-        public IActionResult CargoDetailList()
+        public async Task<IActionResult> CargoDetailList()
         {
-            var values = _detailService.TGetAll();
+            var values = await _detailService.TGetAllAsync();
             return Ok(values);
         }
 
         [HttpPost]
-        public IActionResult CreateCargoDetail(CreateCargoDetailDto createCargoDetailDto)
+        public async Task<IActionResult> CreateCargoDetail(CreateCargoDetailDto createCargoDetailDto)
         {
-            _detailService.TInsert(
+            await _detailService.TInsertAsync(
                 new CargoDetail
                 {
-                    SenderCustomer = createCargoDetailDto.SenderCustomer,
-                    ReceiverCustomer = createCargoDetailDto.ReceiverCustomer,
-                    Barcode = createCargoDetailDto.Barcode,
-                    CargoCompanyId = createCargoDetailDto.CargoCompanyId
+                    CargoId = createCargoDetailDto.CargoId, // Kargo ID'si
+                    ProductName = createCargoDetailDto.ProductName, // Ürün adı
+                    Quantity = createCargoDetailDto.Quantity, // Ürün miktarı
+                    UnitPrice = createCargoDetailDto.UnitPrice, // Birim fiyat
+                    TotalPrice = createCargoDetailDto.TotalPrice // Toplam fiyat
                 }
             );
             return Ok("Cargo Detail Created Successfully");
         }
 
         [HttpDelete]
-        public IActionResult DeleteCargoDetail(int id)
+        public async Task<IActionResult> DeleteCargoDetail(int id)
         {
-            _detailService.TDelete(id);
+            await _detailService.TDeleteAsync(id);
             return Ok("Cargo Detail Deleted Successfully");
         }
 
         [HttpGet("{id}")]
-        public IActionResult GetCargoDetail(int id)
+        public async Task<IActionResult> GetCargoDetail(int id)
         {
-            var value = _detailService.TGetById(id);
+            var value = await _detailService.TGetByIdAsync(id);
             return Ok(value);
         }
 
-        [HttpPut]
-        public IActionResult UpdateCargoDetail(UpdateCargoDetailDto updateCargoDetailDto)
+        [HttpGet("DetailsByCargoId/{id}")]
+        public async Task<IActionResult> GetCargoDetailsByCargoId(int id)
         {
-            _detailService.TUpdate(new CargoDetail
+            var values = await _detailService.TGetByFilterAsync(x => x.CargoId == id);
+            return Ok(values);
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> UpdateCargoDetail(UpdateCargoDetailDto updateCargoDetailDto)
+        {
+            await _detailService.TUpdateAsync(new CargoDetail
             {
-                CargoDetailId = updateCargoDetailDto.CargoDetailId,
-                SenderCustomer = updateCargoDetailDto.SenderCustomer,
-                ReceiverCustomer = updateCargoDetailDto.ReceiverCustomer,
-                Barcode = updateCargoDetailDto.Barcode,
-                CargoCompanyId = updateCargoDetailDto.CargoCompanyId
+                CargoDetailId = updateCargoDetailDto.CargoDetailId, // Kargo detayı ID'si
+                CargoId = updateCargoDetailDto.CargoId, // Kargo ID'si
+                ProductName = updateCargoDetailDto.ProductName, // Ürün adı
+                Quantity = updateCargoDetailDto.Quantity, // Ürün miktarı
+                UnitPrice = updateCargoDetailDto.UnitPrice, // Birim fiyat
+                TotalPrice = updateCargoDetailDto.TotalPrice // Toplam fiyat
             });
             return Ok("Cargo Detail Updated Successfully");
         }

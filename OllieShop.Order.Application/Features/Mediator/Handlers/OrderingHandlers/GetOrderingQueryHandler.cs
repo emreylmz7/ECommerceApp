@@ -1,6 +1,4 @@
 ﻿using MediatR;
-using OllieShop.Order.Application.Features.CQRS.Results.AddressResults;
-using OllieShop.Order.Application.Features.CQRS.Results.OrderDetailResults;
 using OllieShop.Order.Application.Features.Mediator.Queries.OrderingQueries;
 using OllieShop.Order.Application.Features.Mediator.Results.OrderingResults;
 using OllieShop.Order.Application.Interfaces;

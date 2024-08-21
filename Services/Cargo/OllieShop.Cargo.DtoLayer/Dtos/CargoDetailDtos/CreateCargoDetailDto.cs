@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace OllieShop.Cargo.DtoLayer.Dtos.CargoDetailDtos
+﻿namespace OllieShop.Cargo.DtoLayer.Dtos.CargoDetailDtos
 {
     public class CreateCargoDetailDto
     {
-        public string SenderCustomer { get; set; }
-        public string ReceiverCustomer { get; }
-        public int Barcode { get; set; }
-        public int CargoCompanyId { get; set; }
+        public int CargoId { get; set; } // Kargo ID'si
+        public string? ProductName { get; set; } // Ürün adı
+        public int Quantity { get; set; } // Ürün miktarı
+        public decimal UnitPrice { get; set; } // Birim fiyat
+        public decimal TotalPrice { get; set; } // Toplam fiyat
     }
 }
