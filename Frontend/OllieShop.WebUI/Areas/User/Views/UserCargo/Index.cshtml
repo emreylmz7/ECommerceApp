@@ -1,0 +1,127 @@
+﻿@using OllieShop.DtoLayer.Enums
+@model List<ResultCargoDto>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/User/Views/UserLayout/Index.cshtml";
+}
+
+<div class="page-heading">
+    <div class="page-title">
+        <div class="row">
+            <div class="col-12 col-md-6 order-md-1 order-last my-3">
+                <h3>My Shipments</h3>
+            </div>
+            <div class="col-12 col-md-6 order-md-2 order-first">
+                <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="index.html">User Panel</a></li>
+                        <li class="breadcrumb-item active" aria-current="Shipments">Shipments</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+    <section class="section">
+        <div class="card">
+            <div class="card-content">
+                <div class="card-body">
+                    <p class="card-text">
+                        Below is a list of your recent shipments. You can view the details of each shipment, including the tracking number, order ID, dispatch date, delivery date, and status.
+                    </p>
+
+                    @if (Model == null || !Model.Any())
+                    {
+                        <div class="alert alert-warning" role="alert">
+                            You have no shipments yet. Please check back later or make a purchase.
+                        </div>
+                    }
+                    else
+                    {
+                        <!-- Table with outer spacing -->
+                        <div class="table-responsive">
+                            <table class="table table-lg">
+                                <thead>
+                                    <tr>
+                                        <th>Tracking Number</th>
+                                        <th>Order ID</th>
+                                        <th>Dispatch Date</th>
+                                        <th>Delivery Date</th>
+                                        <th>Status</th>
+                                        <th>Address ID</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td class="text-bold-500">@item.TrackingNumber</td>
+                                            <td class="text-bold-500"># @item.OrderId</td>
+                                            <td class="text-bold-500">@item.DispatchDate.Date.ToString("dd/MMM/yyyy")</td>
+                                            <td class="text-bold-500">
+                                                @if (item.DeliveryDate.HasValue)
+                                                {
+                                                    @item.DeliveryDate.Value.Date.ToString("dd/MMM/yyyy")
+                                                }
+                                                else
+                                                {
+                                                    <span class="text-muted">Pending</span>
+                                                }
+                                            </td>
+                                            <td class="text-bold-500">
+                                                @if (item.Status == CargoStatus.Created)
+                                                {
+                                                    <span class="badge bg-warning">Pending</span>
+                                                }
+                                                else if (item.Status == CargoStatus.Dispatched)
+                                                {
+                                                    <span class="badge bg-primary">Processing</span>
+                                                }
+                                                else if (item.Status == CargoStatus.InTransit)
+                                                {
+                                                    <span class="badge bg-info">Shipped</span>
+                                                }
+                                                else if (item.Status == CargoStatus.Delivered)
+                                                {
+                                                    <span class="badge bg-success">Delivered</span>
+                                                }
+                                                else if (item.Status == CargoStatus.Cancelled)
+                                                {
+                                                    <span class="badge bg-danger">Cancelled</span>
+                                                }
+                                            </td>
+                                            <td class="text-bold-500">@item.AddressId</td>
+                                            <td class="text-bold-500">
+                                                <a href="/User/UserCargo/CargoDetails/@item.CargoId"> <i class="fas fa-align-right"></i> Shipment Details</a>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="pagination-container">
+                            <nav aria-label="Page navigation example">
+                                <ul class="pagination">
+                                    <li class="page-item @(ViewBag.CurrentPage == 1 ? "disabled" : "")">
+                                        <a class="page-link" href="@Url.Action("Index", new { pageNumber = ViewBag.CurrentPage - 1 })">Previous</a>
+                                    </li>
+                                    @for (int i = 1; i <= ViewBag.TotalPages; i++)
+                                    {
+                                        <li class="page-item @(ViewBag.CurrentPage == i ? "active" : "")">
+                                            <a class="page-link" href="@Url.Action("Index", new { pageNumber = i })">@i</a>
+                                        </li>
+                                    }
+                                    <li class="page-item @(ViewBag.CurrentPage == ViewBag.TotalPages ? "disabled" : "")">
+                                        <a class="page-link" href="@Url.Action("Index", new { pageNumber = ViewBag.CurrentPage + 1 })">Next</a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
