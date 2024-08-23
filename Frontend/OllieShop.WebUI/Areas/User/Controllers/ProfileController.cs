@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OllieShop.DtoLayer.OrderDtos.Address;
-using OllieShop.DtoLayer.IdentityDtos; // Kullanıcı bilgilerini içeren DTO
+using OllieShop.DtoLayer.IdentityDtos;
 using OllieShop.WebUI.Services.IUserService;
 using OllieShop.WebUI.Services.OrderServices.AddressServices;
-using OllieShop.WebUI.Models;
+using OllieShop.WebUI.Services.ImagesServices;
 
 namespace OllieShop.WebUI.Areas.User.Controllers
 {
@@ -15,11 +15,12 @@ namespace OllieShop.WebUI.Areas.User.Controllers
     {
         private readonly IUserService _userService;
         private readonly IAddressService _addressService;
-
-        public ProfileController(IUserService userService, IAddressService addressService)
+        private readonly IImagesService _imagesService;
+        public ProfileController(IUserService userService, IAddressService addressService, IImagesService imagesService)
         {
             _userService = userService;
             _addressService = addressService;
+            _imagesService = imagesService;
         }
 
         [Route("Index")]
@@ -70,6 +71,55 @@ namespace OllieShop.WebUI.Areas.User.Controllers
             return View("Index", model);
         }
 
-        
+
+        [Route("UpdateProfileImage")]
+        [HttpPost]
+        public async Task<IActionResult> UpdateProfileImage(IFormFile profileImage)
+        {
+            if (profileImage == null || profileImage.Length == 0)
+            {
+                TempData["ErrorMessage"] = "No file selected.";
+                return RedirectToAction("Index");
+            }
+
+            try
+            {
+                var imageUrl = await _imagesService.UploadImageAsync(profileImage);
+                var user = await _userService.GetUserInfoAsync();
+
+                UpdateUserDto updatedUser = new UpdateUserDto
+                {
+                    DateOfBirth = user.DateOfBirth,
+                    Surname = user.Surname,
+                    Email = user.Email,
+                    Gender = user.Gender,
+                    Id = user.Id,
+                    Name = user.Name,
+                    PhoneNumber = user.PhoneNumber,
+                    ProfilePictureUrl = imageUrl,
+                    Username = user.Username
+                };
+                
+
+                var result = await _userService.UpdateUserAsync(updatedUser);
+                if (result)
+                {
+                    TempData["SuccessMessage"] = "Profile Image Updated Successfully!";
+                }
+                else
+                {
+                    TempData["ErrorMessage"] = "Failed to Update Profile Image.";
+                }
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = $"An error occurred: {ex.Message}";
+            }
+
+            return RedirectToAction("Index");
+        }
+
+
+
     }
 }

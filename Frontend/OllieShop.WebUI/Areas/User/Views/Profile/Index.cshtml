@@ -50,13 +50,17 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="d-flex flex-column align-items-center text-center">
-                            <img src="~/img/UserImages/@Model.ProfilePictureUrl" alt="Admin" class="rounded-circle p-1 bg-primary" width="230">
-                            <div class="mt-3">
-                                <h4>@Model.Name</h4>
-                                <p class="text-muted font-size-sm">@address.FirstOrDefault()?.City, @address.FirstOrDefault()?.Country @address.FirstOrDefault()?.ZipCode</p>
-                                <button class="btn btn-outline-primary">Upload Profile Image</button>
-                            </div>
+                            <form asp-action="UpdateProfileImage" asp-controller="Profile" method="post" enctype="multipart/form-data">
+                                <img src="@Model.ProfilePictureUrl" alt="Admin" class="rounded-circle p-1 bg-primary" width="230">
+                                <div class="mt-3">
+                                    <h4>@Model.Name</h4>
+                                    <p class="text-muted font-size-sm">@address.FirstOrDefault()?.City, @address.FirstOrDefault()?.Country @address.FirstOrDefault()?.ZipCode</p>
+                                    <input type="file" name="profileImage" class="form-control mb-3">
+                                    <button type="submit" class="btn btn-outline-primary">Upload Profile Image</button>
+                                </div>
+                            </form>
                         </div>
+
                     </div>
                 </div>
             </div>
@@ -159,7 +163,7 @@
                                     <h6 class="mb-0">Profile Picture URL</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
-                                    <input type="text" class="form-control" name="ProfilePictureUrl" value="@Model.ProfilePictureUrl">
+                                    <input type="text" class="form-control" name="ProfilePictureUrl" value="@Model.ProfilePictureUrl" readonly>
                                 </div>
                             </div>
                             <div class="row">

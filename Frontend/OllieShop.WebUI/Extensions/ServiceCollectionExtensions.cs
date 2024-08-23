@@ -25,6 +25,7 @@ using OllieShop.WebUI.Services.ClientCredentialTokenService;
 using OllieShop.WebUI.Services.CommentServices;
 using OllieShop.WebUI.Services.CouponServices;
 using OllieShop.WebUI.Services.IdentityServices;
+using OllieShop.WebUI.Services.ImagesServices;
 using OllieShop.WebUI.Services.IUserService;
 using OllieShop.WebUI.Services.MessageServices;
 using OllieShop.WebUI.Services.OrderServices.AddressServices;
@@ -198,6 +199,13 @@ namespace OllieShop.WebUI.Extensions
             services.AddHttpClient<ICargoDetailService, CargoDetailService>(opt =>
             {
                 opt.BaseAddress = new Uri($"{values.OcelotUrl}/{values.Cargo.Path}");
+            }).AddHttpMessageHandler<ResourceOwnerPasswordTokenHandler>();
+
+            //IMAGES MICROSERVICE CONFIGS
+
+            services.AddHttpClient<IImagesService, ImagesService>(opt =>
+            {
+                opt.BaseAddress = new Uri($"{values.OcelotUrl}/{values.Images.Path}");
             }).AddHttpMessageHandler<ResourceOwnerPasswordTokenHandler>();
 
 
