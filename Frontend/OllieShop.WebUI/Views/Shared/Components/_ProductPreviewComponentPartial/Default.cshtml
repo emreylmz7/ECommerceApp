@@ -97,35 +97,90 @@
 
 <script>
     $(document).ready(function () {
-        $('#sizeForm input[name="size"]').change(function () {
-            var sizeId = $(this).data('size-id');
-            var productId = '@Model.ProductId'; // Ürün ID'sini sunucudan al
+        let selectedSizeId = null;
+        let selectedColorId = null;
+        let quantity = 1; // Varsayılan miktar
 
-            // AJAX çağrısı ile geçerli renkleri al
+        // Handle size selection
+        $('#sizeForm input[name="size"]').change(function () {
+            selectedSizeId = $(this).data('size-id');
+            var productId = '@Model.ProductId'; // Product ID from the server
+
+            // AJAX call to get colors for the selected size
             $.ajax({
                 url: '@Url.Action("GetColorsForSize", "ProductList")',
                 type: 'GET',
-                data: { sizeId: sizeId, productId: productId },
+                data: { sizeId: selectedSizeId, productId: productId },
                 success: function (colors) {
-                    // Renkleri güncelle
                     updateColors(colors);
                 }
             });
         });
 
+        // Handle color selection
+        $('#colorForm').on('change', 'input[name="color"]', function () {
+            selectedColorId = $(this).val();
+        });
+
+        // Handle quantity change
+        $('.btn-plus').click(function () {
+            quantity++;
+            updateQuantityInput();
+        });
+
+        $('.btn-minus').click(function () {
+            if (quantity > 1) {
+                quantity--;
+                updateQuantityInput();
+            }
+        });
+
+        function updateQuantityInput() {
+            $('input[name="quantity"]').val(quantity);
+        }
+
+        // Add item to basket
+        $('.btn-dark.px-3.rounded').click(function () {
+            if (selectedSizeId && selectedColorId) {
+                var productId = '@Model.ProductId'; // Product ID from the server
+                $.ajax({
+                    url: '@Url.Action("AddItemToBasket", "ShoppingCart")',
+                    type: 'POST',
+                    data: {
+                        productId: productId,
+                        sizeId: selectedSizeId,
+                        colorId: selectedColorId,
+                        quantity: quantity // Send quantity
+                    },
+                    success: function (response) {
+                        // Handle successful addition to basket
+                        window.location.href = '@Url.Action("Index", "ShoppingCart")'; // Redirect to shopping cart
+                    },
+                    error: function (xhr, status, error) {
+                        // Handle error
+                        console.error("Error adding item to basket:", error);
+                    }
+                });
+            } else {
+                alert("Please select both size and color.");
+            }
+        });
+
         function updateColors(colors) {
-            $('#colorForm').empty(); // Mevcut renkleri temizle
+            $('#colorForm').empty(); // Clear existing colors
 
             colors.forEach(function (color) {
                 var colorHtml = `
-                            <div class="custom-control custom-radio custom-control-inline">
-                                <input type="radio" class="custom-control-input" id="color-${color.colorId}" name="color" value="${color.colorId}">
-                                <label class="custom-control-label" for="color-${color.colorId}">${color.name}</label>
-                            </div>
-                        `;
+                    <div class="custom-control custom-radio custom-control-inline">
+                        <input type="radio" class="custom-control-input" id="color-${color.colorId}" name="color" value="${color.colorId}">
+                        <label class="custom-control-label" for="color-${color.colorId}">${color.name}</label>
+                    </div>
+                `;
                 $('#colorForm').append(colorHtml);
             });
         }
     });
+
+
 </script>
 

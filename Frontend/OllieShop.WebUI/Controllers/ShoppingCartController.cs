@@ -34,12 +34,13 @@ namespace OllieShop.WebUI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddItemToBasket(string productId,string sizeId,string colorId)
+        public async Task<IActionResult> AddItemToBasket(string productId, string sizeId, string colorId, int? quantity)
         {
-            if(!User.Identity!.IsAuthenticated)
+            if (!User.Identity!.IsAuthenticated)
             {
-                return RedirectToAction("Index","Login");
+                return RedirectToAction("Index", "Login");
             }
+
             var product = await _productService.GetByIdProductAsync(productId);
             var size = await _sizeService.GetByIdSizeAsync(sizeId);
             var color = await _colorService.GetByIdColorAsync(colorId);
@@ -52,18 +53,19 @@ namespace OllieShop.WebUI.Controllers
                     Description = product.Description!,
                     ImageUrl = product.ImageUrl!,
                     ProductName = product.Name!,
-                    Quantity = 1,
+                    Quantity = quantity ?? 1, 
                     UnitPrice = product.Price,
-                    Color = color.Name,
-                    ColorId = color.ColorId,
-                    Size = size.Name,
-                    SizeId = size.SizeId
+                    Color = color?.Name, 
+                    ColorId = color?.ColorId, 
+                    Size = size?.Name, 
+                    SizeId = size?.SizeId
                 });
 
                 return RedirectToAction("Index");
             }
             return RedirectToAction("Index");
         }
+
 
         [HttpGet]
         public async Task<IActionResult> RemoveItemFromBasket(string productId)
