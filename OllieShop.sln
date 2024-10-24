@@ -83,7 +83,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OlliShop.Images", "Services
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Message", "Message", "{0FB17D65-A53E-42BC-BF01-5B780BFA1FB5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OllieShop.Message", "Services\Message\OllieShop.Message\OllieShop.Message.csproj", "{9AD44BAF-3D7D-4584-9824-A0EB2F02E620}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OllieShop.Message", "Services\Message\OllieShop.Message\OllieShop.Message.csproj", "{9AD44BAF-3D7D-4584-9824-A0EB2F02E620}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "RabbitMQMessage", "RabbitMQMessage", "{AEAE0787-761A-456C-B997-5B5D06CF9063}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OllieShop.RabbitMQMessageApi", "RabbitMQMessage\OllieShop.RabbitMQMessageApi\OllieShop.RabbitMQMessageApi.csproj", "{DC2C60BE-0023-4B31-92E9-02D94E445727}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -171,6 +175,10 @@ Global
 		{9AD44BAF-3D7D-4584-9824-A0EB2F02E620}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9AD44BAF-3D7D-4584-9824-A0EB2F02E620}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9AD44BAF-3D7D-4584-9824-A0EB2F02E620}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DC2C60BE-0023-4B31-92E9-02D94E445727}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DC2C60BE-0023-4B31-92E9-02D94E445727}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DC2C60BE-0023-4B31-92E9-02D94E445727}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DC2C60BE-0023-4B31-92E9-02D94E445727}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -208,6 +216,8 @@ Global
 		{F70B83C7-4252-4C82-A989-CA80A4AF7BEA} = {B8444272-850E-4812-8C5D-62042246656E}
 		{0FB17D65-A53E-42BC-BF01-5B780BFA1FB5} = {111D90EF-E7AF-42E3-985F-B7E1193552B3}
 		{9AD44BAF-3D7D-4584-9824-A0EB2F02E620} = {0FB17D65-A53E-42BC-BF01-5B780BFA1FB5}
+		{AEAE0787-761A-456C-B997-5B5D06CF9063} = {111D90EF-E7AF-42E3-985F-B7E1193552B3}
+		{DC2C60BE-0023-4B31-92E9-02D94E445727} = {AEAE0787-761A-456C-B997-5B5D06CF9063}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1DFDD18C-2BB1-4D55-8239-FFF80F0D1873}
